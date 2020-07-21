@@ -1,0 +1,9 @@
+.DS_Store
+dist
+node_modules
+.env
+public/*.js
+public/*.js.map
+credentials.json
+deploy
+pro-mern-stack.code-workspace
