@@ -29,21 +29,21 @@ var routes = [
   {
     path: "/dashboard",
     name: "Dashboard",
-    icon: "nc-icon nc-bank",
+    icon: "nc-icon nc-layout-11",
     component: Dashboard,
     layout: "/admin",
   },
   {
     path: "/icons",
-    name: "Icons",
-    icon: "nc-icon nc-diamond",
+    name: "Create",
+    icon: "nc-icon nc-vector",
     component: Icons,
     layout: "/admin",
   },
   {
     path: "/maps",
-    name: "Maps",
-    icon: "nc-icon nc-pin-3",
+    name: "Join",
+    icon: "nc-icon nc-watch-time",
     component: Maps,
     layout: "/admin",
   },
@@ -53,6 +53,7 @@ var routes = [
     icon: "nc-icon nc-bell-55",
     component: Notifications,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/user-page",
@@ -60,6 +61,7 @@ var routes = [
     icon: "nc-icon nc-single-02",
     component: UserPage,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/tables",
@@ -67,6 +69,7 @@ var routes = [
     icon: "nc-icon nc-tile-56",
     component: TableList,
     layout: "/admin",
+    invisible: true,
   },
   {
     path: "/typography",
@@ -74,6 +77,7 @@ var routes = [
     icon: "nc-icon nc-caps-small",
     component: Typography,
     layout: "/admin",
+    invisible: true,
   },
   {
     pro: true,
@@ -82,6 +86,7 @@ var routes = [
     icon: "nc-icon nc-spaceship",
     component: UpgradeToPro,
     layout: "/admin",
+    invisible: true,
   },
 ];
 export default routes;
