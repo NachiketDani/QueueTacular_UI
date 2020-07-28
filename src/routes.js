@@ -19,6 +19,7 @@
 import Dashboard from "views/Dashboard.js";
 import Notifications from "views/Notifications.js";
 import Icons from "views/Icons.js";
+import Create from "views/Create.js";
 import Typography from "views/Typography.js";
 import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
@@ -34,9 +35,16 @@ var routes = [
     layout: "/admin",
   },
   {
-    path: "/icons",
+    path: "/create",
     name: "Create",
     icon: "nc-icon nc-vector",
+    component: Create,
+    layout: "/admin",
+  },
+  {
+    path: "/icons",
+    name: "Icons",
+    icon: "nc-icon nc-palette",
     component: Icons,
     layout: "/admin",
   },
