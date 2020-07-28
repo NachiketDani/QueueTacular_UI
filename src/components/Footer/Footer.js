@@ -45,6 +45,14 @@ class Footer extends React.Component {
                     Licenses
                   </a>
                 </li>
+                <li>
+                  <a
+                    href="https://www.creative-tim.com/license"
+                    target="_blank"
+                  >
+                    Contact
+                  </a>
+                </li>
               </ul>
             </nav>
             <div className="credits ml-auto">
@@ -56,7 +64,10 @@ class Footer extends React.Component {
           </Row>
           <Row>
             <div className="credits ml-auto">
-              <div className="copyright">Queue-Tacular by Space Force</div>
+              <div className="copyright">
+                Queue-Tacular by Space Force{"  "}
+                <i className="nc-icon nc-spaceship" />
+              </div>
             </div>
           </Row>
         </Container>

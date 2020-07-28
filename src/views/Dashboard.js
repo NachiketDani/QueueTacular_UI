@@ -36,11 +36,18 @@ import {
   dashboardNASDAQChart,
 } from "variables/charts.js";
 
+import Queue from "../components/Queue.js";
+
 class Dashboard extends React.Component {
   render() {
     return (
       <>
         <div className="content">
+          <Row>
+            <Col md="12">
+              <Queue />
+            </Col>
+          </Row>
           <Row>
             <Col lg="3" md="6" sm="6">
               <Card className="card-stats">
