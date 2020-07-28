@@ -38,7 +38,7 @@ class Queue extends React.Component {
                     You Are Here
                   </Progress>
                   <Progress bar color="info" value="15" />
-                  <Progress bar striped color="warning" value="15">
+                  <Progress bar color="warning" value="15">
                     5 Min Warning
                   </Progress>
                   <Progress bar color="danger" value="15">
@@ -50,7 +50,7 @@ class Queue extends React.Component {
                 <Badge color="danger">
                   Wait.
                   <div classname="icon-big text-center icon-warning">
-                    <i className="nc-icon nc-user-run" />
+                    <i className="nc-icon nc-simple-remove" />
                   </div>
                 </Badge>
               </Col>
