@@ -1,4 +1,5 @@
 import React from "react";
+
 // reactstrap components
 import {
   Card,
@@ -11,12 +12,56 @@ import {
   Progress,
 } from "reactstrap";
 
+import graphQLFetch from "../GraphQLFetch";
+
 class Queue extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      id: 2,
+      title: "",
+      description: "",
+      queueItems: [],
+    };
+
+    this.loadData.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  async loadData() {
+    const query = `query showQueue(
+      $id: Int!
+    ) {
+      showQueue(
+        id: $id
+      ) {
+        title description
+        items {
+          name
+        }
+      }
+    }`;
+
+    const data = await graphQLFetch(query, { id: this.state.id });
+    if (data) {
+      this.setState({
+        title: data.showQueue.title,
+        description: data.showQueue.description,
+        queueItems: data.showQueue.queueItems,
+      });
+      console.log(this.state.title);
+    }
+  }
+
   render() {
+    //const queue = { props.queue };
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag="h5">Zack's Queue Name Here</CardTitle>
+          <CardTitle tag="h5">{this.state.title}</CardTitle>
           <p className="card-just-text">
             You have an estimated 30 mins remaining in the queue.
           </p>
