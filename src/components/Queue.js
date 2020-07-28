@@ -17,9 +17,10 @@ class Queue extends React.Component {
       <Card>
         <CardHeader>
           <CardTitle tag="h5">Zack's Queue Name Here</CardTitle>
-          <p className="card-just-text">
+          <hr />
+          <div className="card-just-text">
             You have an estimated 30 mins remaining in the queue.
-          </p>
+          </div>
         </CardHeader>
         <CardBody>
           <div>
