@@ -25,11 +25,11 @@ class Queue extends React.Component {
           <div>
             <Row>
               <Col>
-                <p className="card-just-text">Queue Progress</p>
+                <h6 className="card-just-text">Queue Progress</h6>
               </Col>
             </Row>
             <Row>
-              <Col xs="11">
+              <Col sm="11">
                 <Progress multi>
                   <Progress bar color="success" value="40" />
                   <Progress bar animated color="new-blue" value="15">
@@ -44,12 +44,15 @@ class Queue extends React.Component {
                   </Progress>
                 </Progress>
               </Col>
-              <i className="nc-icon nc-user-run" />
+              <Col>
+                Go!
+                {"  "}
+                <i className="nc-icon nc-user-run" />
+              </Col>
             </Row>
-            <br />
             <Row>
               <Col className="card-just-text">
-                In Queue - There are 10 peaple ahead of you!
+                In Queue - There are 10 people ahead of you!
               </Col>
             </Row>
           </div>
