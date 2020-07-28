@@ -9,6 +9,7 @@ import {
   Row,
   Col,
   Progress,
+  Badge,
 } from "reactstrap";
 
 class Queue extends React.Component {
@@ -46,9 +47,12 @@ class Queue extends React.Component {
                 </Progress>
               </Col>
               <Col>
-                Go!
-                {"  "}
-                <i className="nc-icon nc-user-run" />
+                <Badge color="danger">
+                  Wait.
+                  <div classname="icon-big text-center icon-warning">
+                    <i className="nc-icon nc-user-run" />
+                  </div>
+                </Badge>
               </Col>
             </Row>
             <Row>
