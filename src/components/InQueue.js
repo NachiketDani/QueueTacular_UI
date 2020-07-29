@@ -12,7 +12,7 @@ import {
   Badge,
 } from "reactstrap";
 
-class Queue extends React.Component {
+class InQueue extends React.Component {
   render() {
     return (
       <Card>
@@ -73,4 +73,4 @@ class Queue extends React.Component {
   }
 }
 
-export default Queue;
+export default InQueue;

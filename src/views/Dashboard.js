@@ -36,7 +36,8 @@ import {
   dashboardNASDAQChart,
 } from "variables/charts.js";
 
-import Queue from "../components/Queue.js";
+import InQueue from "../components/InQueue.js";
+import QueueMultiview from "../components/QueueMultiview.js";
 
 class Dashboard extends React.Component {
   render() {
@@ -45,7 +46,12 @@ class Dashboard extends React.Component {
         <div className="content">
           <Row>
             <Col md="12">
-              <Queue />
+              <QueueMultiview />
+            </Col>
+          </Row>
+          <Row>
+            <Col md="12">
+              <InQueue />
             </Col>
           </Row>
           <Row>
