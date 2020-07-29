@@ -37,7 +37,7 @@ class App extends React.Component {
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
-      queueId: 2,
+      queueId: "5f2115c2ee09da2e4cbc6467",
     };
     this.mainPanel = React.createRef();
   }
@@ -82,10 +82,11 @@ class App extends React.Component {
                 return (
                   <Route
                     path={prop.layout + prop.path}
-                    component={prop.component}
+                    // component={prop.component}
                     key={key}
-                    queueId={this.state.queueId}
-                    render={(props) => <Dashboard {...props} queueId={2} />}
+                    render={(props) => (
+                      <prop.component {...props} queueId={this.state.queueId} />
+                    )}
                   />
                 );
               })}

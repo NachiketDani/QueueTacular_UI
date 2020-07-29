@@ -39,6 +39,12 @@ import {
 import Queue from "../components/Queue.js";
 
 class Dashboard extends React.Component {
+  /*
+  state = {
+    queueId: "5f210068ad556f58782644b9",
+  };
+  */
+
   render() {
     return (
       <>

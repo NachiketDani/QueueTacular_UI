@@ -19,33 +19,33 @@ class Queue extends React.Component {
     super(props);
     this.state = {
       title: "",
+      description: "",
     };
-    this.loadData.bind(this);
+    this.loadData = this.loadData.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadData();
   }
 
   async loadData() {
-    const query = `query showQueue(
-      $id: Int!
-    ) {
-      showQueue(
-        id: $id
-      ) {
-        title description
-        items {
-          name
+    const query = `query showQueueById($_id: MongoID!) {
+      queueById(_id: $_id) {
+        title
+        description
         }
-      }
-    }`;
+      }`;
 
-    const data = await graphQLFetch(query, { id: this.props.queueId });
+    const data = await graphQLFetch(query, { _id: this.props.queueId });
     if (data) {
-      console.log(data);
-      this.setState({ title: data.showQueue.title });
+      this.setState({
+        title: data.queueById.title,
+        description: data.queueById.description,
+      });
     }
   }
 
   render() {
-    // let title = this.loadData();
     return (
       <Card>
         <CardHeader>
