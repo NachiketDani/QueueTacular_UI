@@ -17,14 +17,13 @@ import graphQLFetch from "../GraphQLFetch";
 class Queue extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      title: "",
+    };
     this.loadData.bind(this);
   }
 
-  componentDidMount() {
-    this.loadData();
-  }
-
-  async loadData(queueId) {
+  async loadData() {
     const query = `query showQueue(
       $id: Int!
     ) {
@@ -38,19 +37,19 @@ class Queue extends React.Component {
       }
     }`;
 
-    const data = await graphQLFetch(query, { id: queueId });
+    const data = await graphQLFetch(query, { id: this.props.queueId });
     if (data) {
-      return data.showQueue;
+      console.log(data);
+      this.setState({ title: data.showQueue.title });
     }
   }
 
   render() {
-    const { queueId } = this.props;
-    const data = this.loadData(queueId);
+    // let title = this.loadData();
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag="h5">{data.title}</CardTitle>
+          <CardTitle tag="h5">{this.state.title}</CardTitle>
           <p className="card-just-text">
             You have an estimated 30 mins remaining in the queue.
           </p>

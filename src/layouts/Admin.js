@@ -27,17 +27,17 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
+import Dashboard from "views/Dashboard";
 
 var ps;
 
-class Dashboard extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
       queueId: 2,
-      // queueId: "5f1bdcf0ce51b71784cae028",
     };
     this.mainPanel = React.createRef();
   }
@@ -85,7 +85,7 @@ class Dashboard extends React.Component {
                     component={prop.component}
                     key={key}
                     queueId={this.state.queueId}
-                    render={prop.render}
+                    render={(props) => <Dashboard {...props} queueId={2} />}
                   />
                 );
               })}
@@ -104,4 +104,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+export default App;

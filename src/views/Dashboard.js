@@ -39,10 +39,6 @@ import {
 import Queue from "../components/Queue.js";
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <>

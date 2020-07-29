@@ -24,7 +24,6 @@ import TableList from "views/Tables.js";
 import Maps from "views/Map.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
-import React from "react";
 
 var routes = [
   {
@@ -33,11 +32,7 @@ var routes = [
     icon: "nc-icon nc-layout-11",
     component: Dashboard,
     layout: "/admin",
-    render: (props) => (
-      <Dashboard queueId={this.StaticRange.queueId} {...props} />
-    ),
-    // render: (props) => <Dashboard queueId={props.queueId} />,
-    //"{ (props) => <Dashboard queueId={props.queueId} /> }"
+    //render: (props) => <Dashboard queueId={this.state.queueId} {...props} />,
   },
   {
     path: "/icons",
