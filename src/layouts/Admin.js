@@ -30,12 +30,13 @@ import routes from "routes.js";
 
 var ps;
 
-class Dashboard extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
+      queueID: "5f210d29cbf9a1561cd58d2e",
     };
     this.mainPanel = React.createRef();
   }
@@ -79,8 +80,11 @@ class Dashboard extends React.Component {
               return (
                 <Route
                   path={prop.layout + prop.path}
-                  component={prop.component}
                   key={key}
+                  queueID={this.state.queueID}
+                  render={(props) => (
+                    <prop.component {...props} queueID={this.props.queueID} />
+                  )}
                 />
               );
             })}
@@ -98,4 +102,4 @@ class Dashboard extends React.Component {
   }
 }
 
-export default Dashboard;
+export default App;

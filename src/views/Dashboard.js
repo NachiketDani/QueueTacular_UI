@@ -45,7 +45,7 @@ class Dashboard extends React.Component {
         <div className="content">
           <Row>
             <Col md="12">
-              <Queue />
+              <Queue queueID={this.props.queueID} />
             </Col>
           </Row>
           <Row>

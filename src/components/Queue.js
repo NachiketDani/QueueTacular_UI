@@ -11,13 +11,44 @@ import {
   Progress,
   Badge,
 } from "reactstrap";
+import graphQLFetch from "../GraphQLFetch";
 
 class Queue extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      queueID: "5f210d29cbf9a1561cd58d2e",
+    };
+    this.loadData = this.loadData.bind(this);
+  }
+
+  componentDidMount() {
+    console.log("Hello\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    this.loadData();
+  }
+
+  async loadData() {
+    const query = `query showQueueById( $_id: MongoID! ) {
+      queueById ( _id: $_id )
+      {
+        title description
+      }
+    }`;
+
+    const data = await graphQLFetch(query, { _id: this.state.queueID });
+    if (data) {
+      console.log(data);
+      return data;
+    }
+  }
+
   render() {
+    const data = this.loadData();
+    console.log(data);
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag="h5">Zack's Queue Name Here</CardTitle>
+          <CardTitle tag="h5">{data.title}</CardTitle>
           <hr />
           <div className="card-just-text">
             You have an estimated 30 mins remaining in the queue.
@@ -49,7 +80,7 @@ class Queue extends React.Component {
               <Col>
                 <Badge color="danger">
                   Wait.
-                  <div classname="icon-big text-center icon-warning">
+                  <div className="icon-big text-center icon-warning">
                     <i className="nc-icon nc-simple-remove" />
                   </div>
                 </Badge>
