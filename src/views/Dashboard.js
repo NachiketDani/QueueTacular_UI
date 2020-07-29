@@ -36,7 +36,8 @@ import {
   dashboardNASDAQChart,
 } from "variables/charts.js";
 
-import Queue from "../components/Queue.js";
+import InQueue from "../components/InQueue.js";
+import QueueMultiview from "../components/QueueMultiview.js";
 
 class Dashboard extends React.Component {
   /*
