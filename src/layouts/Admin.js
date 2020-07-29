@@ -82,10 +82,12 @@ class App extends React.Component {
                 return (
                   <Route
                     path={prop.layout + prop.path}
-                    component={prop.component}
+                    //component={prop.component}
                     key={key}
-                    queueId={this.state.queueId}
-                    render={(props) => <Dashboard {...props} queueId={2} />}
+                    // queueId={this.state.queueId}
+                    render={(props) => (
+                      <prop.component {...props} queueId={2} />
+                    )}
                   />
                 );
               })}
