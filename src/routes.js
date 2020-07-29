@@ -33,7 +33,6 @@ var routes = [
     icon: "nc-icon nc-layout-11",
     component: Dashboard,
     layout: "/admin",
-    //render: (props) => <Dashboard queueId={this.state.queueId} {...props} />,
   },
   {
     path: "/create",
