@@ -15,15 +15,8 @@ import {
 import graphQLFetch from "../GraphQLFetch";
 
 class Queue extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      id: 2,
-      title: "",
-      description: "",
-      queueItems: [],
-    };
-
+  constructor(props) {
+    super(props);
     this.loadData.bind(this);
   }
 
@@ -31,7 +24,7 @@ class Queue extends React.Component {
     this.loadData();
   }
 
-  async loadData() {
+  async loadData(queueId) {
     const query = `query showQueue(
       $id: Int!
     ) {
@@ -45,23 +38,19 @@ class Queue extends React.Component {
       }
     }`;
 
-    const data = await graphQLFetch(query, { id: this.state.id });
+    const data = await graphQLFetch(query, { id: queueId });
     if (data) {
-      this.setState({
-        title: data.showQueue.title,
-        description: data.showQueue.description,
-        queueItems: data.showQueue.queueItems,
-      });
-      console.log(this.state.title);
+      return data.showQueue;
     }
   }
 
   render() {
-    //const queue = { props.queue };
+    const { queueId } = this.props;
+    const data = this.loadData(queueId);
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag="h5">{this.state.title}</CardTitle>
+          <CardTitle tag="h5">{data.title}</CardTitle>
           <p className="card-just-text">
             You have an estimated 30 mins remaining in the queue.
           </p>

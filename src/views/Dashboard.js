@@ -39,13 +39,17 @@ import {
 import Queue from "../components/Queue.js";
 
 class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <>
         <div className="content">
           <Row>
             <Col md="12">
-              <Queue />
+              <Queue queueId={this.props.queueId} />
             </Col>
           </Row>
           <Row>

@@ -36,6 +36,8 @@ class Dashboard extends React.Component {
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
+      queueId: 2,
+      // queueId: "5f1bdcf0ce51b71784cae028",
     };
     this.mainPanel = React.createRef();
   }
@@ -74,17 +76,21 @@ class Dashboard extends React.Component {
         />
         <div className="main-panel" ref={this.mainPanel}>
           <DemoNavbar {...this.props} />
-          <Switch>
-            {routes.map((prop, key) => {
-              return (
-                <Route
-                  path={prop.layout + prop.path}
-                  component={prop.component}
-                  key={key}
-                />
-              );
-            })}
-          </Switch>
+          {
+            <Switch>
+              {routes.map((prop, key) => {
+                return (
+                  <Route
+                    path={prop.layout + prop.path}
+                    component={prop.component}
+                    key={key}
+                    queueId={this.state.queueId}
+                    render={prop.render}
+                  />
+                );
+              })}
+            </Switch>
+          }
           <Footer fluid />
         </div>
         {/* <FixedPlugin
