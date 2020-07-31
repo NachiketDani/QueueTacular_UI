@@ -1,4 +1,6 @@
-const API_ENDPOINT = "http://localhost:3030/graphql";
+require("dotenv").config();
+const API_ENDPOINT =
+  process.env.API_SERVER_PORT || "http://localhost:4000/graphql";
 
 export default async function graphQLFetch(query, variables = {}) {
   try {
