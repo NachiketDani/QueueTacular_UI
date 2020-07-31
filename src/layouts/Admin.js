@@ -27,6 +27,7 @@ import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
 import routes from "routes.js";
+// import Dashboard from "views/Dashboard";
 
 var ps;
 
@@ -36,7 +37,7 @@ class App extends React.Component {
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
-      queueID: "5f210d29cbf9a1561cd58d2e",
+      userId: "5f235c25ac3b06498000f2b9",
     };
     this.mainPanel = React.createRef();
   }
@@ -75,20 +76,21 @@ class App extends React.Component {
         />
         <div className="main-panel" ref={this.mainPanel}>
           <DemoNavbar {...this.props} />
-          <Switch>
-            {routes.map((prop, key) => {
-              return (
-                <Route
-                  path={prop.layout + prop.path}
-                  key={key}
-                  queueID={this.state.queueID}
-                  render={(props) => (
-                    <prop.component {...props} queueID={this.props.queueID} />
-                  )}
-                />
-              );
-            })}
-          </Switch>
+          {
+            <Switch>
+              {routes.map((prop, key) => {
+                return (
+                  <Route
+                    path={prop.layout + prop.path}
+                    key={key}
+                    render={(props) => (
+                      <prop.component {...props} userId={this.state.userId} />
+                    )}
+                  />
+                );
+              })}
+            </Switch>
+          }
           <Footer fluid />
         </div>
         {/* <FixedPlugin

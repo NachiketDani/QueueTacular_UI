@@ -1,4 +1,5 @@
 import React from "react";
+
 // reactstrap components
 import {
   Card,
@@ -9,36 +10,54 @@ import {
   Row,
   Col,
   Progress,
-  Badge,
 } from "reactstrap";
 import graphQLFetch from "../GraphQLFetch";
+
+import graphQLFetch from "../GraphQLFetch";
+import { queue } from "jquery";
 
 class Queue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      queueID: "5f210d29cbf9a1561cd58d2e",
+      title: "You are not currently in any queues",
+      description: "",
     };
     this.loadData = this.loadData.bind(this);
   }
 
   componentDidMount() {
-    console.log("Hello");
     this.loadData();
   }
 
   async loadData() {
-    const query = `query showQueueById( $_id: MongoID! ) {
-      queueById ( _id: $_id )
-      {
-        title description
+    const queryForItems = `query {
+      itemMany(filter:{
+          status: Waiting,
+          user: "${this.props.userId}",
+      }) {
+       _id
       }
     }`;
 
-    const data = await graphQLFetch(query, { _id: this.state.queueID });
-    if (data) {
-      console.log(data);
-      return data;
+    const queryForQueue = `query {
+      queueOne(filter:{
+        items:[{
+          user: "${this.props.userId}",
+          status: Waiting
+        }]
+      }) {
+        title
+      }
+    }`;
+
+    const data = await graphQLFetch(queryForItems);
+    if (data.itemMany.length > 0) {
+      const queueData = await graphQLFetch(queryForQueue);
+      this.setState({
+        title: queueData.queueOne.title,
+        description: queueData.queueOne.description,
+      });
     }
   }
 
@@ -48,28 +67,27 @@ class Queue extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag="h5">{data.title}</CardTitle>
-          <hr />
-          <div className="card-just-text">
+          <CardTitle tag="h5">{this.state.title}</CardTitle>
+          <p className="card-just-text">
             You have an estimated 30 mins remaining in the queue.
-          </div>
+          </p>
         </CardHeader>
         <CardBody>
           <div>
             <Row>
               <Col>
-                <h6 className="card-just-text">Queue Progress</h6>
+                <p className="card-just-text">Queue Progress</p>
               </Col>
             </Row>
             <Row>
-              <Col sm="11">
+              <Col xs="11">
                 <Progress multi>
                   <Progress bar color="success" value="40" />
                   <Progress bar animated color="new-blue" value="15">
                     You Are Here
                   </Progress>
                   <Progress bar color="info" value="15" />
-                  <Progress bar color="warning" value="15">
+                  <Progress bar striped color="warning" value="15">
                     5 Min Warning
                   </Progress>
                   <Progress bar color="danger" value="15">
@@ -77,18 +95,12 @@ class Queue extends React.Component {
                   </Progress>
                 </Progress>
               </Col>
-              <Col>
-                <Badge color="danger">
-                  Wait.
-                  <div className="icon-big text-center icon-warning">
-                    <i className="nc-icon nc-simple-remove" />
-                  </div>
-                </Badge>
-              </Col>
+              <i className="nc-icon nc-user-run" />
             </Row>
+            <br />
             <Row>
               <Col className="card-just-text">
-                In Queue - There are 10 people ahead of you!
+                In Queue - There are 10 peaple ahead of you!
               </Col>
             </Row>
           </div>

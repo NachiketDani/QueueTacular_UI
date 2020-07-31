@@ -3,6 +3,7 @@ import NavBar from "./components/navbar";
 import Counters from "./components/counters";
 
 import "./App.css";
+import Queue from "./components/queue";
 
 class App extends Component {
   state = {
@@ -59,6 +60,7 @@ class App extends Component {
             onDelete={this.handleDelete}
           />
         </main>
+        <Queue />
       </React.Fragment>
     );
   }

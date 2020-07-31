@@ -1,8 +1,17 @@
+<<<<<<< HEAD
 const API_ENDPOINT = "http://localhost:3030/graphql";
 
 export default async function graphQLFetch(query, variables = {}) {
   try {
     console.log("Hello");
+=======
+require("dotenv").config();
+const API_ENDPOINT =
+  process.env.API_SERVER_PORT || "http://localhost:4000/graphql";
+
+export default async function graphQLFetch(query, variables = {}) {
+  try {
+>>>>>>> 87f54394682f81dde29612ea3e3ccc3f77ace9aa
     const response = await fetch(API_ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
