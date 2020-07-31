@@ -17,8 +17,57 @@ import {
 
 import InQueueMini from "../components/InQueueMini.js";
 import Example from "../components/Example.js";
+import graphQLFetch from "../GraphQLFetch.js";
 
 class QueueMultiview extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      queueHistory: [],
+    };
+    this.loadData = this.loadData.bind(this);
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
+  async loadData() {
+    const queryForItems = `query {
+      itemMany(filter:{
+          status: Removed,
+          user: "${this.props.userId}",
+      }) {
+       _id
+      }
+    }`;
+
+    const queryForQueue = `query {
+      queueMany(filter:{
+        items:[{
+          user: "${this.props.userId}",
+          status: Waiting
+        }]
+      }) {
+        title
+      }
+    }`;
+
+    const data = await graphQLFetch(queryForItems);
+    console.log(data);
+    if (data.itemMany.length > 0) {
+      const queueData = await graphQLFetch(queryForQueue);
+      console.log(queueData);
+      const queueHistory = [];
+      queueData.queueMany.forEach((queue) => {
+        queueHistory.push(queue);
+      });
+      this.setState({
+        queueHistory,
+      });
+    }
+  }
+
   render() {
     return (
       <Card>
@@ -29,7 +78,7 @@ class QueueMultiview extends React.Component {
         <CardBody>
           <Row>
             <Col>
-              <InQueueMini />
+              <InQueueMini queue={this.state.queueHistory[0]} />
             </Col>
           </Row>
           <br />
@@ -37,7 +86,7 @@ class QueueMultiview extends React.Component {
           <br />
           <Row>
             <Col>
-              <InQueueMini />
+              <InQueueMini queue={this.state.queueHistory[1]} />
             </Col>
           </Row>
         </CardBody>

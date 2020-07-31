@@ -4,11 +4,12 @@ import { Row, Col, Progress, Badge } from "reactstrap";
 
 class InQueueMini extends React.Component {
   render() {
+    const queueTitle = this.props.queue != null ? this.props.queue.title : "";
     return (
       <>
         <Row>
           <Col>
-            <h6>A Queue Name</h6>
+            <h6>{queueTitle}</h6>
           </Col>
         </Row>
         <Row>
