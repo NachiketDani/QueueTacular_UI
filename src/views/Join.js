@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import AsyncSelect from "react-select/async";
-import graphQLFetch from "./GraphQLFetch.js";
-import withToast from "./withToast";
+import SelectAsync from "react-select/lib/Async";
+// import graphQLFetch from "./GraphQLFetch.js";
+// import withToast from "./withToast";
 
 class Join extends React.Component {
   constructor(props) {
@@ -10,28 +10,34 @@ class Join extends React.Component {
     this.loadOptions = this.loadOptions.bind(this);
   }
 
-  onChangeSelection({ value }) {
-    const { history } = this.props;
-    history.push("/edit/${value}");
+  onChangeSelection() {
+    //   const { history } = this.props;
+    //   history.push("/edit/${value}");
   }
 
-  async loadOptions(term) {
-    if (term.length < 3) return [];
-    const query = `query issueList($search: String) {
-        issueList(search: $search) {
-        issues {id title}
-        }
-    }`;
-    const { showError } = this.props;
-    const data = await graphQLFetch(query, { search: term }, showError);
-    return data.issueList.issues.map((issue) => ({
-      label: `#${issue.id}: ${issue.title}`,
-      value: issue.id,
-    }));
+  async loadOptions() {
+    //   if (term.length < 3) return [];
+    //   const query = `query issueList($search: String) {
+    //       issueList(search: $search) {
+    //       issues {id title}
+    //       }
   }
+
+  //   const { showError } = this.props;
+  //   const data = await graphQLFetch(query, { search: term }, showError);
+  //   return data.issueList.issues.map((issue) => ({
+  //     label: `#${issue.id}: ${issue.title}`,
+  //     value: issue.id,
+  //   }));
+  // }
 
   render() {
-    return <h1>Hi</h1>;
+    return (
+      <AsyncSelect>
+        loadOptions = {this.loadOptions}
+        filterOption={() => true}
+      </AsyncSelect>
+    );
   }
 }
 
