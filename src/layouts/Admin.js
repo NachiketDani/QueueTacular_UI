@@ -37,7 +37,7 @@ class App extends React.Component {
     this.state = {
       backgroundColor: "black",
       activeColor: "info",
-      queueId: "5f2115c2ee09da2e4cbc6467",
+      userId: "5f235c25ac3b06498000f2b9",
     };
     this.mainPanel = React.createRef();
   }
@@ -84,7 +84,7 @@ class App extends React.Component {
                     path={prop.layout + prop.path}
                     key={key}
                     render={(props) => (
-                      <prop.component {...props} queueId={this.state.queueId} />
+                      <prop.component {...props} userId={this.state.userId} />
                     )}
                   />
                 );

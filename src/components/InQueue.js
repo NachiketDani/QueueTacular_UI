@@ -29,18 +29,21 @@ class Queue extends React.Component {
   }
 
   async loadData() {
-    const query = `query showQueueById($_id: MongoID!) {
-      queueById(_id: $_id) {
+    const query = `query {
+      queueMany(filter:{
+        items:[{
+          user: "${this.props.userId}",
+          status: Waiting
+        }]
+      }) {
         title
-        description
-        }
-      }`;
+      }
+    }`;
 
-    const data = await graphQLFetch(query, { _id: this.props.queueId });
+    const data = await graphQLFetch(query);
     if (data) {
       this.setState({
-        title: data.queueById.title,
-        description: data.queueById.description,
+        title: data.queueMany[0].title,
       });
     }
   }
