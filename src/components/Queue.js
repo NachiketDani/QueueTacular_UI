@@ -23,7 +23,7 @@ class Queue extends React.Component {
   }
 
   componentDidMount() {
-    console.log("Hello\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
+    console.log("Hello");
     this.loadData();
   }
 
