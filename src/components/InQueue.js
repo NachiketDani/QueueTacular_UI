@@ -41,6 +41,7 @@ class Queue extends React.Component {
 
     const queryForQueue = `query {
       queueOne(filter:{
+        status: Open,
         items:[{
           user: "${this.props.userId}",
           status: Waiting
