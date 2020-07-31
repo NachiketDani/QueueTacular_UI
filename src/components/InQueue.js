@@ -11,7 +11,6 @@ import {
   Col,
   Progress,
 } from "reactstrap";
-import graphQLFetch from "../GraphQLFetch";
 
 import graphQLFetch from "../GraphQLFetch";
 import { queue } from "jquery";
