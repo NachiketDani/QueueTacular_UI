@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import SelectAsync from "react-select/lib/Async";
-// import graphQLFetch from "./GraphQLFetch.js";
+import AsyncSelect from "react-select/lib/Async";
+import graphQLFetch from "../GraphQLFetch.js";
 // import withToast from "./withToast";
 
 class Join extends React.Component {
@@ -33,10 +33,12 @@ class Join extends React.Component {
 
   render() {
     return (
-      <AsyncSelect>
-        loadOptions = {this.loadOptions}
-        filterOption={() => true}
-      </AsyncSelect>
+      <div className="content">
+        <AsyncSelect>
+          loadOptions = {this.loadOptions}
+          filterOption={() => true}
+        </AsyncSelect>
+      </div>
     );
   }
 }
