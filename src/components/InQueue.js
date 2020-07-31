@@ -13,12 +13,13 @@ import {
 } from "reactstrap";
 
 import graphQLFetch from "../GraphQLFetch";
+import { queue } from "jquery";
 
 class Queue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "",
+      title: "You are not currently in any queues",
       description: "",
     };
     this.loadData = this.loadData.bind(this);
@@ -29,8 +30,17 @@ class Queue extends React.Component {
   }
 
   async loadData() {
-    const query = `query {
-      queueMany(filter:{
+    const queryForItems = `query {
+      itemMany(filter:{
+          status: Waiting,
+          user: "${this.props.userId}",
+      }) {
+       _id
+      }
+    }`;
+
+    const queryForQueue = `query {
+      queueOne(filter:{
         items:[{
           user: "${this.props.userId}",
           status: Waiting
@@ -40,10 +50,12 @@ class Queue extends React.Component {
       }
     }`;
 
-    const data = await graphQLFetch(query);
-    if (data) {
+    const data = await graphQLFetch(queryForItems);
+    if (data.itemMany.length > 0) {
+      const queueData = await graphQLFetch(queryForQueue);
       this.setState({
-        title: data.queueMany[0].title,
+        title: queueData.queueOne.title,
+        description: queueData.queueOne.description,
       });
     }
   }
