@@ -84,6 +84,7 @@ class Join extends React.Component {
           <Card body outline color="secondary">
             <CardTitle>
               <h4>Larry's shared washing machine</h4>
+              <em>Queue-tacular ID:5A32451</em>
             </CardTitle>
             <CardText>
               Hey guys! Queue up using this tool - its awesome!. Please bring
@@ -97,7 +98,7 @@ class Join extends React.Component {
               </ListGroup>
             </CardText>
             <div>
-              <Button>Join Queue!</Button>
+              <Button color="primary">Join Queue!</Button>{" "}
             </div>
           </Card>
         </div>
