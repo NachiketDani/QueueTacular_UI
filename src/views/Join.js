@@ -9,15 +9,23 @@ import {
   ListGroup,
   ListGroupItem,
 } from "reactstrap";
+
 // import withToast from "./withToast";
 
 class Join extends React.Component {
   constructor(props) {
     super(props);
     this.onChangeSelection = this.onChangeSelection.bind(this);
-    this.loadOptions = this.loadOptions.bind(this);
+    // this.loadOptions = this.loadOptions.bind(this);
     this.loadData = this.loadData.bind(this);
   }
+
+  state = {
+    queueId: "5f235c25ac3b06498000f2c5",
+    title: "",
+    description: "",
+    people_in_queue: [],
+  };
 
   componentDidMount() {
     this.loadData();
@@ -33,36 +41,36 @@ class Join extends React.Component {
       }
     }`;
 
-    const queryForQueue = `query {
-      queueOne(filter:{
-        items:[{
-          user: "${this.props.userId}",
-          status: Waiting
-        }]
-      }) {
-        title
-      }
+    const queryForQueue = `query queueById($queueId: MongoID!) {
+      queueById(_id: $queueId) {
+          title, description, items {
+            user
+          }
+        }
     }`;
 
-    const data = await graphQLFetch(queryForItems);
-    if (data.itemMany.length > 0) {
-      const queueData = await graphQLFetch(queryForQueue);
+    const data = await graphQLFetch(queryForQueue, {
+      queueId: this.state.queueId,
+    });
+    console.log(data);
+    if (data) {
       this.setState({
-        title: queueData.queueOne.title,
-        description: queueData.queueOne.description,
+        title: data.queueById.title,
+        description: data.queueById.description,
+        people_in_queue: data.queueById.items.length,
       });
     }
   }
 
   onChangeSelection() {}
 
-  async loadOptions() {
-    //   if (term.length < 3) return [];
-    //   const query = `query issueList($search: String) {
-    //       issueList(search: $search) {
-    //       issues {id title}
-    //       }
-  }
+  // async loadOptions() {
+  //     if (term.length < 3) return [];
+  //     const query = `query issueList($search: String) {
+  //         issueList(search: $search) {
+  //         issues {id title}
+  //         }
+  // }
 
   //   const { showError } = this.props;
   //   const data = await graphQLFetch(query, { search: term }, showError);
@@ -83,17 +91,16 @@ class Join extends React.Component {
         <div>
           <Card body outline color="secondary">
             <CardTitle>
-              <h4>Larry's shared washing machine</h4>
-              <em>Queue-tacular ID:5A32451</em>
+              <h4>{this.state.title}</h4>
+              <em>Queue-tacular ID:{this.state.queueId}</em>
             </CardTitle>
             <CardText>
-              Hey guys! Queue up using this tool - its awesome!. Please bring
-              your own detergent. Clear our all your belongings after use and
-              make sure to be courteous to others! Cheers..I love this Washing
-              Machine
+              {this.state.description}
               <hr></hr>
               <ListGroup>
-                <ListGroupItem>People currently in Queue: 2</ListGroupItem>
+                <ListGroupItem>
+                  People currently in Queue: {this.state.people_in_queue}
+                </ListGroupItem>
                 <ListGroupItem>Estimated wait time: 85 min</ListGroupItem>
               </ListGroup>
             </CardText>
