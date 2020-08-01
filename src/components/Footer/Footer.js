@@ -33,7 +33,7 @@ class Footer extends React.Component {
             <nav className="footer-nav">
               <ul>
                 <li>
-                  <a href="https://www.creative-tim.com" target="_blank">
+                  <a href="#" target="_blank">
                     About
                   </a>
                 </li>
@@ -46,10 +46,7 @@ class Footer extends React.Component {
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="https://www.creative-tim.com/license"
-                    target="_blank"
-                  >
+                  <a href="#" target="_blank">
                     Contact
                   </a>
                 </li>

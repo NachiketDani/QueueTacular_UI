@@ -22,7 +22,7 @@ import Icons from "views/Icons.js";
 import Create from "views/Create.js";
 import Typography from "views/Typography.js";
 import TableList from "views/Tables.js";
-import Maps from "views/Map.js";
+import Join from "views/Join.js";
 import UserPage from "views/User.js";
 import UpgradeToPro from "views/Upgrade.js";
 
@@ -47,12 +47,13 @@ var routes = [
     icon: "nc-icon nc-palette",
     component: Icons,
     layout: "/admin",
+    invisible: true,
   },
   {
-    path: "/maps",
+    path: "/join",
     name: "Join",
     icon: "nc-icon nc-watch-time",
-    component: Maps,
+    component: Join,
     layout: "/admin",
   },
   {
