@@ -55,7 +55,6 @@ class Create extends React.Component {
               <CardBody>
                 <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
-                    <p>{this.state.title}</p>
                     <Label for="createTitle">Title</Label>
                     <Input
                       placeholder="Title"
@@ -70,9 +69,9 @@ class Create extends React.Component {
                     <Input
                       placeholder="Description"
                       type="textarea"
+                      description="empty description"
                       name="text"
-                      id="createDescription"
-                      required
+                      id="createDescription" 
                     />
                   </FormGroup>
                   <FormGroup>
@@ -83,15 +82,13 @@ class Create extends React.Component {
                         min={0}
                         type="number"
                         step="1"
-                        id="createParticipants"
+                        id ="createParticipants"
                       />
-                      <InputGroupAddon addonType="append">
-                        persons
-                      </InputGroupAddon>
+                      <InputGroupAddon addonType="append">persons</InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="createParticipants">Maximum Wait Time</Label>
+                    <Label for="createWaitHours">Maximum Wait Time</Label>
                     <Row>
                       <Col>
                         <InputGroup>
@@ -100,10 +97,9 @@ class Create extends React.Component {
                             min={0}
                             type="number"
                             step="1"
+                            id="createWaitHours"
                           />
-                          <InputGroupAddon addonType="append">
-                            hours
-                          </InputGroupAddon>
+                          <InputGroupAddon addonType="append">hours</InputGroupAddon>
                         </InputGroup>
                       </Col>
                       <Col>
@@ -111,12 +107,12 @@ class Create extends React.Component {
                           <Input
                             placeholder="Minutes"
                             min={0}
+                            max={59}
                             type="number"
                             step="15"
+                            id="createWaitMinutes"
                           />
-                          <InputGroupAddon addonType="append">
-                            minutes
-                          </InputGroupAddon>
+                          <InputGroupAddon addonType="append">minutes</InputGroupAddon>
                         </InputGroup>
                       </Col>
                     </Row>
