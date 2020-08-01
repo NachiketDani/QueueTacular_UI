@@ -43,35 +43,63 @@ constructor(props) {
               <CardBody>
                 <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
-                    <p>{this.state.title}</p>
                     <Label for="createTitle">Title</Label>
-                    <Input placeholder="Title" type="text" title="empty title"
-                    id="createTitle" onChange={this.handleInputChange}/>
+                    <Input
+                      placeholder="Title"
+                      type="text"
+                      title="empty title"
+                      id="createTitle"
+                      onChange={this.handleInputChange}
+                    />
                   </FormGroup>
                   <FormGroup>
                     <Label for="createDescription">Description</Label>
-                    <Input placeholder="Description" type="textarea" name="text" id="createDescription" required/>
+                    <Input
+                      placeholder="Description"
+                      type="textarea"
+                      description="empty description"
+                      name="text"
+                      id="createDescription" 
+                    />
                   </FormGroup>
                   <FormGroup>
                     <Label for="createParticipants">Maximum Participants</Label>
                     <InputGroup>
-                      <Input placeholder="Maximum Participants" min={0}
-                      type="number" step="1" id ="createParticipants"/>
+                      <Input
+                        placeholder="Maximum Participants"
+                        min={0}
+                        type="number"
+                        step="1"
+                        id ="createParticipants"
+                      />
                       <InputGroupAddon addonType="append">persons</InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="createParticipants">Maximum Wait Time</Label>
+                    <Label for="createWaitHours">Maximum Wait Time</Label>
                     <Row>
                       <Col>
                         <InputGroup>
-                          <Input placeholder="Hours" min={0} type="number" step="1" />
+                          <Input
+                            placeholder="Hours"
+                            min={0}
+                            type="number"
+                            step="1"
+                            id="createWaitHours"
+                          />
                           <InputGroupAddon addonType="append">hours</InputGroupAddon>
                         </InputGroup>
                       </Col>
                       <Col>
                         <InputGroup>
-                          <Input placeholder="Minutes" min={0} type="number" step="15" />
+                          <Input
+                            placeholder="Minutes"
+                            min={0}
+                            max={59}
+                            type="number"
+                            step="15"
+                            id="createWaitMinutes"
+                          />
                           <InputGroupAddon addonType="append">minutes</InputGroupAddon>
                         </InputGroup>
                       </Col>
