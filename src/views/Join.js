@@ -62,6 +62,8 @@ class Join extends React.Component {
     }
   }
 
+  async onClickJoin() {}
+
   onChangeSelection() {}
 
   // async loadOptions() {
@@ -105,7 +107,9 @@ class Join extends React.Component {
               </ListGroup>
             </CardText>
             <div>
-              <Button color="primary">Join Queue!</Button>{" "}
+              <Button color="primary" onClick={this.onClickJoin}>
+                Join Queue!
+              </Button>{" "}
             </div>
           </Card>
         </div>
