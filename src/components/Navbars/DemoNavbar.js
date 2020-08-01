@@ -151,7 +151,7 @@ class Header extends React.Component {
             navbar
             className="justify-content-end"
           >
-            <form>
+            {/* <form>
               <InputGroup className="no-border">
                 <Input placeholder="Search for a Queue..." />
                 <InputGroupAddon addonType="append">
@@ -160,7 +160,7 @@ class Header extends React.Component {
                   </InputGroupText>
                 </InputGroupAddon>
               </InputGroup>
-            </form>
+            </form> }*/}
             <Nav navbar>
               {/* <NavItem>
                 <Link to="#pablo" className="nav-link btn-magnify">
@@ -181,11 +181,13 @@ class Header extends React.Component {
                     <span className="d-lg-none d-md-block">Some Actions</span>
                   </p>
                 </DropdownToggle>
-                <DropdownMenu right>
-                  <DropdownItem tag="a">Dashboard</DropdownItem>
-                  <DropdownItem tag="a">Create</DropdownItem>
-                  <DropdownItem tag="a">Join</DropdownItem>
-                </DropdownMenu>
+                {
+                  <DropdownMenu right>
+                    <DropdownItem tag="a">Login</DropdownItem>
+                    {/* <DropdownItem tag="a">Create</DropdownItem>
+                    <DropdownItem tag="a">Join</DropdownItem> */}
+                  </DropdownMenu>
+                }
               </Dropdown>
               {/* <NavItem>
                 <Link to="#pablo" className="nav-link btn-rotate">

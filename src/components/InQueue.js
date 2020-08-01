@@ -62,6 +62,8 @@ class Queue extends React.Component {
   }
 
   render() {
+    const data = this.loadData();
+    console.log(data);
     return (
       <Card>
         <CardHeader>
