@@ -9,9 +9,9 @@
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import React from "react";
+import React from 'react';
 // react plugin used to create charts
-import { Line, Pie } from "react-chartjs-2";
+// import { Line, Pie } from 'react-chartjs-2';
 // reactstrap components
 import {
   Card,
@@ -21,29 +21,29 @@ import {
   CardTitle,
   Row,
   Col,
-} from "reactstrap";
+} from 'reactstrap';
 // core components
 import {
   dashboard24HoursPerformanceChart,
   dashboardEmailStatisticsChart,
   dashboardNASDAQChart,
-} from "variables/charts.js";
+} from 'variables/charts.js';
 
-import InQueue from "../components/InQueue.js";
-import QueueMultiview from "../components/QueueMultiview.js";
+import InQueue from '../components/InQueue.js';
+import QueueMultiview from '../components/QueueMultiview.js';
 
 class Dashboard extends React.Component {
   render() {
     return (
       <>
-        <div className="content">
+        <div className='content'>
           <Row>
-            <Col md="12">
+            <Col md='12'>
               <InQueue userId={this.props.userId} />
             </Col>
           </Row>
           <Row>
-            <Col md="12">
+            <Col md='12'>
               <QueueMultiview userId={this.props.userId} />
             </Col>
           </Row>

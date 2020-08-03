@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 // reactstrap components
 import {
   Card,
@@ -13,11 +13,11 @@ import {
   Container,
   Button,
   Collapse,
-} from "reactstrap";
+} from 'reactstrap';
 
-import InQueueMini from "../components/InQueueMini.js";
-import Example from "../components/Example.js";
-import graphQLFetch from "../GraphQLFetch.js";
+import InQueueMini from '../components/InQueueMini.js';
+import Example from '../components/Example.js';
+import graphQLFetch from '../GraphQLFetch.js';
 
 class QueueMultiview extends React.Component {
   constructor(props) {
@@ -35,7 +35,7 @@ class QueueMultiview extends React.Component {
   async loadData() {
     const queryForItems = `query {
       itemMany(filter:{
-          status: Removed,
+          status: Complete,
           user: "${this.props.userId}",
       }) {
        _id
@@ -44,9 +44,10 @@ class QueueMultiview extends React.Component {
 
     const queryForQueue = `query {
       queueMany(filter:{
+        status: Closed,
         items:[{
           user: "${this.props.userId}",
-          status: Waiting
+          status: Complete
         }]
       }) {
         title
@@ -72,7 +73,7 @@ class QueueMultiview extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag="h5">My Queue History</CardTitle>
+          <CardTitle tag='h5'>My Queue History</CardTitle>
           <hr />
         </CardHeader>
         <CardBody>

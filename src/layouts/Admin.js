@@ -16,17 +16,18 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
+import React from 'react';
 // javascript plugin used to create scrollbars on windows
-import PerfectScrollbar from "perfect-scrollbar";
-import { Route, Switch } from "react-router-dom";
+import PerfectScrollbar from 'perfect-scrollbar';
+import { Route, Switch } from 'react-router-dom';
 
-import DemoNavbar from "components/Navbars/DemoNavbar.js";
-import Footer from "components/Footer/Footer.js";
-import Sidebar from "components/Sidebar/Sidebar.js";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
+import DemoNavbar from 'components/Navbars/DemoNavbar.js';
+import Footer from 'components/Footer/Footer.js';
+import Sidebar from 'components/Sidebar/Sidebar.js';
+import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 
-import routes from "routes.js";
+import routes from 'routes.js';
+import Login from '../components/Login.js';
 // import Dashboard from "views/Dashboard";
 
 var ps;
@@ -35,26 +36,26 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      backgroundColor: "black",
-      activeColor: "info",
-      userId: "5f235c25ac3b06498000f2ba",
+      backgroundColor: 'black',
+      activeColor: 'info',
+      userId: '5f287519960e002bc4505307',
     };
     this.mainPanel = React.createRef();
   }
   componentDidMount() {
-    if (navigator.platform.indexOf("Win") > -1) {
+    if (navigator.platform.indexOf('Win') > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
-      document.body.classList.toggle("perfect-scrollbar-on");
+      document.body.classList.toggle('perfect-scrollbar-on');
     }
   }
   componentWillUnmount() {
-    if (navigator.platform.indexOf("Win") > -1) {
+    if (navigator.platform.indexOf('Win') > -1) {
       ps.destroy();
-      document.body.classList.toggle("perfect-scrollbar-on");
+      document.body.classList.toggle('perfect-scrollbar-on');
     }
   }
   componentDidUpdate(e) {
-    if (e.history.action === "PUSH") {
+    if (e.history.action === 'PUSH') {
       this.mainPanel.current.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
     }
@@ -67,14 +68,14 @@ class App extends React.Component {
   };
   render() {
     return (
-      <div className="wrapper">
+      <div className='wrapper'>
         <Sidebar
           {...this.props}
           routes={routes}
           bgColor={this.state.backgroundColor}
           activeColor={this.state.activeColor}
         />
-        <div className="main-panel" ref={this.mainPanel}>
+        <div className='main-panel' ref={this.mainPanel}>
           <DemoNavbar {...this.props} />
           {
             <Switch>
@@ -91,6 +92,7 @@ class App extends React.Component {
               })}
             </Switch>
           }
+          <Login />
           <Footer fluid />
         </div>
         {/* <FixedPlugin
