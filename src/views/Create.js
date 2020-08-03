@@ -15,37 +15,34 @@ import {
   InputGroupAddon,
 } from 'reactstrap';
 
-// Fields:
-// Title: TEXT
-// Description: TEXT
-// maxParticipants: INT
-// maxWaitTime: INT
-// TODO: Date and time field
-
 class Create extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: null,
-      description: null,
-      participants: null,
-      wait: null,
+      title: '',
+      description: '',
+      participant: 0,
+      startDate: null,
+      startTime: null,
+      endDate: null,
+      endTime: null,
     };
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const {title, description, participant, startDate, startTime, endDate, endTime} = this.state;
+    alert(`${title}, ${description}, ${participant}, ${startDate}, ${startTime}, ${endDate}, ${endTime}`)
   };
 
-  handleInputChange = (event) => {
-    event.preventDefault();
+  handleChange = (event) => {
     this.setState({
-      [event.target.tiel]: event.target.value,
+      [event.target.id]: event.target.value}, () => {
+        console.log(this.state);
     });
-  };
+  }
 
   render() {
-    // const { title, description, participants, wait } = this.state;
     return (
       <div className='content'>
         <Row>
@@ -55,35 +52,43 @@ class Create extends React.Component {
               <CardBody>
                 <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
-                    <Label for='createTitle'>Title</Label>
+                    <Label for='title' className='mt-2'>Title</Label>
                     <Input
-                      placeholder='Title'
+                      className='mt-2'
+                      defaultValue={this.state.title}
                       type='text'
-                      title='empty title'
-                      id='createTitle'
-                      onChange={this.handleInputChange}
+                      id='title'
+                      placeholder='Text'
+                      onChange={this.handleChange}
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for='createDescription'>Description</Label>
+                    <Label for='description' className='mt-2'>Description</Label>
                     <Input
-                      placeholder="Description"
+                      className='mt-2'
+                      defaultValue={this.state.description}
                       type="textarea"
-                      description="empty description"
-                      id="createDescription" 
+                      id="description" 
+                      placeholder="Text"
+                      onChange={this.handleChange}
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for='createParticipants'>Maximum Participants</Label>
+                    <Label for='participant' className='mt-2'>Maximum Participant</Label>
                     <InputGroup>
                       <Input
-                        placeholder='Maximum Participants'
+                        className='mt-2'
+                        defaultValue={this.state.participant}
                         min={0}
                         type='number'
                         step='1'
-                        id='createParticipants'
+                        id='participant'
+                        placeholder='Number'
+                        onChange={this.handleChange}
                       />
-                      <InputGroupAddon addonType='append'>
+                      <InputGroupAddon
+                        className='mt-2'
+                        addonType='append'>
                         persons
                       </InputGroupAddon>
                     </InputGroup>
@@ -91,32 +96,34 @@ class Create extends React.Component {
                   <FormGroup>
                     <Row>
                       <Col>
-                        <Label for="createStartDate">Start Date</Label>
+                        <Label for="startDate" className='mt-2'>Start Date</Label>
                       </Col>
                       <Col>
-                        <Label for="createStartTime">Start Time</Label>
+                        <Label for="startTime" className='mt-2'>Start Time</Label>
                       </Col>
                     </Row>
                     <Row>
                       <Col>
                         <InputGroup>
                           <Input
-                            className='border-left border-right'
+                            className='border-left border-right mt-2'
+                            defaultValue={this.state.startDate}
                             type="date"
-                            name="startDate"
-                            id="createStartDate"
+                            id="startDate"
                             placeholder="date placeholder"
+                            onChange={this.handleChange}
                           />
                         </InputGroup>
                       </Col>
                       <Col>
                         <InputGroup>
                           <Input
-                            className='border-left border-right'
+                            className='border-left border-right mt-2'
+                            defaultValue={this.state.startTime}
                             type="time"
-                            name="endDate"
-                            id="createStartTime"
+                            id="startTime"
                             placeholder="time placeholder"
+                            onChange={this.handleChange}
                           />
                         </InputGroup>
                       </Col>
@@ -125,71 +132,39 @@ class Create extends React.Component {
                   <FormGroup>
                     <Row>
                       <Col>
-                        <Label for="createEndDate">End Date</Label>
+                        <Label for="endDate" className='mt-2'>End Date</Label>
                       </Col>
                       <Col>
-                        <Label for="createEndTime">End Time</Label>
+                        <Label for="endTime" className='mt-2'>End Time</Label>
                       </Col>
                     </Row>
                     <Row>
                       <Col>
                         <InputGroup>
                           <Input
-                            className='border-left border-right'
+                            className='border-left border-right mt-2'
+                            defaultValue={this.state.endDate}
                             type="date"
-                            name="endDate"
-                            id="createEndDate"
+                            id="endDate"
                             placeholder="date placeholder"
+                            onChange={this.handleChange}
                           />
                         </InputGroup>
                       </Col>
                       <Col>
                         <InputGroup>
                           <Input
-                            className='border-left border-right'
+                            className='border-left border-right mt-2'
+                            defaultValue={this.state.endTime}
                             type="time"
-                            name="endDate"
-                            id="createEndTime"
+                            id="endTime"
                             placeholder="time placeholder"
+                            onChange={this.handleChange}
                           />
                         </InputGroup>
                       </Col>
                     </Row>
                   </FormGroup>
-                  {/* <FormGroup>
-                    <Label for="createWaitHours">Maximum Wait Time</Label>
-                    <Row>
-                      <Col>
-                        <InputGroup>
-                          <Input
-                            placeholder='Hours'
-                            min={0}
-                            type='number'
-                            step='1'
-                            id='createWaitHours'
-                          />
-                          <InputGroupAddon addonType='append'>
-                            hours
-                          </InputGroupAddon>
-                        </InputGroup>
-                      </Col>
-                      <Col>
-                        <InputGroup>
-                          <Input
-                            placeholder='Minutes'
-                            min={0}
-                            max={59}
-                            type='number'
-                            step='15'
-                            id='createWaitMinutes'
-                          />
-                          <InputGroupAddon addonType='append'>
-                            minutes
-                          </InputGroupAddon>
-                        </InputGroup>
-                      </Col>
-                    </Row>
-                  </FormGroup> */}
                   <FormGroup>
                     <CardFooter>
                       <Button>Submit</Button>
