@@ -10,33 +10,23 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 import React from "react";
-// react plugin used to create charts
-import { Line, Pie } from "react-chartjs-2";
 // reactstrap components
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Row,
-  Col,
-} from "reactstrap";
-// core components
-import {
-  dashboard24HoursPerformanceChart,
-  dashboardEmailStatisticsChart,
-  dashboardNASDAQChart,
-} from "variables/charts.js";
+import { Row, Col } from "reactstrap";
 
 import InQueue from "../components/InQueue.js";
 import QueueMultiview from "../components/QueueMultiview.js";
+import CreatedQueues from "../components/CreatedQueues.js";
 
 class Dashboard extends React.Component {
   render() {
     return (
       <>
         <div className="content">
+          <Row>
+            <Col md="12">
+              <CreatedQueues userId={this.props.userId} />
+            </Col>
+          </Row>
           <Row>
             <Col md="12">
               <InQueue userId={this.props.userId} />

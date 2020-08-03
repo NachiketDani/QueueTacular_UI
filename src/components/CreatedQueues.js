@@ -6,14 +6,16 @@ import {
   CardBody,
   CardFooter,
   CardTitle,
+  Row,
+  Col,
   Table,
 } from "reactstrap";
 
-import InQueueMini from "../components/InQueueMini.js";
 import graphQLFetch from "../GraphQLFetch.js";
+import CreatedQueueMini from "./CreatedQueueMini.js";
 import Expandable from "./Expandable.js";
 
-class QueueMultiview extends React.Component {
+class CreatedQueues extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,19 +68,19 @@ class QueueMultiview extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag="h5">My Queue History</CardTitle>
+          <CardTitle tag="h5">My Created Queues</CardTitle>
         </CardHeader>
         <CardBody>
           <Table hover>
             <tbody>
               <tr>
                 <td>
-                  <InQueueMini queue={this.state.queueHistory[0]} />
+                  <CreatedQueueMini queue={this.state.queueHistory[0]} />
                 </td>
               </tr>
               <tr>
                 <td>
-                  <InQueueMini queue={this.state.queueHistory[1]} />
+                  <CreatedQueueMini queue={this.state.queueHistory[1]} />
                 </td>
               </tr>
             </tbody>
@@ -92,4 +94,4 @@ class QueueMultiview extends React.Component {
   }
 }
 
-export default QueueMultiview;
+export default CreatedQueues;
