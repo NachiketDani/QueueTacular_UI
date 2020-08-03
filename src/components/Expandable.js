@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Collapse, Button, CardBody, Card, Row, Col, Table } from "reactstrap";
+import { Collapse, Button, Table } from "reactstrap";
 import InQueueMini from "./InQueueMini.js";
 
 const Expandable = (props) => {
