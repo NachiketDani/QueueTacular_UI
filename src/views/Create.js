@@ -70,7 +70,6 @@ class Create extends React.Component {
                       placeholder="Description"
                       type="textarea"
                       description="empty description"
-                      name="text"
                       id="createDescription" 
                     />
                   </FormGroup>
@@ -88,6 +87,74 @@ class Create extends React.Component {
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
+                    <Row>
+                      <Col>
+                        <Label for="createStartDate">Start Date</Label>
+                      </Col>
+                      <Col>
+                        <Label for="createStartTime">Start Time</Label>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <InputGroup>
+                          <Input
+                            className='border-left border-right'
+                            type="date"
+                            name="startDate"
+                            id="createStartDate"
+                            placeholder="date placeholder"
+                          />
+                        </InputGroup>
+                      </Col>
+                      <Col>
+                        <InputGroup>
+                          <Input
+                            className='border-left border-right'
+                            type="time"
+                            name="endDate"
+                            id="createStartTime"
+                            placeholder="time placeholder"
+                          />
+                        </InputGroup>
+                      </Col>
+                    </Row>
+                  </FormGroup>
+                  <FormGroup>
+                    <Row>
+                      <Col>
+                        <Label for="createEndDate">End Date</Label>
+                      </Col>
+                      <Col>
+                        <Label for="createEndTime">End Time</Label>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <InputGroup>
+                          <Input
+                            className='border-left border-right'
+                            type="date"
+                            name="endDate"
+                            id="createEndDate"
+                            placeholder="date placeholder"
+                          />
+                        </InputGroup>
+                      </Col>
+                      <Col>
+                        <InputGroup>
+                          <Input
+                            className='border-left border-right'
+                            type="time"
+                            name="endDate"
+                            id="createEndTime"
+                            placeholder="time placeholder"
+                          />
+                        </InputGroup>
+                      </Col>
+                    </Row>
+                  </FormGroup>
+                  {/* <FormGroup>
                     <Label for="createWaitHours">Maximum Wait Time</Label>
                     <Row>
                       <Col>
@@ -116,7 +183,7 @@ class Create extends React.Component {
                         </InputGroup>
                       </Col>
                     </Row>
-                  </FormGroup>
+                  </FormGroup> */}
                   <FormGroup>
                     <CardFooter>
                       <Button>Submit</Button>
