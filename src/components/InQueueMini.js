@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 // reactstrap components
-import { Row, Col, Progress, Badge } from "reactstrap";
+import { Row, Col, Progress, Badge } from 'reactstrap';
 
 class InQueueMini extends React.Component {
   render() {
-    const queueTitle = this.props.queue != null ? this.props.queue.title : "";
+    const queueTitle = this.props.queue != null ? this.props.queue.title : '';
     return (
       <>
         <Row>

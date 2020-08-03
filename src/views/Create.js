@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Card,
@@ -13,7 +13,7 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-} from "reactstrap";
+} from 'reactstrap';
 
 // Fields:
 // Title: TEXT
@@ -47,72 +47,78 @@ class Create extends React.Component {
   render() {
     // const { title, description, participants, wait } = this.state;
     return (
-      <div className="content">
+      <div className='content'>
         <Row>
-          <Col md="12">
+          <Col md='12'>
             <Card>
               <CardHeader>Create a Queue</CardHeader>
               <CardBody>
                 <Form onSubmit={this.handleSubmit}>
                   <FormGroup>
-                    <Label for="createTitle">Title</Label>
+                    <Label for='createTitle'>Title</Label>
                     <Input
-                      placeholder="Title"
-                      type="text"
-                      title="empty title"
-                      id="createTitle"
+                      placeholder='Title'
+                      type='text'
+                      title='empty title'
+                      id='createTitle'
                       onChange={this.handleInputChange}
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="createDescription">Description</Label>
+                    <Label for='createDescription'>Description</Label>
                     <Input
-                      placeholder="Description"
-                      type="textarea"
-                      description="empty description"
-                      name="text"
-                      id="createDescription" 
+                      placeholder='Description'
+                      type='textarea'
+                      description='empty description'
+                      name='text'
+                      id='createDescription'
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="createParticipants">Maximum Participants</Label>
+                    <Label for='createParticipants'>Maximum Participants</Label>
                     <InputGroup>
                       <Input
-                        placeholder="Maximum Participants"
+                        placeholder='Maximum Participants'
                         min={0}
-                        type="number"
-                        step="1"
-                        id ="createParticipants"
+                        type='number'
+                        step='1'
+                        id='createParticipants'
                       />
-                      <InputGroupAddon addonType="append">persons</InputGroupAddon>
+                      <InputGroupAddon addonType='append'>
+                        persons
+                      </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="createWaitHours">Maximum Wait Time</Label>
+                    <Label for='createWaitHours'>Maximum Wait Time</Label>
                     <Row>
                       <Col>
                         <InputGroup>
                           <Input
-                            placeholder="Hours"
+                            placeholder='Hours'
                             min={0}
-                            type="number"
-                            step="1"
-                            id="createWaitHours"
+                            type='number'
+                            step='1'
+                            id='createWaitHours'
                           />
-                          <InputGroupAddon addonType="append">hours</InputGroupAddon>
+                          <InputGroupAddon addonType='append'>
+                            hours
+                          </InputGroupAddon>
                         </InputGroup>
                       </Col>
                       <Col>
                         <InputGroup>
                           <Input
-                            placeholder="Minutes"
+                            placeholder='Minutes'
                             min={0}
                             max={59}
-                            type="number"
-                            step="15"
-                            id="createWaitMinutes"
+                            type='number'
+                            step='15'
+                            id='createWaitMinutes'
                           />
-                          <InputGroupAddon addonType="append">minutes</InputGroupAddon>
+                          <InputGroupAddon addonType='append'>
+                            minutes
+                          </InputGroupAddon>
                         </InputGroup>
                       </Col>
                     </Row>

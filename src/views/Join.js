@@ -1,6 +1,6 @@
-import React, { Component } from "react";
-import AsyncSelect from "react-select/lib/Async";
-import graphQLFetch from "../GraphQLFetch.js";
+import React, { Component } from 'react';
+import AsyncSelect from 'react-select/lib/Async';
+import graphQLFetch from '../GraphQLFetch.js';
 import {
   Card,
   Button,
@@ -8,7 +8,7 @@ import {
   CardText,
   ListGroup,
   ListGroupItem,
-} from "reactstrap";
+} from 'reactstrap';
 
 // import withToast from "./withToast";
 
@@ -21,9 +21,9 @@ class Join extends React.Component {
   }
 
   state = {
-    queueId: "5f235c25ac3b06498000f2c5",
-    title: "",
-    description: "",
+    queueId: '5f235c25ac3b06498000f2c5',
+    title: '',
+    description: '',
     people_in_queue: [],
   };
 
@@ -84,14 +84,14 @@ class Join extends React.Component {
 
   render() {
     return (
-      <div className="content">
+      <div className='content'>
         <h4>Join by Queue-tacular ID:</h4>
         <AsyncSelect>
           loadOptions = {this.loadOptions}
           filterOption={() => true}
         </AsyncSelect>
         <div>
-          <Card body outline color="secondary">
+          <Card body outline color='secondary'>
             <CardTitle>
               <h4>{this.state.title}</h4>
               <em>Queue-tacular ID:{this.state.queueId}</em>
@@ -107,9 +107,9 @@ class Join extends React.Component {
               </ListGroup>
             </CardText>
             <div>
-              <Button color="primary" onClick={this.onClickJoin}>
+              <Button color='primary' onClick={this.onClickJoin}>
                 Join Queue!
-              </Button>{" "}
+              </Button>{' '}
             </div>
           </Card>
         </div>
