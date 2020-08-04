@@ -93,7 +93,7 @@ class App extends React.Component {
     }`;
 
     const data = await graphQLFetch(queryForUserId);
-    if (data) {
+    if (data && data.userOne != null) {
       this.setState({ userId: data.userOne._id });
       const itemIds = await this.getInQueueItems();
       this.setState({ inQueueItemIds: itemIds });
