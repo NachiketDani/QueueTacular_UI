@@ -39,7 +39,10 @@ class Dashboard extends React.Component {
         <div className='content'>
           <Row>
             <Col md='12'>
-              <InQueue userId={this.props.userId} />
+              <InQueue
+                userId={this.props.userId}
+                inQueueItemIds={this.props.inQueueItemIds}
+              />
             </Col>
           </Row>
           <Row>

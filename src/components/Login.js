@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button } from 'reactstrap';
 import GoogleLogin from 'react-google-login';
 
-import GraphQLFetch from '../GraphQLFetch.js';
+require('dotenv').config();
+
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 class Login extends React.Component {
   constructor(props) {

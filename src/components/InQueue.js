@@ -32,35 +32,31 @@ class Queue extends React.Component {
   }
 
   async loadData() {
-    const queryForItems = `query {
-      itemMany(filter:{
-          status: Waiting,
-          user: "${this.props.userId}",
-      }) {
-       _id
-      }
-    }`;
-
     const queryForQueue = `query {
       queueOne(filter:{
         status: Open,
         items:[{
-          user: "${this.props.userId}",
-          status: Waiting
+          _id: "${this.props.inQueueItemIds[0]}",
         }]
       }) {
         title
+        description
       }
     }`;
 
-    const data = await graphQLFetch(queryForItems);
-    if (data.itemMany !== null && data.itemMany.length > 0) {
-      console.log(data);
-      const itemId = data.itemMany[0]._id;
-      console.log(itemId);
-      // the part below is not working...
-      const queueData = await graphQLFetch(queryForQueue);
-      console.log(queueData);
+    // const data = await graphQLFetch(queryForItems);
+    // if (data.itemMany != null && data.itemMany.length > 0) {
+    //   console.log(data);
+    //   const itemId = data.itemMany[0]._id;
+    //   console.log(itemId);
+    //   this.setState({ itemId: itemId });
+    //   console.log(this.state.itemId);
+
+    // Get the appropriate queue
+    console.log(this.props.inQueueItemIds[0]);
+    const queueData = await graphQLFetch(queryForQueue);
+    console.log(queueData);
+    if (queueData != null && queueData.queueOne !== null) {
       this.setState({
         title: queueData.queueOne.title,
         description: queueData.queueOne.description,

@@ -30,10 +30,7 @@ import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 import routes from 'routes.js';
 import graphQLFetch from '../GraphQLFetch';
 
-require('dotenv').config();
-
 var ps;
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 class App extends React.Component {
   constructor(props) {
@@ -43,9 +40,13 @@ class App extends React.Component {
       activeColor: 'info',
       userId: '',
       name: '',
+      inQueueItemIds: [],
+      inQueueIds: [],
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
+    this.getInQueueItems = this.getInQueueItems.bind(this);
+    this.getQueuesCurrentlyIn = this.getQueuesCurrentlyIn.bind(this);
   }
 
   componentDidMount() {
@@ -93,7 +94,51 @@ class App extends React.Component {
     const data = await graphQLFetch(queryForUserId);
     if (data) {
       this.setState({ userId: data.userOne._id });
+      const itemIds = await this.getInQueueItems();
+      this.setState({ inQueueItemIds: itemIds });
+      if (itemIds.length > 0) {
+        // const inQueueIds = await this.getQueuesCurrentlyIn();
+        // this.setState({ inQueueIds: inQueueIds });
+      }
     }
+  }
+
+  async getInQueueItems() {
+    const queryForItems = `query {
+      itemMany(filter:{
+          status: Waiting,
+          user: "${this.state.userId}",
+      }) {
+        _id
+      }
+    }`;
+
+    const data = await graphQLFetch(queryForItems);
+    console.log(data);
+    if (data != null) {
+      const itemIds = data.itemMany.map((item) => item._id);
+      console.log(itemIds);
+      return itemIds;
+    }
+  }
+
+  async getQueuesCurrentlyIn() {
+    const queryForQueue = `query {
+      queueOne(filter:{
+        status: Open,
+        items:[
+          _id: "${this.state.inQueueItemIds[0]}",
+        }]
+      }) {
+        title
+        description
+      }
+    }`;
+
+    const queuesCurrentlyIn = [];
+    const data = await graphQLFetch(queryForQueue);
+    queuesCurrentlyIn.push(data.queueOne);
+    return queuesCurrentlyIn;
   }
 
   render() {
@@ -119,7 +164,11 @@ class App extends React.Component {
                     path={prop.layout + prop.path}
                     key={key}
                     render={(props) => (
-                      <prop.component {...props} userId={this.state.userId} />
+                      <prop.component
+                        {...props}
+                        userId={this.state.userId}
+                        inQueueItemIds={this.state.inQueueItemIds}
+                      />
                     )}
                   />
                 );
