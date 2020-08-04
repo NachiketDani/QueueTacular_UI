@@ -20,6 +20,7 @@ import React from 'react';
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Route, Switch } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
 
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
 import Footer from 'components/Footer/Footer.js';
@@ -28,9 +29,11 @@ import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 
 import routes from 'routes.js';
 import Login from '../components/Login.js';
-// import Dashboard from "views/Dashboard";
+
+require('dotenv').config();
 
 var ps;
+const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
 
 class App extends React.Component {
   constructor(props) {
@@ -38,10 +41,13 @@ class App extends React.Component {
     this.state = {
       backgroundColor: 'black',
       activeColor: 'info',
-      userId: '5f287519960e002bc4505307',
+      userId: '5f28be621c0d9905080ade83',
+      name: '',
     };
     this.mainPanel = React.createRef();
+    this.responseGoogle = this.responseGoogle.bind(this);
   }
+
   componentDidMount() {
     if (navigator.platform.indexOf('Win') > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
@@ -66,6 +72,13 @@ class App extends React.Component {
   handleBgClick = (color) => {
     this.setState({ backgroundColor: color });
   };
+
+  responseGoogle(response) {
+    console.log(response);
+    console.log(response.profileObj.givenName);
+    this.setState({ name: response.profileObj.givenName });
+  }
+
   render() {
     return (
       <div className='wrapper'>
@@ -77,6 +90,15 @@ class App extends React.Component {
         />
         <div className='main-panel' ref={this.mainPanel}>
           <DemoNavbar {...this.props} />
+          <h1>Welcome {this.state.name}</h1>
+          <GoogleLogin
+            clientId='853849420986-fr4bopp51rbkquud8e8jd4jbhp356cir.apps.googleusercontent.com'
+            buttonText='Login with Google'
+            onSuccess={this.responseGoogle}
+            onFailure={this.responseGoogle}
+            cookiePolicy={'single_host_origin'}
+            isSignedIn={true}
+          />
           {
             <Switch>
               {routes.map((prop, key) => {
@@ -92,7 +114,6 @@ class App extends React.Component {
               })}
             </Switch>
           }
-          <Login />
           <Footer fluid />
         </div>
         {/* <FixedPlugin

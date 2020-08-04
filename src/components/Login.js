@@ -1,22 +1,33 @@
 import React from 'react';
-import { Form, FormGroup, Label, Input } from 'reactstrap';
-import { GoogleLoginButton } from 'react-social-login-buttons';
+import { Button } from 'reactstrap';
+
+import GraphQLFetch from '../GraphQLFetch.js';
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showing: false,
+    };
+  }
+
   render() {
     return (
-      <Form className='App'>
-        <h1>Login</h1>
-        <FormGroup>
-          <Label>Email</Label>
-          <Input type='email' placeholder='Email' />
-        </FormGroup>
-        <FormGroup>
-          <Label>Password</Label>
-          <Input type='password' placeholder='Password' />
-        </FormGroup>
-        <GoogleLoginButton />
-      </Form>
+      <div class='g-signin2' data-onsuccess='onSignIn'>
+        <Button>
+          <img src='https://goo.gl/4yjp6B' alt='Sign In' />
+        </Button>
+      </div>
+      //   <Form className='App'>
+      //     <FormGroup>
+      //       <Label>Email</Label>
+      //       <Input type='email' placeholder='Email' />
+      //     </FormGroup>
+      //     <FormGroup>
+      //       <Label>Password</Label>
+      //       <Input type='password' placeholder='Password' />
+      //     </FormGroup>
+      //   </Form>
     );
   }
 }
