@@ -10,10 +10,10 @@ import {
   Row,
   Col,
   Progress,
+  Badge,
 } from 'reactstrap';
 
 import graphQLFetch from '../GraphQLFetch';
-import { queue } from 'jquery';
 
 class InQueue extends React.Component {
   constructor(props) {
@@ -68,9 +68,8 @@ class InQueue extends React.Component {
       <Card>
         <CardHeader>
           <CardTitle tag='h5'>{this.state.title}</CardTitle>
-          <p className='card-just-text'>
-            You have an estimated 30 mins remaining in the queue.
-          </p>
+          <hr />
+          You have an estimated 30 mins remaining in the queue.
         </CardHeader>
         <CardBody>
           <div>
@@ -95,12 +94,19 @@ class InQueue extends React.Component {
                   </Progress>
                 </Progress>
               </Col>
-              <i className='nc-icon nc-user-run' />
+              <Col>
+                <Badge color='danger'>
+                  Wait.
+                  <div classname='icon-big text-center icon-warning'>
+                    <i className='nc-icon nc-simple-remove' />
+                  </div>
+                </Badge>
+              </Col>
             </Row>
             <br />
             <Row>
               <Col className='card-just-text'>
-                In Queue - There are 10 peaple ahead of you!
+                In Queue - There are 10 people ahead of you!
               </Col>
             </Row>
           </div>
