@@ -107,7 +107,7 @@ class InQueue extends React.Component {
             <br />
             <Row>
               <Col className="card-just-text">
-                In Queue - There are 10 peaple ahead of you!
+                In Queue - There are 10 people ahead of you!
               </Col>
             </Row>
           </div>

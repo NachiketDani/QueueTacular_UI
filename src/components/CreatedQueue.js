@@ -11,15 +11,19 @@ import {
   Col,
   Progress,
   Badge,
+  Button,
+  Table,
+  Tooltip,
 } from "reactstrap";
 
 import graphQLFetch from "../GraphQLFetch";
+import TooltipExampleMulti from "./ToolTipExampleMulti";
 
 class CreatedQueue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "You are not currently in any queues",
+      title: `No created queues! Click "CREATE" to get started.`,
       description: "",
     };
     this.loadData = this.loadData.bind(this);
@@ -66,57 +70,75 @@ class CreatedQueue extends React.Component {
     console.log(data);
     return (
       <Card>
-        <CardHeader>
-          <CardTitle tag="h5">{this.state.title}</CardTitle>
-          <p className="card-just-text">
-            You have an estimated 30 mins remaining in the queue.
-          </p>
-        </CardHeader>
         <CardBody>
-          <div>
-            <Row>
-              <Col>
-                <p className="card-just-text">Queue Progress</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs="11">
-                <Progress multi>
-                  <Progress bar color="success" value="40" />
-                  <Progress bar animated color="new-blue" value="15">
-                    You Are Here
-                  </Progress>
-                  <Progress bar color="info" value="15" />
-                  <Progress bar striped color="warning" value="15">
-                    5 Min Warning
-                  </Progress>
-                  <Progress bar color="danger" value="15">
-                    Almost Ready!
-                  </Progress>
-                </Progress>
-              </Col>
-              <Col>
-                <Badge color="danger">
-                  Wait.
-                  <div classname="icon-big text-center icon-warning">
-                    <i className="nc-icon nc-simple-remove" />
-                  </div>
+          <Table style={{ marginBottom: 0 }} size="sm" borderless>
+            <tbody>
+              <tr>
+                <CardHeader tag="h5" style={{ verticalAlign: "top" }}>
+                  {this.state.title}
+                </CardHeader>
+                <td style={{ textAlign: "right" }}>
+                  <Button>
+                    <i
+                      style={{ marginRight: 10 }}
+                      className="nc-icon nc-settings-gear-65"
+                    />
+                    Edit
+                  </Button>
+                </td>
+              </tr>
+            </tbody>
+          </Table>
+          <hr />
+          <Table style={{ marginBottom: 0 }} size="sm" borderless responsive>
+            <tbody>
+              <tr>
+                <td>
+                  <b>5</b> participants currently waiting.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Queue is capped at <b>15</b> participants.
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <TooltipExampleMulti />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Estimated end of queue current wait time is <b>15</b> minutes.
+                </td>
+              </tr>
+              <td>
+                <Badge color="success">
+                  <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                    Active.
+                    <i
+                      style={{ marginRight: 10 }}
+                      className="nc-icon nc-bulb-63"
+                    />
+                  </h5>
                 </Badge>
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col className="card-just-text">
-                In Queue - There are 10 peaple ahead of you!
-              </Col>
-            </Row>
-          </div>
+              </td>
+            </tbody>
+          </Table>
         </CardBody>
         <CardFooter>
-          <hr />
-          <div className="stats">
-            <i className="fa fa-history" /> Updated 3 mins ago
-          </div>
+          <Table style={{ marginBottom: 0 }} size="md">
+            <tr>
+              <td>
+                <div className="stats">
+                  <i className="fa fa-history" /> Updated 3 mins ago
+                </div>
+              </td>
+              <td style={{ textAlign: "right" }}>
+                <Button color="info">Table View</Button>
+              </td>
+            </tr>
+          </Table>
         </CardFooter>
       </Card>
     );
