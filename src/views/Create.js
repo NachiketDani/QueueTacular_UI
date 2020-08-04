@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Card,
@@ -13,113 +13,177 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
-} from "reactstrap";
+} from 'reactstrap';
 
-// Fields:
-// Title: TEXT
-// Description: TEXT
-// maxParticipants: INT
-// maxWaitTime: INT
-// TODO: Date and time field
+import graphQLFetch from '../GraphQLFetch.js';
 
 class Create extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: null,
-      description: null,
-      participants: null,
-      wait: null,
-    };
+      title: '',
+      description: '',
+      participant: 0,
+      startDate: '',
+      startTime: '',
+      endDate: '',
+      endTime: '',
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit = (event) => {
+  async handleSubmit(event) {
     event.preventDefault();
+    const {title, description, participant, startDate, startTime, endDate, endTime} = this.state;
+    const start = new Date(startDate + "T" + startTime).toISOString();
+    const end = new Date(endDate + "T" + endTime).toISOString();
+    const record = {
+      title: title,
+      status: "Open",
+      owner: this.props.userId,
+      description: description,
+      maxParticipants: parseFloat(participant),
+      startDate: start,
+      endDate: end
+    }
+    const mutationForQueue = `mutation queueCreateOne($record: CreateOneQueueInput!) {
+      queueCreateOne(record: $record) {
+        recordId
+      }
+    }`;
+
+    const data = await graphQLFetch(mutationForQueue, {record});
+    console.log(data.queueCreateOne.recordId)
   };
 
-  handleInputChange = (event) => {
-    event.preventDefault();
+  handleChange = (event) => {
     this.setState({
-      [event.target.tiel]: event.target.value,
-    });
-  };
+      [event.target.id]: event.target.value});
+  }
 
   render() {
-    // const { title, description, participants, wait } = this.state;
     return (
-      <div className="content">
+      <div className='content'>
         <Row>
-          <Col md="12">
+          <Col md='12'>
             <Card>
               <CardHeader>Create a Queue</CardHeader>
               <CardBody>
-                <Form onSubmit={this.handleSubmit}>
+                <Form 
+                  onSubmit={this.handleSubmit}
+                  onChange={this.handleChange}
+                >
                   <FormGroup>
-                    <Label for="createTitle">Title</Label>
+                    <Label for='title' className='mt-2'>Title</Label>
                     <Input
-                      placeholder="Title"
-                      type="text"
-                      title="empty title"
-                      id="createTitle"
-                      onChange={this.handleInputChange}
+                      className='mt-2'
+                      defaultValue={this.state.title}
+                      type='text'
+                      id='title'
+                      placeholder='Text'
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="createDescription">Description</Label>
+                    <Label for='description' className='mt-2'>Description</Label>
                     <Input
-                      placeholder="Description"
+                      className='mt-2'
+                      defaultValue={this.state.description}
                       type="textarea"
-                      description="empty description"
-                      name="text"
-                      id="createDescription" 
+                      id="description" 
+                      placeholder="Text"
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for="createParticipants">Maximum Participants</Label>
+                    <Label for='participant' className='mt-2'>Maximum Participant</Label>
                     <InputGroup>
                       <Input
-                        placeholder="Maximum Participants"
+                        className='mt-2'
+                        defaultValue={this.state.participant}
                         min={0}
-                        type="number"
-                        step="1"
-                        id ="createParticipants"
+                        type='number'
+                        step='1'
+                        id='participant'
+                        placeholder='Number'
                       />
-                      <InputGroupAddon addonType="append">persons</InputGroupAddon>
+                      <InputGroupAddon
+                        className='mt-2'
+                        addonType='append'>
+                        persons
+                      </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
                   <FormGroup>
-                    <Label for="createWaitHours">Maximum Wait Time</Label>
+                    <Row>
+                      <Col>
+                        <Label for="startDate" className='mt-2'>Start Date</Label>
+                      </Col>
+                      <Col>
+                        <Label for="startTime" className='mt-2'>Start Time</Label>
+                      </Col>
+                    </Row>
                     <Row>
                       <Col>
                         <InputGroup>
                           <Input
-                            placeholder="Hours"
-                            min={0}
-                            type="number"
-                            step="1"
-                            id="createWaitHours"
+                            className='border-left border-right mt-2'
+                            defaultValue={this.state.startDate}
+                            type="date"
+                            id="startDate"
+                            placeholder="date placeholder"
                           />
-                          <InputGroupAddon addonType="append">hours</InputGroupAddon>
                         </InputGroup>
                       </Col>
                       <Col>
                         <InputGroup>
                           <Input
-                            placeholder="Minutes"
-                            min={0}
-                            max={59}
-                            type="number"
-                            step="15"
-                            id="createWaitMinutes"
+                            className='border-left border-right mt-2'
+                            defaultValue={this.state.startTime}
+                            type="time"
+                            id="startTime"
+                            placeholder="time placeholder"
                           />
-                          <InputGroupAddon addonType="append">minutes</InputGroupAddon>
+                        </InputGroup>
+                      </Col>
+                    </Row>
+                  </FormGroup>
+                  <FormGroup>
+                    <Row>
+                      <Col>
+                        <Label for="endDate" className='mt-2'>End Date</Label>
+                      </Col>
+                      <Col>
+                        <Label for="endTime" className='mt-2'>End Time</Label>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <InputGroup>
+                          <Input
+                            className='border-left border-right mt-2'
+                            defaultValue={this.state.endDate}
+                            type="date"
+                            id="endDate"
+                            placeholder="date placeholder"
+                          />
+                        </InputGroup>
+                      </Col>
+                      <Col>
+                        <InputGroup>
+                          <Input
+                            className='border-left border-right mt-2'
+                            defaultValue={this.state.endTime}
+                            type="time"
+                            id="endTime"
+                            placeholder="time placeholder"
+                          />
                         </InputGroup>
                       </Col>
                     </Row>
                   </FormGroup>
                   <FormGroup>
                     <CardFooter>
-                      <Button>Submit</Button>
+                      <Button color='primary'>Submit</Button>
                     </CardFooter>
                   </FormGroup>
                 </Form>

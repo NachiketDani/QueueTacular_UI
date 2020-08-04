@@ -1,3 +1,7 @@
 {
+<<<<<<< HEAD
   "extends": "react-app"
+=======
+  "extends": "airbnb"
+>>>>>>> a173bbc2030f1ff8c7ed69174a0df36f8c508918
 }

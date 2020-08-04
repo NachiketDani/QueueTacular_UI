@@ -10,12 +10,13 @@ import {
   Row,
   Col,
   Progress,
+  Badge,
 } from 'reactstrap';
 
 import graphQLFetch from '../GraphQLFetch';
 //import { queue } from 'jquery';
 
-class Queue extends React.Component {
+class InQueue extends React.Component {
   constructor(props) {
     super(props);
     this.loadData = this.loadData.bind(this);
@@ -92,12 +93,19 @@ class Queue extends React.Component {
                   </Progress>
                 </Progress>
               </Col>
-              <i className='nc-icon nc-user-run' />
+              <Col>
+                <Badge color='danger'>
+                  Wait.
+                  <div classname='icon-big text-center icon-warning'>
+                    <i className='nc-icon nc-simple-remove' />
+                  </div>
+                </Badge>
+              </Col>
             </Row>
             <br />
             <Row>
               <Col className='card-just-text'>
-                In Queue - There are 10 peaple ahead of you!
+                In Queue - There are 10 people ahead of you!
               </Col>
             </Row>
           </div>
@@ -113,4 +121,4 @@ class Queue extends React.Component {
   }
 }
 
-export default Queue;
+export default InQueue;
