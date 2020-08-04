@@ -37,7 +37,7 @@ class App extends React.Component {
     this.state = {
       backgroundColor: 'black',
       activeColor: 'info',
-      userId: '"5f28ae7300c0463540135fa1"',
+      userId: '5f28ae7300c0463540135fa1',
     };
     this.mainPanel = React.createRef();
   }

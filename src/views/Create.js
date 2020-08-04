@@ -36,24 +36,25 @@ class Create extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
     const {title, description, participant, startDate, startTime, endDate, endTime} = this.state;
-    const mutationForQueue = `
-      queueCreateOne(record:{
-        title: ${title}
-        owner: "${this.props.userId}"
-        description: ${description}
-        maxParticipants: ${participant}
-        startDate: ${startDate + "T" + startTime}
-        endDate: ${endDate + "T" + endTime}
-      }) {
+    const start = new Date(startDate + "T" + startTime).toISOString();
+    const end = new Date(endDate + "T" + endTime).toISOString();
+    const record = {
+      title: title,
+      status: "Open",
+      owner: this.props.userId,
+      description: description,
+      maxParticipants: parseFloat(participant),
+      startDate: start,
+      endDate: end
+    }
+    const mutationForQueue = `mutation queueCreateOne($record: CreateOneQueueInput!) {
+      queueCreateOne(record: $record) {
         recordId
       }
-    `;
+    }`;
 
-    const data = await graphQLFetch(mutationForQueue);
-    alert(data);
-    if (data) {
-      
-    }
+    const data = await graphQLFetch(mutationForQueue, {record});
+    console.log(data.queueCreateOne.recordId)
   };
 
   handleChange = (event) => {
