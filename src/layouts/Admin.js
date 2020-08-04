@@ -20,7 +20,7 @@ import React from 'react';
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Route, Switch } from 'react-router-dom';
-import GoogleLogin from 'react-google-login';
+import { Card, CardBody, CardText } from 'reactstrap';
 
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
 import Footer from 'components/Footer/Footer.js';
@@ -28,7 +28,7 @@ import Sidebar from 'components/Sidebar/Sidebar.js';
 import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 
 import routes from 'routes.js';
-import Login from '../components/Login.js';
+import graphQLFetch from '../GraphQLFetch';
 
 require('dotenv').config();
 
@@ -41,7 +41,7 @@ class App extends React.Component {
     this.state = {
       backgroundColor: 'black',
       activeColor: 'info',
-      userId: '5f28be621c0d9905080ade83',
+      userId: '',
       name: '',
     };
     this.mainPanel = React.createRef();
@@ -66,6 +66,7 @@ class App extends React.Component {
       document.scrollingElement.scrollTop = 0;
     }
   }
+
   handleActiveClick = (color) => {
     this.setState({ activeColor: color });
   };
@@ -73,10 +74,26 @@ class App extends React.Component {
     this.setState({ backgroundColor: color });
   };
 
-  responseGoogle(response) {
+  async responseGoogle(response) {
     console.log(response);
     console.log(response.profileObj.givenName);
-    this.setState({ name: response.profileObj.givenName });
+    this.setState({
+      name: response.profileObj.givenName,
+      email: response.profileObj.email,
+    });
+
+    const queryForUserId = `query {
+      userOne(filter:{
+          email: "${this.state.email}",
+      }) {
+       _id
+      }
+    }`;
+
+    const data = await graphQLFetch(queryForUserId);
+    if (data) {
+      this.setState({ userId: 'data.userOne._id' });
+    }
   }
 
   render() {
@@ -89,15 +106,10 @@ class App extends React.Component {
           activeColor={this.state.activeColor}
         />
         <div className='main-panel' ref={this.mainPanel}>
-          <DemoNavbar {...this.props} />
-          <h1>Welcome {this.state.name}</h1>
-          <GoogleLogin
-            clientId='853849420986-fr4bopp51rbkquud8e8jd4jbhp356cir.apps.googleusercontent.com'
-            buttonText='Login with Google'
-            onSuccess={this.responseGoogle}
-            onFailure={this.responseGoogle}
-            cookiePolicy={'single_host_origin'}
-            isSignedIn={true}
+          <DemoNavbar
+            {...this.props}
+            onSignIn={this.responseGoogle}
+            name={this.state.name}
           />
           {
             <Switch>

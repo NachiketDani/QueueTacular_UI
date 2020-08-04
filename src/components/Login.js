@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import GoogleLogin from 'react-google-login';
 
 import GraphQLFetch from '../GraphQLFetch.js';
 
@@ -13,11 +14,14 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div class='g-signin2' data-onsuccess='onSignIn'>
-        <Button>
-          <img src='https://goo.gl/4yjp6B' alt='Sign In' />
-        </Button>
-      </div>
+      <GoogleLogin
+        clientId='853849420986-fr4bopp51rbkquud8e8jd4jbhp356cir.apps.googleusercontent.com'
+        buttonText='Login with Google'
+        onSuccess={this.props.onSignIn}
+        onFailure={this.props.onSignIn}
+        cookiePolicy={'single_host_origin'}
+        isSignedIn={true}
+      />
       //   <Form className='App'>
       //     <FormGroup>
       //       <Label>Email</Label>

@@ -134,6 +134,9 @@ class Header extends React.Component {
         }
       >
         <Container fluid>
+          <span>
+            <h5>Hello {this.props.name}</h5>
+          </span>
           <div className='navbar-wrapper'>
             <div className='navbar-toggle'>
               <button
@@ -192,7 +195,7 @@ class Header extends React.Component {
                 {
                   <DropdownMenu right>
                     <DropdownItem tag='a'>
-                      <Login />
+                      <Login onSignIn={this.props.onSignIn} />
                     </DropdownItem>
                     {/* <DropdownItem tag="a">Create</DropdownItem>
                     <DropdownItem tag="a">Join</DropdownItem> */}
