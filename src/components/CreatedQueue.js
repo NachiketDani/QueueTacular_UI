@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 // reactstrap components
 import {
@@ -14,18 +14,18 @@ import {
   Button,
   Table,
   Tooltip,
-} from "reactstrap";
+} from 'reactstrap';
 
-import graphQLFetch from "../GraphQLFetch";
-import TooltipExampleMulti from "./ToolTipExampleMulti";
-import ExpandableTable from "./ExpandableTable";
+import graphQLFetch from '../GraphQLFetch';
+import TooltipExampleMulti from './ToolTipExampleMulti';
+import ExpandableTable from './ExpandableTable';
 
 class CreatedQueue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       title: `No created queues! Click "CREATE" to get started.`,
-      description: "",
+      description: '',
     };
     this.loadData = this.loadData.bind(this);
   }
@@ -72,17 +72,17 @@ class CreatedQueue extends React.Component {
     return (
       <Card>
         <CardBody>
-          <Table style={{ marginBottom: 0 }} size="sm" borderless>
+          <Table style={{ marginBottom: 0 }} size='sm' borderless>
             <tbody>
               <tr>
-                <CardHeader tag="h5" style={{ verticalAlign: "top" }}>
+                <CardHeader tag='h5' style={{ verticalAlign: 'top' }}>
                   {this.state.title}
                 </CardHeader>
-                <td style={{ textAlign: "right" }}>
+                <td style={{ textAlign: 'right' }}>
                   <Button>
                     <i
                       style={{ marginRight: 10 }}
-                      className="nc-icon nc-settings-gear-65"
+                      className='nc-icon nc-settings-gear-65'
                     />
                     Edit
                   </Button>
@@ -91,7 +91,7 @@ class CreatedQueue extends React.Component {
             </tbody>
           </Table>
           <hr />
-          <Table style={{ marginBottom: 0 }} size="sm" borderless responsive>
+          <Table style={{ marginBottom: 0 }} size='sm' borderless responsive>
             <tbody>
               <tr>
                 <td>
@@ -114,26 +114,26 @@ class CreatedQueue extends React.Component {
                 </td>
               </tr>
               <td>
-                <Badge color="success">
+                <Badge color='success'>
                   <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
                     Active.
                     <i
                       style={{ marginRight: 10 }}
-                      className="nc-icon nc-bulb-63"
+                      className='nc-icon nc-bulb-63'
                     />
                   </h5>
                 </Badge>
               </td>
             </tbody>
           </Table>
+          <hr style={{ marginBottom: 0, marginTop: 0 }} />
         </CardBody>
         <CardFooter>
-          <hr />
           <div>
             <ExpandableTable />
           </div>
-          <div style={{ textAlign: "right" }}>
-            <i className="fa fa-history" /> Updated 3 mins ago
+          <div style={{ textAlign: 'right' }}>
+            <i className='fa fa-history' /> Updated 3 mins ago
           </div>
         </CardFooter>
       </Card>
