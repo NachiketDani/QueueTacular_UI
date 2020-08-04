@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Collapse, Button, CardBody, Card, Row, Col } from "reactstrap";
+import { Collapse, Button, Table } from "reactstrap";
 import InQueueMini from "./InQueueMini.js";
 
-const Example = (props) => {
+const Expandable = (props) => {
   const [collapse, setCollapse] = useState(false);
   const [status, setStatus] = useState("Closed");
 
@@ -29,14 +29,23 @@ const Example = (props) => {
         onExiting={onExiting}
         onExited={onExited}
       >
-        <Row>
-          <Col>
-            <InQueueMini />
-          </Col>
-        </Row>
+        <Table hover>
+          <tbody>
+            <tr>
+              <td>
+                <InQueueMini />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <InQueueMini />
+              </td>
+            </tr>
+          </tbody>
+        </Table>
       </Collapse>
     </div>
   );
 };
 
-export default Example;
+export default Expandable;

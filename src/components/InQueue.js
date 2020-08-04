@@ -15,7 +15,7 @@ import {
 import graphQLFetch from '../GraphQLFetch';
 import { queue } from 'jquery';
 
-class Queue extends React.Component {
+class InQueue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -116,4 +116,4 @@ class Queue extends React.Component {
   }
 }
 
-export default Queue;
+export default InQueue;

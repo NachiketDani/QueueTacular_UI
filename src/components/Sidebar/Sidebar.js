@@ -57,25 +57,19 @@ class Sidebar extends React.Component {
         data-active-color={this.props.activeColor}
       >
         <div className="logo">
-          <a
-            href="../index.js"
-            className="simple-text logo-mini"
-          >
+          <a href="../index.js" className="simple-text logo-mini">
             <div className="logo-img">
-              <img src={logo} alt="react-logo" />
+              <img src={logo} alt="queue-logo" />
             </div>
           </a>
-          <a
-            href="../index.js"
-            className="simple-text logo-normal"
-          >
+          <a href="../index.js" className="simple-text logo-normal">
             Queue-Tacular
           </a>
         </div>
         <div className="sidebar-wrapper" ref={this.sidebar}>
           <Nav>
             {this.props.routes.map((prop, key) => {
-              if(prop.invisible) return null;
+              if (prop.invisible) return null;
               return (
                 <li
                   className={
