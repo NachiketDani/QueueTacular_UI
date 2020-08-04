@@ -16,12 +16,18 @@ import { Row, Col } from "reactstrap";
 import InQueue from "../components/InQueue.js";
 import QueueMultiview from "../components/QueueMultiview.js";
 import CreatedQueues from "../components/CreatedQueues.js";
+import CreatedQueue from "../components/CreatedQueue.js";
 
 class Dashboard extends React.Component {
   render() {
     return (
       <>
         <div className="content">
+          <Row>
+            <Col md="12">
+              <CreatedQueue userId={this.props.userId} />
+            </Col>
+          </Row>
           <Row>
             <Col md="12">
               <CreatedQueues userId={this.props.userId} />
