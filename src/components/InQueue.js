@@ -13,7 +13,7 @@ import {
 } from 'reactstrap';
 
 import graphQLFetch from '../GraphQLFetch';
-// import { queue } from 'jquery';
+//import { queue } from 'jquery';
 
 class Queue extends React.Component {
   constructor(props) {
@@ -26,7 +26,9 @@ class Queue extends React.Component {
   }
 
   componentDidMount() {
-    this.loadData();
+    if (this.props.userId !== '') {
+      this.loadData();
+    }
   }
 
   async loadData() {
@@ -52,8 +54,13 @@ class Queue extends React.Component {
     }`;
 
     const data = await graphQLFetch(queryForItems);
-    if (data.itemMany.length > 0) {
+    if (data.itemMany !== null && data.itemMany.length > 0) {
+      console.log(data);
+      const itemId = data.itemMany[0]._id;
+      console.log(itemId);
+      // the part below is not working...
       const queueData = await graphQLFetch(queryForQueue);
+      console.log(queueData);
       this.setState({
         title: queueData.queueOne.title,
         description: queueData.queueOne.description,
@@ -62,8 +69,6 @@ class Queue extends React.Component {
   }
 
   render() {
-    const data = this.loadData();
-    console.log(data);
     return (
       <Card>
         <CardHeader>

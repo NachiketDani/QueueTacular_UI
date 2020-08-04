@@ -44,7 +44,7 @@ class Dashboard extends React.Component {
           </Row>
           <Row>
             <Col md='12'>
-              <QueueMultiview userId={this.props.userId} />
+              {/*<QueueMultiview userId={this.props.userId} />*/}
             </Col>
           </Row>
         </div>

@@ -92,7 +92,7 @@ class App extends React.Component {
 
     const data = await graphQLFetch(queryForUserId);
     if (data) {
-      this.setState({ userId: 'data.userOne._id' });
+      this.setState({ userId: data.userOne._id });
     }
   }
 
