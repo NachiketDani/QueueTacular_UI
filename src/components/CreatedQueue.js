@@ -18,6 +18,7 @@ import {
 
 import graphQLFetch from "../GraphQLFetch";
 import TooltipExampleMulti from "./ToolTipExampleMulti";
+import ExpandableTable from "./ExpandableTable";
 
 class CreatedQueue extends React.Component {
   constructor(props) {
@@ -127,18 +128,13 @@ class CreatedQueue extends React.Component {
           </Table>
         </CardBody>
         <CardFooter>
-          <Table style={{ marginBottom: 0 }} size="md">
-            <tr>
-              <td>
-                <div className="stats">
-                  <i className="fa fa-history" /> Updated 3 mins ago
-                </div>
-              </td>
-              <td style={{ textAlign: "right" }}>
-                <Button color="info">Table View</Button>
-              </td>
-            </tr>
-          </Table>
+          <hr />
+          <div>
+            <ExpandableTable />
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <i className="fa fa-history" /> Updated 3 mins ago
+          </div>
         </CardFooter>
       </Card>
     );
