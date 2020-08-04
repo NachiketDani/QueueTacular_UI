@@ -15,6 +15,8 @@ import {
   InputGroupAddon,
 } from 'reactstrap';
 
+import graphQLFetch from '../GraphQLFetch.js';
+
 class Create extends React.Component {
   constructor(props) {
     super(props);
@@ -22,24 +24,41 @@ class Create extends React.Component {
       title: '',
       description: '',
       participant: 0,
-      startDate: null,
-      startTime: null,
-      endDate: null,
-      endTime: null,
-    };
+      startDate: '',
+      startTime: '',
+      endDate: '',
+      endTime: '',
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit = (event) => {
+  async handleSubmit(event) {
     event.preventDefault();
     const {title, description, participant, startDate, startTime, endDate, endTime} = this.state;
-    alert(`${title}, ${description}, ${participant}, ${startDate}, ${startTime}, ${endDate}, ${endTime}`)
+    const mutationForQueue = `mutation CreateOneQueue {
+      queueCreateOne(record:{
+          title: ${title}
+          owner: "${this.props.userId}"
+          description: ${description}
+          maxParticipants: ${participant}
+          startDate: ${startDate + "T" + startTime}
+          endDate: ${endDate + "T" + endTime}
+      }) {
+       recordId
+      }
+    }`;
+
+    const data = await graphQLFetch(mutationForQueue);
+    alert(data);
+    if (data) {
+      
+    }
   };
 
   handleChange = (event) => {
     this.setState({
-      [event.target.id]: event.target.value}, () => {
-        console.log(this.state);
-    });
+      [event.target.id]: event.target.value});
   }
 
   render() {
@@ -50,7 +69,10 @@ class Create extends React.Component {
             <Card>
               <CardHeader>Create a Queue</CardHeader>
               <CardBody>
-                <Form onSubmit={this.handleSubmit}>
+                <Form 
+                  onSubmit={this.handleSubmit}
+                  onChange={this.handleChange}
+                >
                   <FormGroup>
                     <Label for='title' className='mt-2'>Title</Label>
                     <Input
@@ -59,7 +81,6 @@ class Create extends React.Component {
                       type='text'
                       id='title'
                       placeholder='Text'
-                      onChange={this.handleChange}
                     />
                   </FormGroup>
                   <FormGroup>
@@ -70,7 +91,6 @@ class Create extends React.Component {
                       type="textarea"
                       id="description" 
                       placeholder="Text"
-                      onChange={this.handleChange}
                     />
                   </FormGroup>
                   <FormGroup>
@@ -84,7 +104,6 @@ class Create extends React.Component {
                         step='1'
                         id='participant'
                         placeholder='Number'
-                        onChange={this.handleChange}
                       />
                       <InputGroupAddon
                         className='mt-2'
@@ -111,7 +130,6 @@ class Create extends React.Component {
                             type="date"
                             id="startDate"
                             placeholder="date placeholder"
-                            onChange={this.handleChange}
                           />
                         </InputGroup>
                       </Col>
@@ -123,7 +141,6 @@ class Create extends React.Component {
                             type="time"
                             id="startTime"
                             placeholder="time placeholder"
-                            onChange={this.handleChange}
                           />
                         </InputGroup>
                       </Col>
@@ -147,7 +164,6 @@ class Create extends React.Component {
                             type="date"
                             id="endDate"
                             placeholder="date placeholder"
-                            onChange={this.handleChange}
                           />
                         </InputGroup>
                       </Col>
@@ -159,7 +175,6 @@ class Create extends React.Component {
                             type="time"
                             id="endTime"
                             placeholder="time placeholder"
-                            onChange={this.handleChange}
                           />
                         </InputGroup>
                       </Col>
@@ -167,7 +182,7 @@ class Create extends React.Component {
                   </FormGroup>
                   <FormGroup>
                     <CardFooter>
-                      <Button>Submit</Button>
+                      <Button color='primary'>Submit</Button>
                     </CardFooter>
                   </FormGroup>
                 </Form>
