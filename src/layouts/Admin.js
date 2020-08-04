@@ -42,11 +42,12 @@ class App extends React.Component {
       name: '',
       inQueueItemIds: [],
       inQueueIds: [],
+      queueInTitle: '',
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
     this.getInQueueItems = this.getInQueueItems.bind(this);
-    this.getQueuesCurrentlyIn = this.getQueuesCurrentlyIn.bind(this);
+    this.getQueueCurrentlyIn = this.getQueueCurrentlyIn.bind(this);
   }
 
   componentDidMount() {
@@ -97,8 +98,8 @@ class App extends React.Component {
       const itemIds = await this.getInQueueItems();
       this.setState({ inQueueItemIds: itemIds });
       if (itemIds.length > 0) {
-        // const inQueueIds = await this.getQueuesCurrentlyIn();
-        // this.setState({ inQueueIds: inQueueIds });
+        const inQueueTitle = await this.getQueueCurrentlyIn();
+        this.setState({ queueInTitle: inQueueTitle });
       }
     }
   }
@@ -122,11 +123,11 @@ class App extends React.Component {
     }
   }
 
-  async getQueuesCurrentlyIn() {
+  async getQueueCurrentlyIn() {
     const queryForQueue = `query {
       queueOne(filter:{
         status: Open,
-        items:[
+        items:[{
           _id: "${this.state.inQueueItemIds[0]}",
         }]
       }) {
@@ -135,10 +136,14 @@ class App extends React.Component {
       }
     }`;
 
-    const queuesCurrentlyIn = [];
+    // Get the appropriate queue
+    console.log(this.state.inQueueItemIds[0]);
     const data = await graphQLFetch(queryForQueue);
-    queuesCurrentlyIn.push(data.queueOne);
-    return queuesCurrentlyIn;
+    console.log(data);
+    if (data != null) {
+      const queueTitle = data.queueOne.title;
+      return queueTitle;
+    }
   }
 
   render() {
@@ -168,6 +173,7 @@ class App extends React.Component {
                         {...props}
                         userId={this.state.userId}
                         inQueueItemIds={this.state.inQueueItemIds}
+                        queueInTitle={this.state.queueInTitle}
                       />
                     )}
                   />

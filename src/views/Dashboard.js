@@ -42,6 +42,7 @@ class Dashboard extends React.Component {
               <InQueue
                 userId={this.props.userId}
                 inQueueItemIds={this.props.inQueueItemIds}
+                queueInTitle={this.props.queueInTitle}
               />
             </Col>
           </Row>

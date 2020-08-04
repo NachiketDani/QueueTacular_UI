@@ -18,16 +18,12 @@ import graphQLFetch from '../GraphQLFetch';
 class Queue extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      title: 'You are not currently in any queues',
-      description: '',
-    };
     this.loadData = this.loadData.bind(this);
   }
 
   componentDidMount() {
     if (this.props.userId !== '') {
-      this.loadData();
+      // this.loadData();
     }
   }
 
@@ -68,7 +64,7 @@ class Queue extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag='h5'>{this.state.title}</CardTitle>
+          <CardTitle tag='h5'>{this.props.queueInTitle}</CardTitle>
           <p className='card-just-text'>
             You have an estimated 30 mins remaining in the queue.
           </p>
