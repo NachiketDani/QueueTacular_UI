@@ -70,7 +70,7 @@ class Join extends React.Component {
     // history.push('/edit/${value}');
     console.log(value);
     this.setState({
-      queueId: value.queueId,
+      queueId: value._id,
       title: value.title,
       description: value.description,
       people_in_queue: value.items.length,
@@ -84,6 +84,7 @@ class Join extends React.Component {
     if (term.length < 5) return [];
     const query = `query queueMany {
       queueMany(filter: {title: "${term}"}) {
+        _id
         title
         description
         items {user}
@@ -123,7 +124,6 @@ class Join extends React.Component {
                 <ListGroupItem>
                   People currently in Queue: {this.state.people_in_queue}
                 </ListGroupItem>
-                <ListGroupItem>Estimated wait time: </ListGroupItem>
               </ListGroup>
             </CardText>
             <div>
