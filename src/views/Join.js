@@ -10,7 +10,7 @@ import {
   ListGroupItem,
 } from 'reactstrap';
 
-// import withToast from "./withToast";
+import withToast from "./withToast";
 
 class Join extends React.Component {
   constructor(props) {
