@@ -19,7 +19,7 @@ class InQueue extends React.Component {
   constructor(props) {
     super(props);
     this.getPlaceInQueue = this.getPlaceInQueue.bind(this);
-    this.getPlaceInProgressBar = this.getPlaceInProgressBar.bind(this);
+    this.getProgressViews = this.getProgressViews.bind(this);
   }
 
   getPlaceInQueue() {
@@ -34,19 +34,26 @@ class InQueue extends React.Component {
     }
   }
 
-  getPlaceInProgressBar() {
-    const progress =
-      100 - (this.getPlaceInQueue() / this.props.queue.items.length) * 100;
-    console.log(progress);
-    if (progress <= 25) {
-      return 1;
-    } else if (progress > 25 && progress <= 50) {
-      return 2;
-    } else if (progress > 50 && progress <= 85) {
-      return 3;
-    } else {
-      return 4;
+  getProgressViews() {
+    const num = this.props.queue.items.length;
+    let placeInQueue = this.getPlaceInQueue();
+    const progressBars = [];
+    let unit = 1 / num;
+    let i;
+    for (i = num - 1; i >= 0; i--) {
+      let progressBar = (
+        <Progress
+          bar
+          animated={placeInQueue === i ? true : false}
+          color={placeInQueue === i ? 'info' : 'success'}
+          value={unit * 100}
+        >
+          {placeInQueue === i ? 'You Are Here' : ''}
+        </Progress>
+      );
+      progressBars.push(progressBar);
     }
+    return progressBars;
   }
 
   render() {
@@ -65,48 +72,7 @@ class InQueue extends React.Component {
             </Row>
             <Row>
               <Col xs='10'>
-                <Progress multi>
-                  <Progress
-                    bar
-                    animated={this.getPlaceInProgressBar() === 1 ? true : false}
-                    color={
-                      this.getPlaceInProgressBar() === 1 ? 'info' : 'success'
-                    }
-                    value='25'
-                  >
-                    {this.getPlaceInProgressBar() === 1 ? 'You Are Here' : ''}
-                  </Progress>
-                  <Progress
-                    bar
-                    animated={this.getPlaceInProgressBar() === 2 ? true : false}
-                    color={
-                      this.getPlaceInProgressBar() === 2 ? 'info' : 'success'
-                    }
-                    value='25'
-                  >
-                    {this.getPlaceInProgressBar() === 2 ? 'You Are Here' : ''}
-                  </Progress>
-                  <Progress
-                    bar
-                    animated={this.getPlaceInProgressBar() === 3 ? true : false}
-                    color={
-                      this.getPlaceInProgressBar() === 3 ? 'info' : 'success'
-                    }
-                    value='35'
-                  >
-                    {this.getPlaceInProgressBar() === 3 ? 'You Are Here' : ''}
-                  </Progress>
-                  <Progress
-                    bar
-                    animated={this.getPlaceInProgressBar() === 4 ? true : false}
-                    color={
-                      this.getPlaceInProgressBar() === 4 ? 'danger' : 'success'
-                    }
-                    value='15'
-                  >
-                    {this.getPlaceInProgressBar() === 4 ? 'You Are Here' : ''}
-                  </Progress>
-                </Progress>
+                <Progress multi>{this.getProgressViews()}</Progress>
               </Col>
               <Col xs='2'>
                 <h6>
