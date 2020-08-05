@@ -16,6 +16,29 @@ import {
 } from 'reactstrap';
 
 import graphQLFetch from '../GraphQLFetch.js';
+import NotificationAlert from 'react-notification-alert';
+
+let optionSuccess = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Successfully created queue.'</div>
+    </div>
+  ),
+  type: 'success',
+  autoDismiss: 3,
+};
+
+let optionFailure = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Failed to create queue.'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
 
 class Edit extends React.Component {
   constructor(props) {
@@ -31,6 +54,8 @@ class Edit extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.submitSuccess = this.submitSuccess.bind(this);
+    this.submitFailure = this.submitFailure.bind(this);
   }
 
   async handleSubmit(event) {
@@ -70,6 +95,14 @@ class Edit extends React.Component {
       [event.target.id]: event.target.value,
     });
   };
+
+  submitSuccess() {
+    this.refs.notify.notificationAlert(optionSuccess);
+  }
+
+  submitFailure() {
+    this.refs.notify.notificationAlert(optionFailure);
+  }
 
   render() {
     return (
@@ -119,7 +152,7 @@ class Edit extends React.Component {
                         placeholder='0'
                       />
                       <InputGroupAddon className='mt-2' addonType='append'>
-                        persons
+                        person(s)
                       </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
@@ -201,6 +234,7 @@ class Edit extends React.Component {
                   </FormGroup>
                   <FormGroup>
                     <CardFooter>
+                      <NotificationAlert ref='notify' />
                       <Button color='primary'>Submit</Button>
                     </CardFooter>
                   </FormGroup>

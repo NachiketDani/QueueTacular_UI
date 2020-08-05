@@ -54,8 +54,8 @@ class Create extends React.Component {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
-    this.onSuccess = this.onSuccess.bind(this);
-    this.onFailure = this.onFailure.bind(this);
+    this.submitSuccess = this.submitSuccess.bind(this);
+    this.submitFailure = this.submitFailure.bind(this);
   }
 
   async handleSubmit(event) {
@@ -89,19 +89,11 @@ class Create extends React.Component {
     const data = await graphQLFetch(mutationForQueue, { record });
     if (data) {
       console.log(data.queueCreateOne.recordId);
-      this.onSuccess();
+      this.submitSuccess();
     } else {
       // Failure doesn't trigger right now because of compiler error
-      this.onFailure();
+      this.submitFailure();
     }
-  }
-
-  onSuccess() {
-    this.refs.notify.notificationAlert(optionSuccess);
-  }
-
-  onFailure() {
-    this.refs.notify.notificationAlert(optionFailure);
   }
 
   handleChange = (event) => {
@@ -109,6 +101,14 @@ class Create extends React.Component {
       [event.target.id]: event.target.value,
     });
   };
+
+  submitSuccess() {
+    this.refs.notify.notificationAlert(optionSuccess);
+  }
+
+  submitFailure() {
+    this.refs.notify.notificationAlert(optionFailure);
+  }
 
   render() {
     return (
@@ -158,7 +158,7 @@ class Create extends React.Component {
                         placeholder='Number'
                       />
                       <InputGroupAddon className='mt-2' addonType='append'>
-                        persons
+                        person(s)
                       </InputGroupAddon>
                     </InputGroup>
                   </FormGroup>
