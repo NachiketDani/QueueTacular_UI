@@ -12,6 +12,7 @@ import {
 import graphQLFetch from '../GraphQLFetch.js';
 import CreatedQueueMini from './CreatedQueueMini.js';
 import Expandable from './Expandable.js';
+import CreatedQueue from './CreatedQueue.js';
 
 class CreatedQueues extends React.Component {
   constructor(props) {
@@ -71,12 +72,12 @@ class CreatedQueues extends React.Component {
         <CardBody>
           <Table hover>
             <tbody>
-              <tr>
+              <tr onClick={() => this.props.showCreated()}>
                 <td>
-                  <CreatedQueueMini queue={this.state.queueHistory[0]} />
+                  <CreatedQueueMini queue='testing' />
                 </td>
               </tr>
-              <tr>
+              <tr onClick={() => console.log('Hello!')}>
                 <td>
                   <CreatedQueueMini queue={this.state.queueHistory[1]} />
                 </td>
