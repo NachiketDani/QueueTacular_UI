@@ -90,6 +90,7 @@ class CreatedQueue extends React.Component {
                     style={{ textAlign: 'right', verticalAlign: 'top' }}
                     color='danger'
                     onClick={() => this.props.removeCreated()}
+                    style={{ cursor: 'pointer' }}
                   >
                     <i className='nc-icon nc-simple-remove' />
                   </Badge>

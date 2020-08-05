@@ -72,12 +72,18 @@ class CreatedQueues extends React.Component {
         <CardBody>
           <Table hover>
             <tbody>
-              <tr onClick={() => this.props.showCreated()}>
+              <tr
+                style={{ cursor: 'pointer' }}
+                onClick={() => this.props.showCreated()}
+              >
                 <td>
                   <CreatedQueueMini queue='testing' />
                 </td>
               </tr>
-              <tr onClick={() => console.log('Hello!')}>
+              <tr
+                style={{ cursor: 'pointer' }}
+                onClick={() => console.log('Hello!')}
+              >
                 <td>
                   <CreatedQueueMini queue={this.state.queueHistory[1]} />
                 </td>
