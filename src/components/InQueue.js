@@ -19,7 +19,7 @@ import graphQLFetch from '../GraphQLFetch';
 class InQueue extends React.Component {
   constructor(props) {
     super(props);
-    this.loadData = this.loadData.bind(this);
+    // this.loadData = this.loadData.bind(this);
   }
 
   componentDidMount() {
@@ -28,44 +28,44 @@ class InQueue extends React.Component {
     }
   }
 
-  async loadData() {
-    const queryForQueue = `query {
-      queueOne(filter:{
-        status: Open,
-        items:[{
-          _id: "${this.props.inQueueItemIds[0]}",
-        }]
-      }) {
-        title
-        description
-      }
-    }`;
+  // async loadData() {
+  //   const queryForQueue = `query {
+  //     queueOne(filter:{
+  //       status: Open,
+  //       items:[{
+  //         _id: "${this.props.queue.title}",
+  //       }]
+  //     }) {
+  //       title
+  //       description
+  //     }
+  //   }`;
 
-    // const data = await graphQLFetch(queryForItems);
-    // if (data.itemMany != null && data.itemMany.length > 0) {
-    //   console.log(data);
-    //   const itemId = data.itemMany[0]._id;
-    //   console.log(itemId);
-    //   this.setState({ itemId: itemId });
-    //   console.log(this.state.itemId);
+  // const data = await graphQLFetch(queryForItems);
+  // if (data.itemMany != null && data.itemMany.length > 0) {
+  //   console.log(data);
+  //   const itemId = data.itemMany[0]._id;
+  //   console.log(itemId);
+  //   this.setState({ itemId: itemId });
+  //   console.log(this.state.itemId);
 
-    // Get the appropriate queue
-    console.log(this.props.inQueueItemIds[0]);
-    const queueData = await graphQLFetch(queryForQueue);
-    console.log(queueData);
-    if (queueData != null && queueData.queueOne !== null) {
-      this.setState({
-        title: queueData.queueOne.title,
-        description: queueData.queueOne.description,
-      });
-    }
-  }
+  // Get the appropriate queue
+  //   console.log(this.props.inQueueItemIds[0]);
+  //   const queueData = await graphQLFetch(queryForQueue);
+  //   console.log(queueData);
+  //   if (queueData != null && queueData.queueOne !== null) {
+  //     this.setState({
+  //       title: queueData.queueOne.title,
+  //       description: queueData.queueOne.description,
+  //     });
+  //   }
+  // }
 
   render() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag='h5'>{this.props.queueInTitle}</CardTitle>
+          <CardTitle tag='h5'>{this.props.queue.title}</CardTitle>
           <p className='card-just-text'>
             You have an estimated 30 mins remaining in the queue.
           </p>

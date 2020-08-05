@@ -40,14 +40,13 @@ class App extends React.Component {
       activeColor: 'info',
       userId: '',
       name: '',
-      inQueueItemIds: [],
-      inQueueIds: [],
-      queueInTitle: '',
+      inQueueItems: [],
+      queues: [],
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
     this.getInQueueItems = this.getInQueueItems.bind(this);
-    this.getQueueCurrentlyIn = this.getQueueCurrentlyIn.bind(this);
+    this.getQueuesCurrentlyIn = this.getQueuesCurrentlyIn.bind(this);
   }
 
   componentDidMount() {
@@ -93,13 +92,18 @@ class App extends React.Component {
     }`;
 
     const data = await graphQLFetch(queryForUserId);
-    if (data) {
+    if (data && data.userOne != null) {
       this.setState({ userId: data.userOne._id });
-      const itemIds = await this.getInQueueItems();
-      this.setState({ inQueueItemIds: itemIds });
-      if (itemIds.length > 0) {
-        const inQueueTitle = await this.getQueueCurrentlyIn();
-        this.setState({ queueInTitle: inQueueTitle });
+      const items = await this.getInQueueItems();
+      this.setState({ inQueueItems: items });
+      if (this.state.inQueueItems.length > 0) {
+        console.log(this.state.inQueueItems.length);
+        console.log(this.state.inQueueItems);
+        console.log('Got the items... on to the queues!');
+        const queues = await this.getQueuesCurrentlyIn();
+        console.log(queues);
+        this.setState({ queues: queues });
+        console.log(this.state.queues);
       }
     }
   }
@@ -111,39 +115,51 @@ class App extends React.Component {
           user: "${this.state.userId}",
       }) {
         _id
+        status
+        description
       }
     }`;
 
     const data = await graphQLFetch(queryForItems);
     console.log(data);
     if (data != null) {
-      const itemIds = data.itemMany.map((item) => item._id);
-      console.log(itemIds);
-      return itemIds;
+      // const itemIds = data.itemMany.map((item) => item._id);
+      console.log(data.itemMany);
+      let i;
+      let items = [];
+      for (i = 0; i < data.itemMany.length; i++) {
+        items.push(data.itemMany[i]);
+      }
+      console.log('items list to return', items);
+      return items;
     }
   }
 
-  async getQueueCurrentlyIn() {
-    const queryForQueue = `query {
-      queueOne(filter:{
-        status: Open,
-        items:[{
-          _id: "${this.state.inQueueItemIds[0]}",
-        }]
-      }) {
-        title
-        description
+  async getQueuesCurrentlyIn() {
+    let queues = [];
+    let i;
+    console.log(this.state.inQueueItems);
+    console.log('Items to iterate over', this.state.inQueueItems);
+    for (i = 0; i < this.state.inQueueItems.length; i++) {
+      let itemId = this.state.inQueueItems[i]._id;
+      const queryForQueue = `query {
+        queueOne(filter:{
+          status: Open,
+          items:[{
+            _id: "${itemId}",
+          }]
+        }) {
+          _id
+          title
+        }
+      }`;
+      const data = await graphQLFetch(queryForQueue);
+      console.log(data);
+      if (data != null && data.queueOne != null) {
+        queues.push(data.queueOne);
       }
-    }`;
-
-    // Get the appropriate queue
-    console.log(this.state.inQueueItemIds[0]);
-    const data = await graphQLFetch(queryForQueue);
-    console.log(data);
-    if (data != null) {
-      const queueTitle = data.queueOne.title;
-      return queueTitle;
     }
+    return queues;
   }
 
   render() {
@@ -172,8 +188,7 @@ class App extends React.Component {
                       <prop.component
                         {...props}
                         userId={this.state.userId}
-                        inQueueItemIds={this.state.inQueueItemIds}
-                        queueInTitle={this.state.queueInTitle}
+                        queues={this.state.queues}
                       />
                     )}
                   />

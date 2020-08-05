@@ -31,7 +31,7 @@ class CreatedQueue extends React.Component {
   }
 
   componentDidMount() {
-    this.loadData();
+    // this.loadData();
   }
 
   async loadData() {
@@ -67,8 +67,8 @@ class CreatedQueue extends React.Component {
   }
 
   render() {
-    const data = this.loadData();
-    console.log(data);
+    // const data = this.loadData();
+    // console.log(data);
     return (
       <Card>
         <CardBody>

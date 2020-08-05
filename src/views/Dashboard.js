@@ -25,10 +25,19 @@ class Dashboard extends React.Component {
         <div className='content'>
           <Row>
             <Col md='12'>
-              <InQueue
+              <CreatedQueue userId={this.props.userId} />
+            </Col>
+          </Row>
+          <Row>
+            <Col md='12'>
+              <CreatedQueues userId={this.props.userId} />
+            </Col>
+          </Row>
+          <Row>
+            <Col md='12'>
+              <QueueMultiview
                 userId={this.props.userId}
-                inQueueItemIds={this.props.inQueueItemIds}
-                queueInTitle={this.props.queueInTitle}
+                queues={this.props.queues}
               />
             </Col>
           </Row>

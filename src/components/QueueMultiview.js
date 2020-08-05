@@ -10,79 +10,44 @@ import {
 } from 'reactstrap';
 
 import InQueueMini from '../components/InQueueMini.js';
+import InQueue from '../components/InQueue.js';
 import graphQLFetch from '../GraphQLFetch.js';
 import Expandable from './Expandable.js';
 
 class QueueMultiview extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      queueHistory: [],
-    };
-    this.loadData = this.loadData.bind(this);
   }
 
   componentDidMount() {
-    this.loadData();
+    // this.loadData();
   }
 
-  async loadData() {
-    const queryForItems = `query {
-      itemMany(filter:{
-          status: Complete,
-          user: "${this.props.userId}",
-      }) {
-       _id
-      }
-    }`;
-
-    const queryForQueue = `query {
-      queueMany(filter:{
-        status: Closed,
-        items:[{
-          user: "${this.props.userId}",
-          status: Complete
-        }]
-      }) {
-        title
-      }
-    }`;
-
-    const data = await graphQLFetch(queryForItems);
-    console.log(data);
-    if (data.itemMany.length > 0) {
-      const queueData = await graphQLFetch(queryForQueue);
-      console.log(queueData);
-      const queueHistory = [];
-      queueData.queueMany.forEach((queue) => {
-        queueHistory.push(queue);
-      });
-      this.setState({
-        queueHistory,
-      });
+  createQueueViews() {
+    const rows = [];
+    let i;
+    for (i = 0; i < this.props.queues.length; i++) {
+      const inQueue = (
+        <tr>
+          <td>
+            <InQueue queue={this.props.queues[i]} />
+          </td>
+        </tr>
+      );
+      rows.push(inQueue);
     }
+    return rows;
   }
 
   render() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag='h5'>My Queue History</CardTitle>
+          <CardTitle tag='h5'>My Queues</CardTitle>
         </CardHeader>
         <CardBody>
           <Table hover>
-            <tbody>
-              <tr>
-                <td>
-                  <InQueueMini queue={this.state.queueHistory[0]} />
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <InQueueMini queue={this.state.queueHistory[1]} />
-                </td>
-              </tr>
-            </tbody>
+            <tbody>{this.createQueueViews()}</tbody>
           </Table>
         </CardBody>
         <CardFooter>

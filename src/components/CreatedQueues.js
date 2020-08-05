@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 // reactstrap components
 import {
   Card,
@@ -7,11 +7,11 @@ import {
   CardFooter,
   CardTitle,
   Table,
-} from "reactstrap";
+} from 'reactstrap';
 
-import graphQLFetch from "../GraphQLFetch.js";
-import CreatedQueueMini from "./CreatedQueueMini.js";
-import Expandable from "./Expandable.js";
+import graphQLFetch from '../GraphQLFetch.js';
+import CreatedQueueMini from './CreatedQueueMini.js';
+import Expandable from './Expandable.js';
 
 class CreatedQueues extends React.Component {
   constructor(props) {
@@ -23,7 +23,7 @@ class CreatedQueues extends React.Component {
   }
 
   componentDidMount() {
-    this.loadData();
+    // this.loadData();
   }
 
   async loadData() {
@@ -66,7 +66,7 @@ class CreatedQueues extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag="h5">My Created Queues</CardTitle>
+          <CardTitle tag='h5'>My Created Queues</CardTitle>
         </CardHeader>
         <CardBody>
           <Table hover>
