@@ -69,18 +69,17 @@ class Join extends React.Component {
   // Load options for search: needs 2 callbacks: loadOptions and filterOptions
   // Each option is an object with a label and value: label is what user sees and value is the unique identifier
   async loadOptions() {
-    if (term.length < 3) return [];
-    const query = `query issueList($search: String) {
-          issueList(search: $search) {
-          issues {id title}
-          }
+    if (term.length < 5) return [];
+    const query = `query queueMany {
+      queueMany(filter: {title: $search}) {
+        title
+      }
   }`;
-
-    const { showError } = this.props;
+    //const { showError } = this.props;
     const data = await graphQLFetch(query, { search: term }, showError);
-    return data.issueList.issues.map((issue) => ({
-      label: `#${issue.id}: ${issue.title}`,
-      value: issue.id,
+    return data.queueMany.map((issue) => ({
+      // label: `#${issue.id}: ${issue.title}`,
+      // value: issue.id,
     }));
   }
 
