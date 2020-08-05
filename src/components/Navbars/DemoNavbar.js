@@ -169,26 +169,14 @@ class Header extends React.Component {
                 </InputGroupAddon>
               </InputGroup>
             </form> }*/}
-            <span>
-              <h6>
-                <em>Hello {this.props.name}!</em>
-              </h6>
-            </span>
             <Nav navbar>
-              {/* <NavItem>
-                <Link to="#pablo" className="nav-link btn-magnify">
-                  <i className="nc-icon nc-layout-11" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </Link>
-              </NavItem> */}
               <Dropdown
                 nav
                 isOpen={this.state.dropdownOpen}
                 toggle={(e) => this.dropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
+                  <span style={{ marginRight: 10 }}>{this.props.name}</span>
                   <i className='nc-icon nc-circle-10' />
                   <p>
                     <span className='d-lg-none d-md-block'>Some Actions</span>

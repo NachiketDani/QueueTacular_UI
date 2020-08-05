@@ -42,6 +42,7 @@ class App extends React.Component {
       name: '',
       inQueueItems: [],
       queues: [],
+      createdQueues: [],
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);

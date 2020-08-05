@@ -19,10 +19,46 @@ import CreatedQueues from '../components/CreatedQueues.js';
 import CreatedQueue from '../components/CreatedQueue.js';
 
 class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showCreatedBool: false,
+    };
+    this.showCreated = this.showCreated.bind(this);
+    this.removeCreated = this.removeCreated.bind(this);
+  }
+
+  showCreated() {
+    this.setState({
+      showCreatedBool: true,
+    });
+    console.log('success');
+  }
+
+  removeCreated() {
+    this.setState({
+      showCreatedBool: false,
+    });
+    console.log('removed');
+  }
+
   render() {
     return (
       <>
         <div className='content'>
+          {this.state.showCreatedBool ? (
+            <CreatedQueue removeCreated={this.removeCreated} />
+          ) : null}
+          {/* <Row>
+            <Col md='12'>
+              <CreatedQueue />
+            </Col>
+          </Row> */}
+          <Row>
+            <Col md='12'>
+              <CreatedQueues showCreated={this.showCreated} />
+            </Col>
+          </Row>
           <Row>
             <Col md='12'>
               <CreatedQueue userId={this.props.userId} />

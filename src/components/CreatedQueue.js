@@ -17,7 +17,7 @@ import {
 } from 'reactstrap';
 
 import graphQLFetch from '../GraphQLFetch';
-import TooltipExampleMulti from './ToolTipExampleMulti';
+import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
 import ExpandableTable from './ExpandableTable';
 
 class CreatedQueue extends React.Component {
@@ -57,7 +57,7 @@ class CreatedQueue extends React.Component {
     }`;
 
     const data = await graphQLFetch(queryForItems);
-    if (data.itemMany.length > 0) {
+    if (data.itemMany != null && data.itemMany.length > 0) {
       const queueData = await graphQLFetch(queryForQueue);
       this.setState({
         title: queueData.queueOne.title,
@@ -79,13 +79,21 @@ class CreatedQueue extends React.Component {
                   {this.state.title}
                 </CardHeader>
                 <td style={{ textAlign: 'right' }}>
-                  <Button>
+                  <Button style={{ marginRight: 10 }}>
                     <i
                       style={{ marginRight: 10 }}
                       className='nc-icon nc-settings-gear-65'
                     />
                     Edit
                   </Button>
+                  <Badge
+                    style={{ textAlign: 'right', verticalAlign: 'top' }}
+                    color='danger'
+                    onClick={() => this.props.removeCreated()}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <i className='nc-icon nc-simple-remove' />
+                  </Badge>
                 </td>
               </tr>
             </tbody>
@@ -105,7 +113,7 @@ class CreatedQueue extends React.Component {
               </tr>
               <tr>
                 <td>
-                  <TooltipExampleMulti />
+                  <CreatedQueueParticipantHover />
                 </td>
               </tr>
               <tr>
