@@ -38,7 +38,15 @@ class InQueue extends React.Component {
     const progress =
       100 - (this.getPlaceInQueue() / this.props.queue.items.length) * 100;
     console.log(progress);
-    return progress;
+    if (progress <= 25) {
+      return 1;
+    } else if (progress > 25 && progress <= 50) {
+      return 2;
+    } else if (progress > 50 && progress <= 85) {
+      return 3;
+    } else {
+      return 4;
+    }
   }
 
   render() {
@@ -56,39 +64,59 @@ class InQueue extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs='11'>
+              <Col xs='10'>
                 <Progress multi>
-                  {/*<Progress bar color='success' value='25'></Progress>*/}
-                  <Progress bar animated color='new-blue' value='25'>
-                    {this.getPlaceInProgressBar() <= 25 ? 'You Are Here' : ''}
+                  <Progress
+                    bar
+                    animated={this.getPlaceInProgressBar() === 1 ? true : false}
+                    color={
+                      this.getPlaceInProgressBar() === 1 ? 'info' : 'success'
+                    }
+                    value='25'
+                  >
+                    {this.getPlaceInProgressBar() === 1 ? 'You Are Here' : ''}
                   </Progress>
-                  <Progress bar color='info' value='25'>
-                    {this.getPlaceInProgressBar() > 25 &&
-                    this.getPlaceInProgressBar() <= 50
-                      ? 'You Are Here'
-                      : ''}
+                  <Progress
+                    bar
+                    animated={this.getPlaceInProgressBar() === 2 ? true : false}
+                    color={
+                      this.getPlaceInProgressBar() === 2 ? 'info' : 'success'
+                    }
+                    value='25'
+                  >
+                    {this.getPlaceInProgressBar() === 2 ? 'You Are Here' : ''}
                   </Progress>
-                  <Progress bar striped color='warningvalue' value='25'>
-                    {this.getPlaceInProgressBar() > 50 &&
-                    this.getPlaceInProgressBar() <= 75
-                      ? 'You Are Here'
-                      : ''}
+                  <Progress
+                    bar
+                    animated={this.getPlaceInProgressBar() === 3 ? true : false}
+                    color={
+                      this.getPlaceInProgressBar() === 3 ? 'info' : 'success'
+                    }
+                    value='35'
+                  >
+                    {this.getPlaceInProgressBar() === 3 ? 'You Are Here' : ''}
                   </Progress>
-                  <Progress bar color='danger' value='25'>
-                    {this.getPlaceInProgressBar() > 75 &&
-                    this.getPlaceInProgressBar() <= 100
-                      ? 'You Are Here'
-                      : ''}
+                  <Progress
+                    bar
+                    animated={this.getPlaceInProgressBar() === 4 ? true : false}
+                    color={
+                      this.getPlaceInProgressBar() === 4 ? 'danger' : 'success'
+                    }
+                    value='15'
+                  >
+                    {this.getPlaceInProgressBar() === 4 ? 'You Are Here' : ''}
                   </Progress>
                 </Progress>
               </Col>
-              <Col>
-                <Badge color='success'>
-                  Its your turn!
-                  <div classname='icon-big text-center icon-success'>
-                    <i className='nc-icon nc-simple-remove' />
-                  </div>
-                </Badge>
+              <Col xs='2'>
+                <h6>
+                  <Badge color='primary'>
+                    Its your turn!
+                    <div classname='icon-big text-center icon-success'>
+                      <i className='nc-icon nc-spaceship' />
+                    </div>
+                  </Badge>
+                </h6>
               </Col>
             </Row>
             <br />
