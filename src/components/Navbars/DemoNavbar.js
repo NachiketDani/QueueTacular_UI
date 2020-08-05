@@ -134,9 +134,6 @@ class Header extends React.Component {
         }
       >
         <Container fluid>
-          <span>
-            <h5>Hello {this.props.name}</h5>
-          </span>
           <div className='navbar-wrapper'>
             <div className='navbar-toggle'>
               <button
@@ -173,20 +170,13 @@ class Header extends React.Component {
               </InputGroup>
             </form> }*/}
             <Nav navbar>
-              {/* <NavItem>
-                <Link to="#pablo" className="nav-link btn-magnify">
-                  <i className="nc-icon nc-layout-11" />
-                  <p>
-                    <span className="d-lg-none d-md-block">Stats</span>
-                  </p>
-                </Link>
-              </NavItem> */}
               <Dropdown
                 nav
                 isOpen={this.state.dropdownOpen}
                 toggle={(e) => this.dropdownToggle(e)}
               >
                 <DropdownToggle caret nav>
+                  <span style={{ marginRight: 10 }}>{this.props.name}</span>
                   <i className='nc-icon nc-circle-10' />
                   <p>
                     <span className='d-lg-none d-md-block'>Some Actions</span>

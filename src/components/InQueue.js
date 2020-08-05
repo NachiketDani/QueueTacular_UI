@@ -13,62 +13,55 @@ import {
   Badge,
 } from 'reactstrap';
 
-import graphQLFetch from '../GraphQLFetch';
 //import { queue } from 'jquery';
 
 class InQueue extends React.Component {
   constructor(props) {
     super(props);
-    this.loadData = this.loadData.bind(this);
+    this.getPlaceInQueue = this.getPlaceInQueue.bind(this);
+    this.getProgressViews = this.getProgressViews.bind(this);
   }
 
-  componentDidMount() {
-    if (this.props.userId !== '') {
-      // this.loadData();
-    }
-  }
-
-  async loadData() {
-    const queryForQueue = `query {
-      queueOne(filter:{
-        status: Open,
-        items:[{
-          _id: "${this.props.inQueueItemIds[0]}",
-        }]
-      }) {
-        title
-        description
+  getPlaceInQueue() {
+    let i;
+    for (i = 0; i < this.props.queue.items.length; i++) {
+      console.log(this.props.queue.items);
+      if (this.props.queue.items[i].user === this.props.userId) {
+        console.log('Determining place in line...');
+        console.log(i);
+        return i;
       }
-    }`;
-
-    // const data = await graphQLFetch(queryForItems);
-    // if (data.itemMany != null && data.itemMany.length > 0) {
-    //   console.log(data);
-    //   const itemId = data.itemMany[0]._id;
-    //   console.log(itemId);
-    //   this.setState({ itemId: itemId });
-    //   console.log(this.state.itemId);
-
-    // Get the appropriate queue
-    console.log(this.props.inQueueItemIds[0]);
-    const queueData = await graphQLFetch(queryForQueue);
-    console.log(queueData);
-    if (queueData != null && queueData.queueOne !== null) {
-      this.setState({
-        title: queueData.queueOne.title,
-        description: queueData.queueOne.description,
-      });
     }
+  }
+
+  getProgressViews() {
+    const num = this.props.queue.items.length;
+    let placeInQueue = this.getPlaceInQueue();
+    const progressBars = [];
+    let unit = 1 / num;
+    let i;
+    for (i = num - 1; i >= 0; i--) {
+      let progressBar = (
+        <Progress
+          bar
+          animated={placeInQueue === i ? true : false}
+          color={placeInQueue === i ? 'info' : 'success'}
+          value={unit * 100}
+        >
+          {placeInQueue === i ? 'You Are Here' : ''}
+        </Progress>
+      );
+      progressBars.push(progressBar);
+    }
+    return progressBars;
   }
 
   render() {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag='h5'>{this.props.queueInTitle}</CardTitle>
-          <p className='card-just-text'>
-            You have an estimated 30 mins remaining in the queue.
-          </p>
+          <CardTitle tag='h5'>{this.props.queue.title}</CardTitle>
+          <p className='card-just-text'>{this.props.queue.description}</p>
         </CardHeader>
         <CardBody>
           <div>
@@ -78,34 +71,25 @@ class InQueue extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs='11'>
-                <Progress multi>
-                  <Progress bar color='success' value='40' />
-                  <Progress bar animated color='new-blue' value='15'>
-                    You Are Here
-                  </Progress>
-                  <Progress bar color='info' value='15' />
-                  <Progress bar striped color='warning' value='15'>
-                    5 Min Warning
-                  </Progress>
-                  <Progress bar color='danger' value='15'>
-                    Almost Ready!
-                  </Progress>
-                </Progress>
+              <Col xs='10'>
+                <Progress multi>{this.getProgressViews()}</Progress>
               </Col>
-              <Col>
-                <Badge color='danger'>
-                  Wait.
-                  <div classname='icon-big text-center icon-warning'>
-                    <i className='nc-icon nc-simple-remove' />
-                  </div>
-                </Badge>
+              <Col xs='2'>
+                <h6>
+                  <Badge color='primary'>
+                    Its your turn!
+                    <div classname='icon-big text-center icon-success'>
+                      <i className='nc-icon nc-spaceship' />
+                    </div>
+                  </Badge>
+                </h6>
               </Col>
             </Row>
             <br />
             <Row>
               <Col className='card-just-text'>
-                In Queue - There are 10 people ahead of you!
+                In Queue - There are {this.getPlaceInQueue()} people ahead of
+                you
               </Col>
             </Row>
           </div>
