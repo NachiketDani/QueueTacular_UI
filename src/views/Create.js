@@ -16,6 +16,29 @@ import {
 } from 'reactstrap';
 
 import graphQLFetch from '../GraphQLFetch.js';
+import NotificationAlert from 'react-notification-alert';
+
+let optionSuccess = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Successfully created queue.'</div>
+    </div>
+  ),
+  type: 'success',
+  autoDismiss: 3,
+};
+
+let optionFailure = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Failed to create queue.'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
 
 class Create extends React.Component {
   constructor(props) {
@@ -23,44 +46,69 @@ class Create extends React.Component {
     this.state = {
       title: '',
       description: '',
-      participant: 0,
+      participant: '',
       startDate: '',
       startTime: '',
       endDate: '',
       endTime: '',
-    }
+    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.onSuccess = this.onSuccess.bind(this);
+    this.onFailure = this.onFailure.bind(this);
   }
 
   async handleSubmit(event) {
     event.preventDefault();
-    const {title, description, participant, startDate, startTime, endDate, endTime} = this.state;
-    const start = new Date(startDate + "T" + startTime).toISOString();
-    const end = new Date(endDate + "T" + endTime).toISOString();
+    const {
+      title,
+      description,
+      participant,
+      startDate,
+      startTime,
+      endDate,
+      endTime,
+    } = this.state;
+    const start = new Date(startDate + 'T' + startTime).toISOString();
+    const end = new Date(endDate + 'T' + endTime).toISOString();
     const record = {
       title: title,
-      status: "Open",
+      status: 'Open',
       owner: this.props.userId,
       description: description,
       maxParticipants: parseFloat(participant),
       startDate: start,
-      endDate: end
-    }
+      endDate: end,
+    };
     const mutationForQueue = `mutation queueCreateOne($record: CreateOneQueueInput!) {
       queueCreateOne(record: $record) {
         recordId
       }
     }`;
 
-    const data = await graphQLFetch(mutationForQueue, {record});
-    console.log(data.queueCreateOne.recordId)
-  };
+    const data = await graphQLFetch(mutationForQueue, { record });
+    if (data) {
+      console.log(data.queueCreateOne.recordId);
+      this.onSuccess();
+    } else {
+      // Failure doesn't trigger right now because of compiler error
+      this.onFailure();
+    }
+  }
+
+  onSuccess() {
+    this.refs.notify.notificationAlert(optionSuccess);
+  }
+
+  onFailure() {
+    this.refs.notify.notificationAlert(optionFailure);
+  }
 
   handleChange = (event) => {
     this.setState({
-      [event.target.id]: event.target.value});
-  }
+      [event.target.id]: event.target.value,
+    });
+  };
 
   render() {
     return (
@@ -70,12 +118,11 @@ class Create extends React.Component {
             <Card>
               <CardHeader>Create a Queue</CardHeader>
               <CardBody>
-                <Form 
-                  onSubmit={this.handleSubmit}
-                  onChange={this.handleChange}
-                >
+                <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
                   <FormGroup>
-                    <Label for='title' className='mt-2'>Title</Label>
+                    <Label for='title' className='mt-2'>
+                      Title
+                    </Label>
                     <Input
                       className='mt-2'
                       defaultValue={this.state.title}
@@ -85,17 +132,21 @@ class Create extends React.Component {
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for='description' className='mt-2'>Description</Label>
+                    <Label for='description' className='mt-2'>
+                      Description
+                    </Label>
                     <Input
                       className='mt-2'
                       defaultValue={this.state.description}
-                      type="textarea"
-                      id="description" 
-                      placeholder="Text"
+                      type='textarea'
+                      id='description'
+                      placeholder='Text'
                     />
                   </FormGroup>
                   <FormGroup>
-                    <Label for='participant' className='mt-2'>Maximum Participant</Label>
+                    <Label for='participant' className='mt-2'>
+                      Maximum Participant
+                    </Label>
                     <InputGroup>
                       <Input
                         className='mt-2'
@@ -106,9 +157,7 @@ class Create extends React.Component {
                         id='participant'
                         placeholder='Number'
                       />
-                      <InputGroupAddon
-                        className='mt-2'
-                        addonType='append'>
+                      <InputGroupAddon className='mt-2' addonType='append'>
                         persons
                       </InputGroupAddon>
                     </InputGroup>
@@ -116,10 +165,14 @@ class Create extends React.Component {
                   <FormGroup>
                     <Row>
                       <Col>
-                        <Label for="startDate" className='mt-2'>Start Date</Label>
+                        <Label for='startDate' className='mt-2'>
+                          Start Date
+                        </Label>
                       </Col>
                       <Col>
-                        <Label for="startTime" className='mt-2'>Start Time</Label>
+                        <Label for='startTime' className='mt-2'>
+                          Start Time
+                        </Label>
                       </Col>
                     </Row>
                     <Row>
@@ -128,9 +181,9 @@ class Create extends React.Component {
                           <Input
                             className='border-left border-right mt-2'
                             defaultValue={this.state.startDate}
-                            type="date"
-                            id="startDate"
-                            placeholder="date placeholder"
+                            type='date'
+                            id='startDate'
+                            placeholder='date placeholder'
                           />
                         </InputGroup>
                       </Col>
@@ -139,9 +192,9 @@ class Create extends React.Component {
                           <Input
                             className='border-left border-right mt-2'
                             defaultValue={this.state.startTime}
-                            type="time"
-                            id="startTime"
-                            placeholder="time placeholder"
+                            type='time'
+                            id='startTime'
+                            placeholder='time placeholder'
                           />
                         </InputGroup>
                       </Col>
@@ -150,10 +203,14 @@ class Create extends React.Component {
                   <FormGroup>
                     <Row>
                       <Col>
-                        <Label for="endDate" className='mt-2'>End Date</Label>
+                        <Label for='endDate' className='mt-2'>
+                          End Date
+                        </Label>
                       </Col>
                       <Col>
-                        <Label for="endTime" className='mt-2'>End Time</Label>
+                        <Label for='endTime' className='mt-2'>
+                          End Time
+                        </Label>
                       </Col>
                     </Row>
                     <Row>
@@ -162,9 +219,9 @@ class Create extends React.Component {
                           <Input
                             className='border-left border-right mt-2'
                             defaultValue={this.state.endDate}
-                            type="date"
-                            id="endDate"
-                            placeholder="date placeholder"
+                            type='date'
+                            id='endDate'
+                            placeholder='date placeholder'
                           />
                         </InputGroup>
                       </Col>
@@ -173,9 +230,9 @@ class Create extends React.Component {
                           <Input
                             className='border-left border-right mt-2'
                             defaultValue={this.state.endTime}
-                            type="time"
-                            id="endTime"
-                            placeholder="time placeholder"
+                            type='time'
+                            id='endTime'
+                            placeholder='time placeholder'
                           />
                         </InputGroup>
                       </Col>
@@ -183,6 +240,7 @@ class Create extends React.Component {
                   </FormGroup>
                   <FormGroup>
                     <CardFooter>
+                      <NotificationAlert ref='notify' />
                       <Button color='primary'>Submit</Button>
                     </CardFooter>
                   </FormGroup>
