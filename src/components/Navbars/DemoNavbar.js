@@ -170,7 +170,9 @@ class Header extends React.Component {
               </InputGroup>
             </form> }*/}
             <span>
-              <h5>Hello {this.props.name}</h5>
+              <h6>
+                <em>Hello {this.props.name}!</em>
+              </h6>
             </span>
             <Nav navbar>
               {/* <NavItem>

@@ -8,6 +8,9 @@ import {
   CardText,
   ListGroup,
   ListGroupItem,
+  Form,
+  Input,
+  FormGroup,
 } from 'reactstrap';
 
 // import withToast from "./withToast";
@@ -17,47 +20,75 @@ class Join extends React.Component {
     super(props);
     this.onChangeSelection = this.onChangeSelection.bind(this);
     // this.loadOptions = this.loadOptions.bind(this);
-    this.loadData = this.loadData.bind(this);
+    // this.loadData = this.loadData.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
+    this.onClickJoin = this.onClickJoin.bind(this);
   }
 
   state = {
-    queueId: '5f2a5c5f5e1e5314e0be64ed',
+    queueId: '',
     title: '',
     description: '',
     people_in_queue: [],
   };
 
-  componentDidMount() {
-    this.loadData();
-  }
+  // componentDidMount() {
+  //   this.loadData();
+  // }
 
-  async loadData() {
-    const queryForItems = `query {
-      itemMany(filter:{
-          status: Waiting,
-          user: "${this.props.userId}",
+  // async loadData() {
+  //   const queryForItems = `query {
+  //     itemMany(filter:{
+  //         status: Waiting,
+  //         user: "${this.props.userId}",
+  //     }) {
+  //      _id
+  //     }
+  //   }`;
+
+  //   const queryForQueue = `query queueById($queueId: MongoID!) {
+  //     queueById(_id: $queueId) {
+  //         title, description, items {
+  //           user
+  //         }
+  //       }
+  //   }`;
+
+  //   const data = await graphQLFetch(queryForQueue, {
+  //     queueId: this.state.queueId,
+  //   });
+  //   console.log(data);
+  //   if (data) {
+  //     this.setState({
+  //       title: data.queueById.title,
+  //       description: data.queueById.description,
+  //       people_in_queue: data.queueById.items.length,
+  //     });
+  //   }
+  // }
+
+  async onSubmit(title) {
+    const queryForQueue = `query {
+      queueOne(filter:{
+        title: "${title}"
       }) {
-       _id
+        title
+        description
+        _id
+        items {
+          user
+        }
       }
     }`;
 
-    const queryForQueue = `query queueById($queueId: MongoID!) {
-      queueById(_id: $queueId) {
-          title, description, items {
-            user
-          }
-        }
-    }`;
-
-    const data = await graphQLFetch(queryForQueue, {
-      queueId: this.state.queueId,
-    });
-    console.log(data);
-    if (data) {
+    const data = await graphQLFetch(queryForQueue);
+    if (data && data.queueOne != null) {
+      console.log(data);
       this.setState({
-        title: data.queueById.title,
-        description: data.queueById.description,
-        people_in_queue: data.queueById.items.length,
+        queueId: data.queueOne._id,
+        title: data.queueOne.title,
+        description: data.queueOne.description,
+        items: data.queueOne.items,
       });
     }
   }
@@ -85,13 +116,24 @@ class Join extends React.Component {
   render() {
     return (
       <div className='content'>
-        <h4>Join by Queue-tacular ID:</h4>
+        <h4>Join by Queue Title:</h4>
         {/*
         <AsyncSelect>
           loadOptions = {this.loadOptions}
           filterOption={() => true}
         </AsyncSelect>
         */}
+        <Form onSubmit={this.onSubmit}>
+          <FormGroup>
+            <Input
+              type='textarea'
+              name='title'
+              id='title'
+              placeholder='Queue title'
+            />
+            <Button color='primary'>Find Queue!</Button>
+          </FormGroup>
+        </Form>
         <div>
           <Card body outline color='secondary'>
             <CardTitle>
