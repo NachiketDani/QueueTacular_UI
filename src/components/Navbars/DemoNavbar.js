@@ -134,9 +134,6 @@ class Header extends React.Component {
         }
       >
         <Container fluid>
-          <span>
-            <h5>Hello {this.props.name}</h5>
-          </span>
           <div className='navbar-wrapper'>
             <div className='navbar-toggle'>
               <button
@@ -172,6 +169,9 @@ class Header extends React.Component {
                 </InputGroupAddon>
               </InputGroup>
             </form> }*/}
+            <span>
+              <h5>Hello {this.props.name}</h5>
+            </span>
             <Nav navbar>
               {/* <NavItem>
                 <Link to="#pablo" className="nav-link btn-magnify">

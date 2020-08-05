@@ -30,7 +30,7 @@ class QueueMultiview extends React.Component {
       const inQueue = (
         <tr>
           <td>
-            <InQueue queue={this.props.queues[i]} />
+            <InQueue queue={this.props.queues[i]} userId={this.props.userId} />
           </td>
         </tr>
       );
@@ -50,9 +50,11 @@ class QueueMultiview extends React.Component {
             <tbody>{this.createQueueViews()}</tbody>
           </Table>
         </CardBody>
+        {/*
         <CardFooter>
           <Expandable />
         </CardFooter>
+        */}
       </Card>
     );
   }

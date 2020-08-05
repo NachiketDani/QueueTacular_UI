@@ -13,62 +13,40 @@ import {
   Badge,
 } from 'reactstrap';
 
-import graphQLFetch from '../GraphQLFetch';
 //import { queue } from 'jquery';
 
 class InQueue extends React.Component {
   constructor(props) {
     super(props);
-    // this.loadData = this.loadData.bind(this);
+    this.getPlaceInQueue = this.getPlaceInQueue.bind(this);
+    this.getPlaceInProgressBar = this.getPlaceInProgressBar.bind(this);
   }
 
-  componentDidMount() {
-    if (this.props.userId !== '') {
-      // this.loadData();
+  getPlaceInQueue() {
+    let i;
+    for (i = 0; i < this.props.queue.items.length; i++) {
+      console.log(this.props.queue.items);
+      if (this.props.queue.items[i].user === this.props.userId) {
+        console.log('Determining place in line...');
+        console.log(i);
+        return i;
+      }
     }
   }
 
-  // async loadData() {
-  //   const queryForQueue = `query {
-  //     queueOne(filter:{
-  //       status: Open,
-  //       items:[{
-  //         _id: "${this.props.queue.title}",
-  //       }]
-  //     }) {
-  //       title
-  //       description
-  //     }
-  //   }`;
-
-  // const data = await graphQLFetch(queryForItems);
-  // if (data.itemMany != null && data.itemMany.length > 0) {
-  //   console.log(data);
-  //   const itemId = data.itemMany[0]._id;
-  //   console.log(itemId);
-  //   this.setState({ itemId: itemId });
-  //   console.log(this.state.itemId);
-
-  // Get the appropriate queue
-  //   console.log(this.props.inQueueItemIds[0]);
-  //   const queueData = await graphQLFetch(queryForQueue);
-  //   console.log(queueData);
-  //   if (queueData != null && queueData.queueOne !== null) {
-  //     this.setState({
-  //       title: queueData.queueOne.title,
-  //       description: queueData.queueOne.description,
-  //     });
-  //   }
-  // }
+  getPlaceInProgressBar() {
+    const progress =
+      100 - (this.getPlaceInQueue() / this.props.queue.items.length) * 100;
+    console.log(progress);
+    return progress;
+  }
 
   render() {
     return (
       <Card>
         <CardHeader>
           <CardTitle tag='h5'>{this.props.queue.title}</CardTitle>
-          <p className='card-just-text'>
-            You have an estimated 30 mins remaining in the queue.
-          </p>
+          <p className='card-just-text'>{this.props.queue.description}</p>
         </CardHeader>
         <CardBody>
           <div>
@@ -80,23 +58,34 @@ class InQueue extends React.Component {
             <Row>
               <Col xs='11'>
                 <Progress multi>
-                  <Progress bar color='success' value='40' />
-                  <Progress bar animated color='new-blue' value='15'>
-                    You Are Here
+                  {/*<Progress bar color='success' value='25'></Progress>*/}
+                  <Progress bar animated color='new-blue' value='25'>
+                    {this.getPlaceInProgressBar() <= 25 ? 'You Are Here' : ''}
                   </Progress>
-                  <Progress bar color='info' value='15' />
-                  <Progress bar striped color='warning' value='15'>
-                    5 Min Warning
+                  <Progress bar color='info' value='25'>
+                    {this.getPlaceInProgressBar() > 25 &&
+                    this.getPlaceInProgressBar() <= 50
+                      ? 'You Are Here'
+                      : ''}
                   </Progress>
-                  <Progress bar color='danger' value='15'>
-                    Almost Ready!
+                  <Progress bar striped color='warningvalue' value='25'>
+                    {this.getPlaceInProgressBar() > 50 &&
+                    this.getPlaceInProgressBar() <= 75
+                      ? 'You Are Here'
+                      : ''}
+                  </Progress>
+                  <Progress bar color='danger' value='25'>
+                    {this.getPlaceInProgressBar() > 75 &&
+                    this.getPlaceInProgressBar() <= 100
+                      ? 'You Are Here'
+                      : ''}
                   </Progress>
                 </Progress>
               </Col>
               <Col>
-                <Badge color='danger'>
-                  Wait.
-                  <div classname='icon-big text-center icon-warning'>
+                <Badge color='success'>
+                  Its your turn!
+                  <div classname='icon-big text-center icon-success'>
                     <i className='nc-icon nc-simple-remove' />
                   </div>
                 </Badge>
@@ -105,7 +94,8 @@ class InQueue extends React.Component {
             <br />
             <Row>
               <Col className='card-just-text'>
-                In Queue - There are 10 people ahead of you!
+                In Queue - There are {this.getPlaceInQueue()} people ahead of
+                you
               </Col>
             </Row>
           </div>

@@ -21,7 +21,7 @@ class Join extends React.Component {
   }
 
   state = {
-    queueId: '5f235c25ac3b06498000f2c5',
+    queueId: '5f2a5c5f5e1e5314e0be64ed',
     title: '',
     description: '',
     people_in_queue: [],
@@ -86,10 +86,12 @@ class Join extends React.Component {
     return (
       <div className='content'>
         <h4>Join by Queue-tacular ID:</h4>
+        {/*
         <AsyncSelect>
           loadOptions = {this.loadOptions}
           filterOption={() => true}
         </AsyncSelect>
+        */}
         <div>
           <Card body outline color='secondary'>
             <CardTitle>

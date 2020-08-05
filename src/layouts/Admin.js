@@ -150,7 +150,13 @@ class App extends React.Component {
           }]
         }) {
           _id
+          description
           title
+          items {
+            user
+            status
+            description
+          }
         }
       }`;
       const data = await graphQLFetch(queryForQueue);
