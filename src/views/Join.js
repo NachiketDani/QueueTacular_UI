@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import AsyncSelect from 'react-select/lib/Async';
+import SelectAsync from 'react-select/lib/Async';
 import graphQLFetch from '../GraphQLFetch.js';
 import {
   Card,
@@ -21,7 +21,7 @@ class Join extends React.Component {
   }
 
   state = {
-    queueId: '5f235c25ac3b06498000f2c5',
+    queueId: '5f2a5c5f5e1e5314e0be64e8',
     title: '',
     description: '',
     people_in_queue: [],
@@ -41,45 +41,56 @@ class Join extends React.Component {
       }
     }`;
 
-    const queryForQueue = `query queueById($queueId: MongoID!) {
-      queueById(_id: $queueId) {
-          title, description, items {
-            user
+    // const queryForQueue = `query queueById($queueId: MongoID!) {
+    //   queueById(_id: $queueId) {
+    //       title, description, items {
+    //         user
+    //       }
+    //     }
+    // }`;
+
+    const queryForQueue = `query{ queueOne(
+      filter:{
+        title: "Doctor's visit"
+      }) 
+      {
+        title, description, items {
+          user
           }
         }
     }`;
 
-    const data = await graphQLFetch(queryForQueue, {
-      queueId: this.state.queueId,
-    });
+    const data = await graphQLFetch(queryForQueue);
     console.log(data);
-    if (data) {
+    if (data && data.queueOne != null) {
       this.setState({
-        title: data.queueById.title,
-        description: data.queueById.description,
-        people_in_queue: data.queueById.items.length,
+        title: data.queueOne.title,
+        description: data.queueOne.description,
+        people_in_queue: data.queueOne.items.length,
       });
     }
   }
 
-  async onClickJoin() {}
-
-  onChangeSelection() {}
+  onChangeSelection({ value }) {
+    const { history } = this.props;
+    history.push('/edit/${value}');
+  }
 
   // Load options for search: needs 2 callbacks: loadOptions and filterOptions
   // Each option is an object with a label and value: label is what user sees and value is the unique identifier
-  async loadOptions() {
+  async loadOptions(term) {
     if (term.length < 5) return [];
-    const query = `query queueMany {
-      queueMany(filter: {title: $search}) {
+    const query = `query queueOne {
+      queueOne(filter: {title: "${term}"}) {
         title
+        description
       }
   }`;
     //const { showError } = this.props;
-    const data = await graphQLFetch(query, { search: term }, showError);
-    return data.queueMany.map((issue) => ({
-      // label: `#${issue.id}: ${issue.title}`,
-      // value: issue.id,
+    const data = await graphQLFetch(query, { search: term });
+    return data.queueOne.map((queue) => ({
+      label: `#${queue.title}: ${queue.description}`,
+      value: queue.title,
     }));
   }
 
@@ -87,10 +98,14 @@ class Join extends React.Component {
     return (
       <div className='content'>
         <h4>Join by Queue-tacular ID:</h4>
-        <AsyncSelect>
-          loadOptions = {this.loadOptions}
+        {/* <SelectAsync
+          instanceId='search-select'
+          value=''
+          loadOptions={this.loadOptions}
           filterOption={() => true}
-        </AsyncSelect>
+          onChange={this.onChangeSelection}
+          components={{ DropdownIndicator: null }}
+        /> */}
         <div>
           <Card body outline color='secondary'>
             <CardTitle>
