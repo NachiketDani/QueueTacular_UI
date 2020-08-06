@@ -47,7 +47,7 @@ class InQueue extends React.Component {
         <Progress
           bar
           animated={placeInQueue === i ? true : false}
-          color={placeInQueue === i ? 'info' : 'success'}
+          color={placeInQueue === i ? 'danger' : 'success'}
           value={unit * 100}
         >
           {placeInQueue === i ? 'You Are Here' : ''}
