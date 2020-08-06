@@ -34,7 +34,6 @@ class Dashboard extends React.Component {
       showCreatedBool: true,
       showId: id,
     });
-    console.log('id:', id);
     console.log('success');
   };
 
@@ -63,7 +62,11 @@ class Dashboard extends React.Component {
           </Row> */}
           <Row>
             <Col md='12'>
-              <CreatedQueues showCreated={this.showCreated} {...this.props} />
+              <CreatedQueues
+                showCreated={this.showCreated}
+                {...this.props}
+                showCreated={this.showCreated}
+              />
             </Col>
           </Row>
           <Row>
