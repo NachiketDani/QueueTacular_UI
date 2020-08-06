@@ -97,6 +97,7 @@ class Join extends React.Component {
     const itemAdd = await graphQLFetch(query);
     if (itemAdd && itemAdd.itemCreateOne != null) {
       console.log(itemAdd.itemCreateOne.record);
+      this.state.queueId;
     }
   }
 
@@ -150,7 +151,9 @@ class Join extends React.Component {
             </CardText>
             <div>
               <Button
-                disabled={this.state.title.length < 1}
+                disabled={
+                  this.state.title.length < 1 && this.props.loggedIn === true
+                }
                 color='primary'
                 onClick={this.onClickJoin()}
               >
