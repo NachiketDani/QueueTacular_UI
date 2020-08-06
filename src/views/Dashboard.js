@@ -23,14 +23,16 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       showCreatedBool: false,
+      showId: 0,
     };
     this.showCreated = this.showCreated.bind(this);
     this.removeCreated = this.removeCreated.bind(this);
   }
 
-  showCreated() {
+  showCreated(id) {
     this.setState({
       showCreatedBool: true,
+      showId: id,
     });
     console.log('success');
   }
@@ -47,7 +49,10 @@ class Dashboard extends React.Component {
       <>
         <div className='content'>
           {this.state.showCreatedBool ? (
-            <CreatedQueue removeCreated={this.removeCreated} {...this.props} />
+            <CreatedQueue
+              removeCreated={this.removeCreated}
+              {...this.props.queues[this.state.showId]}
+            />
           ) : null}
           {/* <Row>
             <Col md='12'>

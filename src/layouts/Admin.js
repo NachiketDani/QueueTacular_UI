@@ -107,6 +107,8 @@ class App extends React.Component {
         console.log(this.state.queues);
       }
     }
+    const queues = await this.getCreatedQueues();
+    this.setState({ createdQueues: queues });
   }
 
   async getInQueueItems() {
@@ -169,6 +171,28 @@ class App extends React.Component {
     return queues;
   }
 
+  async getCreatedQueues() {
+    const queryForQueues = `query {
+      queueMany(filter:{
+        owner: "${this.state.userId}"
+      }){
+        _id
+        title
+        owner
+        description
+        status
+        startDate
+        endDate
+        items {
+          _id user wait description status
+        }
+      }
+    }`;
+
+    const data = await graphQLFetch(queryForQueues);
+    if (data.queueMany.length > 0) return data.queueMany;
+  }
+
   render() {
     return (
       <div className='wrapper'>
@@ -196,6 +220,7 @@ class App extends React.Component {
                         {...props}
                         userId={this.state.userId}
                         queues={this.state.queues}
+                        createdQueues={this.state.createdQueues}
                       />
                     )}
                   />
