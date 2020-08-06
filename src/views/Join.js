@@ -92,7 +92,7 @@ class Join extends React.Component {
       record: {
         _id: "${this.state.queueId}"
         items: ${itemsToAdd}
-      }
+    }
     ) {
       recordId
     }
