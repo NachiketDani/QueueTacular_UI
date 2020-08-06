@@ -40,7 +40,7 @@ let optionFailure = {
   autoDismiss: 3,
 };
 
-class Create extends React.Component {
+class Edit extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -87,13 +87,7 @@ class Create extends React.Component {
     }`;
 
     const data = await graphQLFetch(mutationForQueue, { record });
-    if (data) {
-      console.log(data.queueCreateOne.recordId);
-      this.submitSuccess();
-    } else {
-      // Failure doesn't trigger right now because of compiler error
-      this.submitFailure();
-    }
+    console.log(data.queueCreateOne.recordId);
   }
 
   handleChange = (event) => {
@@ -116,7 +110,7 @@ class Create extends React.Component {
         <Row>
           <Col md='12'>
             <Card>
-              <CardHeader>Create a Queue</CardHeader>
+              <CardHeader>Edit a Queue</CardHeader>
               <CardBody>
                 <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
                   <FormGroup>
@@ -155,7 +149,7 @@ class Create extends React.Component {
                         type='number'
                         step='1'
                         id='participant'
-                        placeholder='Number'
+                        placeholder='0'
                       />
                       <InputGroupAddon className='mt-2' addonType='append'>
                         person(s)
@@ -254,4 +248,4 @@ class Create extends React.Component {
   }
 }
 
-export default Create;
+export default Edit;
