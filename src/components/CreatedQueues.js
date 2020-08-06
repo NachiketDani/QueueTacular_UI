@@ -17,51 +17,7 @@ import CreatedQueue from './CreatedQueue.js';
 class CreatedQueues extends React.Component {
   constructor(props) {
     super(props);
-    // this.state = {
-    //   queueHistory: [],
-    // };
-    // this.loadData = this.loadData.bind(this);
   }
-
-  // componentDidMount() {
-  // this.loadData();
-  // }
-
-  // async loadData() {
-  //   const queryForItems = `query {
-  //     itemMany(filter:{
-  //         status: Removed,
-  //         user: "${this.props.userId}",
-  //     }) {
-  //      _id
-  //     }
-  //   }`;
-
-  //   const queryForQueue = `query {
-  //     queueMany(filter:{
-  //       items:[{
-  //         user: "${this.props.userId}",
-  //         status: Waiting
-  //       }]
-  //     }) {
-  //       title
-  //     }
-  //   }`;
-
-  //   const data = await graphQLFetch(queryForItems);
-  //   console.log(data);
-  //   if (data.itemMany.length > 0) {
-  //     const queueData = await graphQLFetch(queryForQueue);
-  //     console.log(queueData);
-  //     const queueHistory = [];
-  //     queueData.queueMany.forEach((queue) => {
-  //       queueHistory.push(queue);
-  //     });
-  //     this.setState({
-  //       queueHistory,
-  //     });
-  //   }
-  // }
 
   createCreatedQueueMini() {
     const rows = [];
@@ -70,7 +26,7 @@ class CreatedQueues extends React.Component {
       const queueMini = (
         <tr
           style={{ cursor: 'pointer' }}
-          onClick={() => this.props.showCreated()}
+          onClick={() => this.props.showCreated(i)}
         >
           <td>
             <CreatedQueueMini {...this.props.queues[i]} />
