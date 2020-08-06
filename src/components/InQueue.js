@@ -12,6 +12,7 @@ import {
   Progress,
   Badge,
 } from 'reactstrap';
+import { data } from 'jquery';
 
 //import { queue } from 'jquery';
 
@@ -20,6 +21,7 @@ class InQueue extends React.Component {
     super(props);
     this.getPlaceInQueue = this.getPlaceInQueue.bind(this);
     this.getProgressViews = this.getProgressViews.bind(this);
+    this.getEndDate = this.getEndDate.bind(this);
   }
 
   getPlaceInQueue() {
@@ -54,6 +56,13 @@ class InQueue extends React.Component {
       progressBars.push(progressBar);
     }
     return progressBars;
+  }
+
+  getEndDate() {
+    const date = new Date(this.props.queue.endDate);
+    console.log(date);
+    const end = ` ${date.toDateString()} at ${date.toLocaleTimeString()}`;
+    return end;
   }
 
   render() {
@@ -103,7 +112,7 @@ class InQueue extends React.Component {
           <div className='stats'>
             <i className='fa fa-history' />
             This queue will be open until:
-            {this.props.queue.endDate}
+            {this.getEndDate()}
           </div>
         </CardFooter>
       </Card>
