@@ -45,7 +45,7 @@ class Join extends React.Component {
 
     const queryForQueue = `query{ queueOne(
       filter:{
-        title: "Doctor's visit"
+        title: ""
       }) 
       {
         title, description, items {
@@ -63,6 +63,7 @@ class Join extends React.Component {
         people_in_queue: data.queueOne.items.length,
       });
     }
+    // if (data)
   }
 
   onChangeSelection({ value }) {
@@ -76,6 +77,27 @@ class Join extends React.Component {
       people_in_queue: value.items.length,
     });
     console.log(value);
+  }
+
+  async onClickJoin() {
+    const query = `mutation { itemCreateOne(
+      record:{
+        status: Waiting
+        user: "${this.props.userId}"
+        description: "I need service"
+        }) {
+        record{
+          status
+          user
+          description
+        }
+        }
+    }`;
+
+    const itemAdd = await graphQLFetch(query);
+    if (itemAdd && itemAdd.itemCreateOne != null) {
+      console.log(itemAdd.itemCreateOne.record);
+    }
   }
 
   // Load options for search: needs 2 callbacks: loadOptions and filterOptions
@@ -102,7 +124,7 @@ class Join extends React.Component {
   render() {
     return (
       <div className='content'>
-        <h4>Join by Queue-tacular ID:</h4>
+        <h4>Search your Queue by Title:</h4>
         <SelectAsync
           instanceId='search-select'
           value=''
@@ -127,7 +149,11 @@ class Join extends React.Component {
               </ListGroup>
             </CardText>
             <div>
-              <Button color='primary' onClick={this.onClickJoin}>
+              <Button
+                disabled={this.state.title.length < 1}
+                color='primary'
+                onClick={this.onClickJoin()}
+              >
                 Join Queue!
               </Button>{' '}
             </div>
