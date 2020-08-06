@@ -17,50 +17,69 @@ import CreatedQueue from './CreatedQueue.js';
 class CreatedQueues extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      queueHistory: [],
-    };
-    this.loadData = this.loadData.bind(this);
+    // this.state = {
+    //   queueHistory: [],
+    // };
+    // this.loadData = this.loadData.bind(this);
   }
 
-  componentDidMount() {
-    // this.loadData();
-  }
+  // componentDidMount() {
+  // this.loadData();
+  // }
 
-  async loadData() {
-    const queryForItems = `query {
-      itemMany(filter:{
-          status: Removed,
-          user: "${this.props.userId}",
-      }) {
-       _id
-      }
-    }`;
+  // async loadData() {
+  //   const queryForItems = `query {
+  //     itemMany(filter:{
+  //         status: Removed,
+  //         user: "${this.props.userId}",
+  //     }) {
+  //      _id
+  //     }
+  //   }`;
 
-    const queryForQueue = `query {
-      queueMany(filter:{
-        items:[{
-          user: "${this.props.userId}",
-          status: Waiting
-        }]
-      }) {
-        title
-      }
-    }`;
+  //   const queryForQueue = `query {
+  //     queueMany(filter:{
+  //       items:[{
+  //         user: "${this.props.userId}",
+  //         status: Waiting
+  //       }]
+  //     }) {
+  //       title
+  //     }
+  //   }`;
 
-    const data = await graphQLFetch(queryForItems);
-    console.log(data);
-    if (data.itemMany.length > 0) {
-      const queueData = await graphQLFetch(queryForQueue);
-      console.log(queueData);
-      const queueHistory = [];
-      queueData.queueMany.forEach((queue) => {
-        queueHistory.push(queue);
-      });
-      this.setState({
-        queueHistory,
-      });
+  //   const data = await graphQLFetch(queryForItems);
+  //   console.log(data);
+  //   if (data.itemMany.length > 0) {
+  //     const queueData = await graphQLFetch(queryForQueue);
+  //     console.log(queueData);
+  //     const queueHistory = [];
+  //     queueData.queueMany.forEach((queue) => {
+  //       queueHistory.push(queue);
+  //     });
+  //     this.setState({
+  //       queueHistory,
+  //     });
+  //   }
+  // }
+
+  createCreatedQueueMini() {
+    const rows = [];
+    let i;
+    for (i = 0; i < this.props.queues.length; i++) {
+      const queueMini = (
+        <tr
+          style={{ cursor: 'pointer' }}
+          onClick={() => this.props.showCreated()}
+        >
+          <td>
+            <CreatedQueueMini {...this.props.queues[i]} />
+          </td>
+        </tr>
+      );
+      rows.push(queueMini);
     }
+    return rows;
   }
 
   render() {
@@ -71,24 +90,7 @@ class CreatedQueues extends React.Component {
         </CardHeader>
         <CardBody>
           <Table hover>
-            <tbody>
-              <tr
-                style={{ cursor: 'pointer' }}
-                onClick={() => this.props.showCreated()}
-              >
-                <td>
-                  <CreatedQueueMini queue='testing' />
-                </td>
-              </tr>
-              <tr
-                style={{ cursor: 'pointer' }}
-                onClick={() => this.props.showCreated()}
-              >
-                <td>
-                  <CreatedQueueMini queue={this.state.queueHistory[1]} />
-                </td>
-              </tr>
-            </tbody>
+            <tbody>{this.createCreatedQueueMini()}</tbody>
           </Table>
         </CardBody>
         <CardFooter>
