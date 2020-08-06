@@ -56,7 +56,7 @@ class Dashboard extends React.Component {
           </Row> */}
           <Row>
             <Col md='12'>
-              <CreatedQueues showCreated={this.showCreated} />
+              <CreatedQueues showCreated={this.showCreated} {...this.props} />
             </Col>
           </Row>
           <Row>

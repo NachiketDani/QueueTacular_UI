@@ -4,8 +4,8 @@ import { Row, Col, Progress, Badge } from 'reactstrap';
 
 class CreatedQueueMini extends React.Component {
   render() {
-    const queueTitle = this.props.queue != null ? this.props.queue.title : '';
-    console.log(this.props);
+    const queueTitle =
+      this.props.title != null ? this.props.title : 'Title is missing';
     return (
       <>
         <Row>
@@ -33,7 +33,7 @@ class CreatedQueueMini extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col>30 Participants enqueued.</Col>
+          <Col>{this.props.items.length} Participants enqueued.</Col>
         </Row>
       </>
     );
