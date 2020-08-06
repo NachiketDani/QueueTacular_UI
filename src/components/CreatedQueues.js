@@ -82,7 +82,7 @@ class CreatedQueues extends React.Component {
               </tr>
               <tr
                 style={{ cursor: 'pointer' }}
-                onClick={() => console.log('Hello!')}
+                onClick={() => this.props.showCreated()}
               >
                 <td>
                   <CreatedQueueMini queue={this.state.queueHistory[1]} />

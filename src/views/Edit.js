@@ -41,6 +41,29 @@ let optionFailure = {
 };
 
 class Edit extends React.Component {
+  static async fetchData(match, search, showError) {
+    const query = `{
+      queueById(_id: "5f2b37083480b51aa889965a") {
+        title
+        status
+        description
+        maxParticipants
+        startDate
+        endDate
+      }
+    }`;
+
+    const {
+      params: { id },
+    } = match;
+    const result = await graphQLFetch(
+      query,
+      { id: parseInt(id, 10) },
+      showError
+    );
+    return result;
+  }
+
   constructor(props) {
     super(props);
     this.state = {

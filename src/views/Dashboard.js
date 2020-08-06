@@ -47,7 +47,7 @@ class Dashboard extends React.Component {
       <>
         <div className='content'>
           {this.state.showCreatedBool ? (
-            <CreatedQueue removeCreated={this.removeCreated} />
+            <CreatedQueue removeCreated={this.removeCreated} {...this.props} />
           ) : null}
           {/* <Row>
             <Col md='12'>
@@ -57,16 +57,6 @@ class Dashboard extends React.Component {
           <Row>
             <Col md='12'>
               <CreatedQueues showCreated={this.showCreated} />
-            </Col>
-          </Row>
-          <Row>
-            <Col md='12'>
-              <CreatedQueue userId={this.props.userId} />
-            </Col>
-          </Row>
-          <Row>
-            <Col md='12'>
-              <CreatedQueues userId={this.props.userId} />
             </Col>
           </Row>
           <Row>

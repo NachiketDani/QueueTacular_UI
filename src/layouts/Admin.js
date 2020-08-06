@@ -20,12 +20,12 @@ import React from 'react';
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Route, Switch } from 'react-router-dom';
-import { Card, CardBody, CardText } from 'reactstrap';
+// import { Card, CardBody, CardText } from 'reactstrap';
 
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
 import Footer from 'components/Footer/Footer.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
-import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
+// import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 
 import routes from 'routes.js';
 import graphQLFetch from '../GraphQLFetch';

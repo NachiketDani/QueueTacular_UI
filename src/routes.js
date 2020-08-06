@@ -58,9 +58,8 @@ var routes = [
     layout: '/admin',
   },
   {
-    path: '/edit',
+    path: '/edit/:_id',
     name: 'Edit',
-    icon: 'nc-icon nc-tile-56',
     component: Edit,
     layout: '/admin',
     invisible: true,
