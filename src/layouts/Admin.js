@@ -20,12 +20,12 @@ import React from 'react';
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Route, Switch } from 'react-router-dom';
-import { Card, CardBody, CardText } from 'reactstrap';
+// import { Card, CardBody, CardText } from 'reactstrap';
 
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
 import Footer from 'components/Footer/Footer.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
-import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
+// import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 
 import routes from 'routes.js';
 import graphQLFetch from '../GraphQLFetch';
@@ -166,6 +166,8 @@ class App extends React.Component {
         });
       }
     }
+    const queues = await this.getCreatedQueues();
+    this.setState({ createdQueues: queues });
   }
 
   async getInQueueItems() {
@@ -228,6 +230,28 @@ class App extends React.Component {
     return queues;
   }
 
+  async getCreatedQueues() {
+    const queryForQueues = `query {
+      queueMany(filter:{
+        owner: "${this.state.userId}"
+      }){
+        _id
+        title
+        owner
+        description
+        status
+        startDate
+        endDate
+        items {
+          _id user wait description status
+        }
+      }
+    }`;
+
+    const data = await graphQLFetch(queryForQueues);
+    if (data.queueMany.length > 0) return data.queueMany;
+  }
+
   render() {
     return (
       <div className='wrapper'>
@@ -259,6 +283,7 @@ class App extends React.Component {
                         userId={this.state.userId}
                         queues={this.state.queues}
                         loggedIn={this.state.loggedIn}
+                        createdQueues={this.state.createdQueues}
                       />
                     )}
                   />

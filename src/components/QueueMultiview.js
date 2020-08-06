@@ -43,7 +43,7 @@ class QueueMultiview extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag='h5'>My Queues</CardTitle>
+          <CardTitle tag='h5'>Queues I Am In</CardTitle>
         </CardHeader>
         <CardBody>
           <Table hover>
