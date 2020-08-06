@@ -9,6 +9,7 @@ import {
   ListGroup,
   ListGroupItem,
 } from 'reactstrap';
+import { timers } from 'jquery';
 
 // import withToast from "./withToast";
 
@@ -17,52 +18,20 @@ class Join extends React.Component {
     super(props);
     this.onChangeSelection = this.onChangeSelection.bind(this);
     this.loadOptions = this.loadOptions.bind(this);
-    //this.addItemToQueue = this.addItemToQueue.bind(this);
+    this.queueUpItem = this.queueUpItem.bind(this);
+    this.onClickJoin = this.onClickJoin.bind(this);
+
     this.state = {
       queueId: '',
       title: '',
       description: '',
-      people_in_queue: [],
+      peopleInQueue: [],
       status: '',
+      newItemId: '',
+      newItemDescription: '',
+      newItemStatus: '',
     };
   }
-
-  // componentDidMount() {
-  //   this.loadData();
-  // }
-
-  // async loadData() {
-  //   const queryForItems = `query {
-  //     itemMany(filter:{
-  //         status: Waiting,
-  //         user: "${this.props.userId}",
-  //     }) {
-  //      _id
-  //     }
-  //   }`;
-
-  // async addItemToQueue() {
-  //   const queryForQueue = `query{ queueOne(
-  //       filter:{
-  //         title: ""
-  //       })
-  //       {
-  //         title, description, items {
-  //           user
-  //         }
-  //       }
-  //     }`;
-
-  //   const data = await graphQLFetch(queryForQueue);
-  //   //console.log(data);
-  //   if (data && data.queueOne != null) {
-  //     this.setState({
-  //       title: data.queueOne.title,
-  //       description: data.queueOne.description,
-  //       people_in_queue: data.queueOne.items.length,
-  //     });
-  //   }
-  // }
 
   // This method loads the selected option from loadOptions on the screen by setting the Join component state
   onChangeSelection({ value }) {
@@ -73,32 +42,64 @@ class Join extends React.Component {
       queueId: value._id,
       title: value.title,
       description: value.description,
-      people_in_queue: value.items.length,
+      peopleInQueue: value.items,
       status: value.status,
     });
     console.log(value);
   }
 
-  // This method is created to allow user to use the Join button to join the queue currently in state
+  // This method is created to create an item from user login props information to prepare to add to a queue
   async onClickJoin() {
     const query = `mutation { itemCreateOne(
       record:{
         status: Waiting
         user: "${this.props.userId}"
-        description: "I need service"
+        description: "I need service, test add"
         }) {
         record{
           status
           user
           description
+          _id
         }
         }
     }`;
     const itemAdd = await graphQLFetch(query);
     if (itemAdd && itemAdd.itemCreateOne != null) {
       console.log(itemAdd.itemCreateOne.record);
-      // this.state.queueId;
+      this.setState({
+        newItemId: itemAdd.itemCreateOne.record._id,
+        newItemDescription: itemAdd.itemCreateOne.record.description,
+        newItemStatus: itemAdd.itemCreateOne.record.status,
+      });
     }
+    // Get new items array ready to be inserted into the queue
+    const newItemArray = this.state.peopleInQueue; //CHANGED HERE
+    newItemArray.push({
+      status: this.state.newItemStatus,
+      _id: this.state.newItemId,
+      description: this.state.newItemDescription,
+      user: this.props.userId,
+    });
+    this.setState({ peopleInQueue: newItemArray });
+    console.log('New array', newItemArray);
+    this.queueUpItem(newItemArray);
+  }
+
+  // This method is to add the created item data to the queue currently in state
+  async queueUpItem(itemsToAdd) {
+    const updateQueue = `mutation { queueUpdateById(
+      record: {
+        _id: "${this.state.queueId}"
+        items: ${itemsToAdd}
+      }
+    ) {
+      recordId
+    }
+  }`;
+    console.log(updateQueue);
+    const data = await graphQLFetch(updateQueue);
+    console.log(data);
   }
 
   // Load options for search: needs 2 callbacks: loadOptions and filterOptions
@@ -111,7 +112,12 @@ class Join extends React.Component {
         title
         description
         status
-        items {user}
+        items {
+          user
+          _id
+          status
+          description
+        }
       }
   }`;
     //const { showError } = this.props;
@@ -146,20 +152,20 @@ class Join extends React.Component {
               <hr></hr>
               <ListGroup>
                 <ListGroupItem>
-                  People currently in Queue: {this.state.people_in_queue}
+                  People currently in Queue: {this.state.peopleInQueue.length}
                 </ListGroupItem>
               </ListGroup>
             </CardText>
             <div>
               <Button
                 disabled={
-                  this.state.title.length < 1 && this.props.loggedIn === false
+                  this.state.title.length < 1 || this.props.loggedIn === false
                 }
                 color='primary'
-                onClick={this.onClickJoin()}
+                onClick={this.onClickJoin}
               >
                 Join Queue!
-              </Button>{' '}
+              </Button>
             </div>
           </Card>
         </div>

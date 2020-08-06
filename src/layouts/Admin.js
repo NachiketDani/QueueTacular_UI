@@ -258,7 +258,7 @@ class App extends React.Component {
                         {...props}
                         userId={this.state.userId}
                         queues={this.state.queues}
-                        loggedIn={this.props.loggedIn}
+                        loggedIn={this.state.loggedIn}
                       />
                     )}
                   />
