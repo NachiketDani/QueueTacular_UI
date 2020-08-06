@@ -240,6 +240,7 @@ class App extends React.Component {
         owner
         description
         status
+        maxParticipants
         startDate
         endDate
         items {

@@ -9,7 +9,7 @@ class CreatedQueueMini extends React.Component {
     return (
       <>
         <tr
-          onClick={(event) => this.props.showCreated(this.props.showId)}
+          onClick={() => this.props.showCreated(this.props.showId)}
           style={{ cursor: 'pointer' }}
         >
           <td>
@@ -29,12 +29,21 @@ class CreatedQueueMini extends React.Component {
                 </Progress>
               </Col>
               <Col>
-                <Badge color='success'>
-                  Active
-                  <div classname='icon-big text-center icon-warning'>
-                    <i className='nc-icon nc-bulb-63' />
-                  </div>
-                </Badge>
+                {this.props.status === 'Open' ? (
+                  <Badge color='success'>
+                    {this.props.status}
+                    <div classname='icon-big text-center icon-warning'>
+                      <i className='nc-icon nc-bulb-63' />
+                    </div>
+                  </Badge>
+                ) : (
+                  <Badge color='danger'>
+                    {this.props.status}
+                    <div classname='icon-big text-center icon-warning'>
+                      <i className='nc-icon nc-time-alarm' />
+                    </div>
+                  </Badge>
+                )}
               </Col>
             </Row>
             <Row>

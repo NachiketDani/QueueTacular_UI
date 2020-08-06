@@ -46,7 +46,7 @@ class CreatedQueues extends React.Component {
           </Table>
         </CardBody>
         <CardFooter>
-          <Expandable />
+          <Expandable {...this.props} />
         </CardFooter>
       </Card>
     );
