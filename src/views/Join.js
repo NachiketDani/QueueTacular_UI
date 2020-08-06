@@ -8,9 +8,6 @@ import {
   CardText,
   ListGroup,
   ListGroupItem,
-  Form,
-  Input,
-  FormGroup,
 } from 'reactstrap';
 
 // import withToast from "./withToast";
@@ -20,19 +17,15 @@ class Join extends React.Component {
     super(props);
     this.onChangeSelection = this.onChangeSelection.bind(this);
     this.loadOptions = this.loadOptions.bind(this);
-    this.loadData = this.loadData.bind(this);
-    this.addItemToQueue = this.addItemToQueue.bind(this);
-    // this.changeState = this.changeState.bind(this);
+    //this.addItemToQueue = this.addItemToQueue.bind(this);
+    this.state = {
+      queueId: '',
+      title: '',
+      description: '',
+      people_in_queue: [],
+      status: '',
+    };
   }
-
-  state = {
-    //queueId: '5f2a5c5f5e1e5314e0be64e8',
-    queueId: '',
-    title: '',
-    description: '',
-    people_in_queue: [],
-    status: '',
-  };
 
   // componentDidMount() {
   //   this.loadData();
@@ -48,33 +41,30 @@ class Join extends React.Component {
   //     }
   //   }`;
 
-  async addItemToQueue() {
-    const queryForQueue = `query{ queueOne(
-        filter:{
-          title: ""
-        }) 
-        {
-          title, description, items {
-            user
-            }
-          }
-        }
-      }`;
+  // async addItemToQueue() {
+  //   const queryForQueue = `query{ queueOne(
+  //       filter:{
+  //         title: ""
+  //       })
+  //       {
+  //         title, description, items {
+  //           user
+  //         }
+  //       }
+  //     }`;
 
-    // const updateQueue =
+  //   const data = await graphQLFetch(queryForQueue);
+  //   //console.log(data);
+  //   if (data && data.queueOne != null) {
+  //     this.setState({
+  //       title: data.queueOne.title,
+  //       description: data.queueOne.description,
+  //       people_in_queue: data.queueOne.items.length,
+  //     });
+  //   }
+  // }
 
-    const data = await graphQLFetch(queryForQueue);
-    //console.log(data);
-    if (data && data.queueOne != null) {
-      this.setState({
-        title: data.queueOne.title,
-        description: data.queueOne.description,
-        people_in_queue: data.queueOne.items.length,
-      });
-    }
-    // if (data)
-  }
-
+  // This method loads the selected option from loadOptions on the screen by setting the Join component state
   onChangeSelection({ value }) {
     // const { history } = this.props;
     // history.push('/edit/${value}');
@@ -89,6 +79,7 @@ class Join extends React.Component {
     console.log(value);
   }
 
+  // This method is created to allow user to use the Join button to join the queue currently in state
   async onClickJoin() {
     const query = `mutation { itemCreateOne(
       record:{
@@ -103,11 +94,10 @@ class Join extends React.Component {
         }
         }
     }`;
-
     const itemAdd = await graphQLFetch(query);
     if (itemAdd && itemAdd.itemCreateOne != null) {
       console.log(itemAdd.itemCreateOne.record);
-      this.state.queueId;
+      // this.state.queueId;
     }
   }
 
@@ -121,8 +111,7 @@ class Join extends React.Component {
         title
         description
         status
-        items {
-          user
+        items {user}
       }
   }`;
     //const { showError } = this.props;
@@ -164,7 +153,7 @@ class Join extends React.Component {
             <div>
               <Button
                 disabled={
-                  this.state.title.length < 1 && this.props.loggedIn === true
+                  this.state.title.length < 1 && this.props.loggedIn === false
                 }
                 color='primary'
                 onClick={this.onClickJoin()}
