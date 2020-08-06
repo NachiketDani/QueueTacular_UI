@@ -5,6 +5,7 @@ import { Row, Col, Progress, Badge } from 'reactstrap';
 class CreatedQueueMini extends React.Component {
   render() {
     const queueTitle = this.props.queue != null ? this.props.queue.title : '';
+    console.log(this.props);
     return (
       <>
         <Row>

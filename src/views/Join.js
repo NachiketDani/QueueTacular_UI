@@ -8,6 +8,9 @@ import {
   CardText,
   ListGroup,
   ListGroupItem,
+  Form,
+  Input,
+  FormGroup,
 } from 'reactstrap';
 
 // import withToast from "./withToast";
@@ -18,6 +21,7 @@ class Join extends React.Component {
     this.onChangeSelection = this.onChangeSelection.bind(this);
     this.loadOptions = this.loadOptions.bind(this);
     this.loadData = this.loadData.bind(this);
+    this.addItemToQueue = this.addItemToQueue.bind(this);
     // this.changeState = this.changeState.bind(this);
   }
 
@@ -27,32 +31,37 @@ class Join extends React.Component {
     title: '',
     description: '',
     people_in_queue: [],
+    status: '',
   };
 
-  componentDidMount() {
-    this.loadData();
-  }
+  // componentDidMount() {
+  //   this.loadData();
+  // }
 
-  async loadData() {
-    const queryForItems = `query {
-      itemMany(filter:{
-          status: Waiting,
-          user: "${this.props.userId}",
-      }) {
-       _id
-      }
-    }`;
+  // async loadData() {
+  //   const queryForItems = `query {
+  //     itemMany(filter:{
+  //         status: Waiting,
+  //         user: "${this.props.userId}",
+  //     }) {
+  //      _id
+  //     }
+  //   }`;
 
+  async addItemToQueue() {
     const queryForQueue = `query{ queueOne(
-      filter:{
-        title: ""
-      }) 
-      {
-        title, description, items {
-          user
+        filter:{
+          title: ""
+        }) 
+        {
+          title, description, items {
+            user
+            }
           }
         }
-    }`;
+      }`;
+
+    // const updateQueue =
 
     const data = await graphQLFetch(queryForQueue);
     //console.log(data);
@@ -75,6 +84,7 @@ class Join extends React.Component {
       title: value.title,
       description: value.description,
       people_in_queue: value.items.length,
+      status: value.status,
     });
     console.log(value);
   }
@@ -110,7 +120,9 @@ class Join extends React.Component {
         _id
         title
         description
-        items {user}
+        status
+        items {
+          user
       }
   }`;
     //const { showError } = this.props;
