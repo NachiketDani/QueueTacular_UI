@@ -43,29 +43,41 @@ class App extends React.Component {
       inQueueItems: [],
       queues: [],
       createdQueues: [],
+      loggedIn: false,
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
     this.getInQueueItems = this.getInQueueItems.bind(this);
     this.getQueuesCurrentlyIn = this.getQueuesCurrentlyIn.bind(this);
+    this.loadData = this.loadData.bind(this);
+    this.signoutGoogle = this.signoutGoogle.bind(this);
+    this.signInFailure = this.signInFailure.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (navigator.platform.indexOf('Win') > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle('perfect-scrollbar-on');
     }
+    if (this.state.userId !== '') {
+      this.loadData();
+    }
   }
+
   componentWillUnmount() {
     if (navigator.platform.indexOf('Win') > -1) {
       ps.destroy();
       document.body.classList.toggle('perfect-scrollbar-on');
     }
   }
-  componentDidUpdate(e) {
+
+  async componentDidUpdate(e) {
     if (e.history.action === 'PUSH') {
       this.mainPanel.current.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
+    }
+    if (this.state.userId !== '') {
+      this.loadData();
     }
   }
 
@@ -76,12 +88,40 @@ class App extends React.Component {
     this.setState({ backgroundColor: color });
   };
 
+  async loadData() {
+    console.log('loading data..', this.state.userId);
+    const items = await this.getInQueueItems();
+    if (items && items.itemMany != null) {
+      this.setState({ inQueueItems: items });
+      if (this.state.inQueueItems.length > 0) {
+        const queues = await this.getQueuesCurrentlyIn();
+        this.setState({ queues: queues });
+      }
+    }
+  }
+
+  signInFailure() {
+    console.log('Sign in failed');
+  }
+
+  signoutGoogle() {
+    this.setState({
+      userId: '',
+      name: '',
+      inQueueItems: [],
+      queues: [],
+      createdQueues: [],
+      loggedIn: false,
+    });
+  }
+
   async responseGoogle(response) {
     console.log(response);
     console.log(response.profileObj.givenName);
     this.setState({
       name: response.profileObj.givenName,
       email: response.profileObj.email,
+      loggedIn: true,
     });
 
     const queryForUserId = `query {
@@ -93,18 +133,37 @@ class App extends React.Component {
     }`;
 
     const data = await graphQLFetch(queryForUserId);
+    // if user is alaready in the DB
     if (data && data.userOne != null) {
       this.setState({ userId: data.userOne._id });
       const items = await this.getInQueueItems();
       this.setState({ inQueueItems: items });
       if (this.state.inQueueItems.length > 0) {
-        console.log(this.state.inQueueItems.length);
-        console.log(this.state.inQueueItems);
-        console.log('Got the items... on to the queues!');
+        // console.log(this.state.inQueueItems.length);
+        // console.log(this.state.inQueueItems);
+        // console.log('Got the items... on to the queues!');
         const queues = await this.getQueuesCurrentlyIn();
-        console.log(queues);
+        // console.log(queues);
         this.setState({ queues: queues });
-        console.log(this.state.queues);
+        // console.log(this.state.queues);
+      }
+    }
+    // user is not in the DB yet, create a new one
+    else if (data && data.userOne == null) {
+      const mutationForNewUser = `mutation {
+        userCreateOne(record:{
+            username: "${this.state.name}",
+            email: "${this.state.email}",
+        }) {
+         recordId
+        }
+      }`;
+
+      const data = await graphQLFetch(mutationForNewUser);
+      if (data) {
+        this.setState({
+          userId: data.userCreateOne.recordId,
+        });
       }
     }
   }
@@ -123,8 +182,7 @@ class App extends React.Component {
 
     const data = await graphQLFetch(queryForItems);
     console.log(data);
-    if (data != null) {
-      // const itemIds = data.itemMany.map((item) => item._id);
+    if (data != null && data.itemMany != null) {
       console.log(data.itemMany);
       let i;
       let items = [];
@@ -153,6 +211,7 @@ class App extends React.Component {
           _id
           description
           title
+          endDate
           items {
             user
             status
@@ -183,6 +242,9 @@ class App extends React.Component {
             {...this.props}
             onSignIn={this.responseGoogle}
             name={this.state.name}
+            loggedIn={this.state.loggedIn}
+            onSignOut={this.signoutGoogle}
+            onSignInFailure={this.onSignInFailure}
           />
           {
             <Switch>

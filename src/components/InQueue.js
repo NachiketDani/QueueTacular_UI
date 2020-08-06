@@ -62,6 +62,10 @@ class InQueue extends React.Component {
         <CardHeader>
           <CardTitle tag='h5'>{this.props.queue.title}</CardTitle>
           <p className='card-just-text'>{this.props.queue.description}</p>
+          <p className='card-just-text'>
+            <em>Your details: </em>
+            {this.props.queue.items[this.getPlaceInQueue()].description}
+          </p>
         </CardHeader>
         <CardBody>
           <div>
@@ -97,7 +101,9 @@ class InQueue extends React.Component {
         <CardFooter>
           <hr />
           <div className='stats'>
-            <i className='fa fa-history' /> Updated 3 mins ago
+            <i className='fa fa-history' />
+            This queue will be open until:
+            {this.props.queue.endDate}
           </div>
         </CardFooter>
       </Card>

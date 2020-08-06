@@ -185,7 +185,12 @@ class Header extends React.Component {
                 {
                   <DropdownMenu right>
                     <DropdownItem tag='a'>
-                      <Login onSignIn={this.props.onSignIn} />
+                      <Login
+                        loggedIn={this.props.loggedIn}
+                        onSignIn={this.props.onSignIn}
+                        onSignOut={this.props.onSignOut}
+                        onSignInFailure={this.props.onSignInFailure}
+                      />
                     </DropdownItem>
                     {/* <DropdownItem tag="a">Create</DropdownItem>
                     <DropdownItem tag="a">Join</DropdownItem> */}
