@@ -32,7 +32,7 @@ class CreatedQueue extends React.Component {
             <tbody>
               <tr>
                 <CardHeader tag='h5' style={{ verticalAlign: 'top' }}>
-                  {this.state.title}
+                  {/* {this.props.title} */}
                 </CardHeader>
                 <td style={{ textAlign: 'right' }}>
                   <Button style={{ marginRight: 10 }}>

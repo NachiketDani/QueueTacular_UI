@@ -9,7 +9,6 @@ import {
   Table,
 } from 'reactstrap';
 
-import graphQLFetch from '../GraphQLFetch.js';
 import CreatedQueueMini from './CreatedQueueMini.js';
 import Expandable from './Expandable.js';
 import CreatedQueue from './CreatedQueue.js';
@@ -22,15 +21,18 @@ class CreatedQueues extends React.Component {
   createCreatedQueueMini() {
     const rows = [];
     let i;
-    for (i = 0; i < this.props.queues.length; i++) {
+    for (i = 0; i < this.props.createdQueues.length; i++) {
       const queueMini = (
         <tr
           style={{ cursor: 'pointer' }}
-          onClick={() => this.props.showCreated(i)}
+          // having trouble passing the showId property from the InQueueMini component to the Dashboard
+          // so that the correct queueId would be displayed on CreatedQueue.js
+          onClick={() => this.props.showCreated(this.props.showId)}
         >
-          <td>
-            <CreatedQueueMini {...this.props.queues[i]} />
-          </td>
+          <tr>
+            <CreatedQueueMini {...this.props.createdQueues[i]} showId={i} />
+          </tr>
+          //{' '}
         </tr>
       );
       rows.push(queueMini);

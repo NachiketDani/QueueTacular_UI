@@ -1,6 +1,6 @@
 import React from 'react';
 // reactstrap components
-import { Row, Col, Progress, Badge } from 'reactstrap';
+import { Row, Table, Col, Progress, Badge } from 'reactstrap';
 
 class InQueueMini extends React.Component {
   render() {
