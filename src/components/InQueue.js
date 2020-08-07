@@ -101,8 +101,8 @@ class InQueue extends React.Component {
             <br />
             <Row>
               <Col className='card-just-text'>
-                In Queue - There are {this.getPlaceInQueue()} people ahead of
-                you
+                In Queue - There are <strong>{this.getPlaceInQueue()}</strong>{' '}
+                people ahead of you
               </Col>
             </Row>
           </div>

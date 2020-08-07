@@ -91,7 +91,7 @@ class Join extends React.Component {
     const updateQueue = `mutation { queueUpdateById(
       record: {
         _id: "${this.state.queueId}"
-        items: ${itemsToAdd}
+        items: JSON.stringify(${itemsToAdd})
     }
     ) {
       recordId
@@ -158,10 +158,9 @@ class Join extends React.Component {
             </CardText>
             <div>
               <Button
-                disabled='true'
-                // disabled={
-                //   this.state.title.length < 1 || this.props.loggedIn === false
-                // }
+                disabled={
+                  this.state.title.length < 1 || this.props.loggedIn === false
+                }
                 color='primary'
                 onClick={this.onClickJoin}
               >

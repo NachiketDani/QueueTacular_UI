@@ -4,7 +4,9 @@ import { GoogleLogout } from 'react-google-login';
 
 require('dotenv').config();
 
-const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+const GOOGLE_CLIENT_ID =
+  process.env.GOOGLE_CLIENT_ID ||
+  '853849420986-fr4bopp51rbkquud8e8jd4jbhp356cir.apps.googleusercontent.com';
 
 class Login extends React.Component {
   constructor(props) {
@@ -16,7 +18,7 @@ class Login extends React.Component {
     if (this.props.loggedIn) {
       return (
         <GoogleLogout
-          clientId='853849420986-fr4bopp51rbkquud8e8jd4jbhp356cir.apps.googleusercontent.com'
+          clientId={GOOGLE_CLIENT_ID}
           buttonText='Logout'
           onLogoutSuccess={this.props.onSignOut}
         />
@@ -24,7 +26,7 @@ class Login extends React.Component {
     } else {
       return (
         <GoogleLogin
-          clientId='853849420986-fr4bopp51rbkquud8e8jd4jbhp356cir.apps.googleusercontent.com'
+          clientId={GOOGLE_CLIENT_ID}
           buttonText='Login with Google'
           onSuccess={this.props.onSignIn}
           onFailure={this.props.SignInFailure}
