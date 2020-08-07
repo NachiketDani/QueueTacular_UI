@@ -8,6 +8,10 @@ import {
   CardText,
   ListGroup,
   ListGroupItem,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
 } from 'reactstrap';
 import { timers } from 'jquery';
 
@@ -83,15 +87,16 @@ class Join extends React.Component {
     });
     this.setState({ peopleInQueue: newItemArray });
     console.log('New array', newItemArray);
+    // const stringedArray = JSON.stringify(newItemArray);
     this.queueUpItem(newItemArray);
   }
 
   // This method is to add the created item data to the queue currently in state
-  async queueUpItem(itemsToAdd) {
+  async queueUpItem(newItemArray) {
     const updateQueue = `mutation { queueUpdateById(
       record: {
         _id: "${this.state.queueId}"
-        items: ${itemsToAdd}
+        items: ${JSON.stringify(newItemArray)}
     }
     ) {
       recordId
@@ -161,7 +166,7 @@ class Join extends React.Component {
                 disabled={
                   this.state.title.length < 1 || this.props.loggedIn === false
                 }
-                color='primary'
+                color='danger'
                 onClick={this.onClickJoin}
               >
                 Join Queue!
