@@ -78,28 +78,33 @@ class Join extends React.Component {
       });
     }
     // Get new items array ready to be inserted into the queue
-    const newItemArray = this.state.peopleInQueue; //CHANGED HERE
-    newItemArray.push({
-      status: this.state.newItemStatus,
-      _id: this.state.newItemId,
-      description: this.state.newItemDescription,
-      user: this.props.userId,
-    });
-    this.setState({ peopleInQueue: newItemArray });
-    console.log('New array', newItemArray);
+    // const newItemArray = this.state.peopleInQueue; //CHANGED HERE
+    // newItemArray.push({
+    //   status: this.state.newItemStatus,
+    //   _id: this.state.newItemId,
+    //   description: this.state.newItemDescription,
+    //   user: this.props.userId,
+    // });
+    // this.setState({ peopleInQueue: newItemArray });
+    // console.log('New array', newItemArray);
     // const stringedArray = JSON.stringify(newItemArray);
-    this.queueUpItem(newItemArray);
+    this.queueUpItem(itemAdd);
   }
 
   // This method is to add the created item data to the queue currently in state
   async queueUpItem(newItemArray) {
-    const updateQueue = `mutation { queueUpdateById(
+    const updateQueue = `mutation queueInsertOneItem {
+      queuePushToItems (_id: "${this.state.queueId}",
       record: {
-        _id: "${this.state.queueId}"
-        items: ${JSON.stringify(newItemArray)}
-    }
-    ) {
-      recordId
+        _id: "${this.state.newItemId}",
+        status: Waiting,
+        user: "${this.props.userId}",
+        description: "${this.state.newItemDescription}",
+        wait: 30
+    }) {
+      description title items {
+        status description _id
+      }
     }
   }`;
     console.log(updateQueue);
@@ -163,10 +168,10 @@ class Join extends React.Component {
             </CardText>
             <div>
               <Button
-                disabled='true'
-                // disabled={
-                //   this.state.title.length < 1 || this.props.loggedIn === false
-                // }
+                // disabled='true'
+                disabled={
+                  this.state.title.length < 1 || this.props.loggedIn === false
+                }
                 color='primary'
                 onClick={this.onClickJoin}
               >
