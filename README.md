@@ -7,9 +7,16 @@
 
 ---
 
+## Heroku Links:
+
+- [Space Force API on Heroku](https://queuetacular-api.herokuapp.com/graphql)
+- [Space Force UI on Heroku](https://queuetacular-ui.herokuapp.com/)
+
+---
+
 ## Link to API
 
-[Space Force API](https://github.ccs.neu.edu/NEU-CS5610-SU20/GroupProject-SpaceForce-API)
+[Space Force Group Project API](https://github.ccs.neu.edu/NEU-CS5610-SU20/GroupProject-SpaceForce-API)
 
 ---
 
@@ -23,4 +30,25 @@ To run the the application, install npm, and start with the start scripts
 
 ## Components:
 
-Custom components include InQueue.js, InqueueMini.js, QueueMultiview.js. As well custom views in Dashboard.js, Create.js, and Join.js with modifications made throughout in other areas. Current versions of those componenents are displayed in the dashboard tab.
+The top level file is Admin.js, which routes using routes.js and fetches using GraphQLFetch.js. There are modifications made throughout in other areas.
+
+Custom components:
+
+- CreatedQueue.js
+- CreatedQueueMini.js
+- CreatedQueueparticipantHover.js
+- CreatedQueues.js
+- Expandable.js
+- ExpandatableTable.js
+- Inqueue.js
+- QueueMultiview.js
+- Login.js
+- LoginButtons.js
+- QueueMultiview.js
+
+Views:
+
+- Create.js
+- Dashboard.js
+- Edit.js
+- Join.js

@@ -32,7 +32,7 @@ class CreatedQueue extends React.Component {
             <tbody>
               <tr>
                 <CardHeader tag='h5' style={{ verticalAlign: 'top' }}>
-                  {/* {this.props.title} */}
+                  {this.props.title}
                 </CardHeader>
                 <td style={{ textAlign: 'right' }}>
                   <Button style={{ marginRight: 10 }}>
@@ -59,13 +59,20 @@ class CreatedQueue extends React.Component {
           <Table style={{ marginBottom: 0 }} size='sm' borderless responsive>
             <tbody>
               <tr>
+                <td>{this.props.description}</td>
+              </tr>
+              <tr>
                 <td>
-                  <b>5</b> participants currently waiting.
+                  <b>
+                    {this.props.status === 'Open' ? this.props.items.length : 0}
+                  </b>{' '}
+                  participant(s) currently waiting.
                 </td>
               </tr>
               <tr>
                 <td>
-                  Queue is capped at <b>15</b> participants.
+                  Queue is capped at <b>{this.props.maxParticipants}</b>{' '}
+                  participant(s).
                 </td>
               </tr>
               <tr>
@@ -95,7 +102,7 @@ class CreatedQueue extends React.Component {
         </CardBody>
         <CardFooter>
           <div>
-            <ExpandableTable />
+            <ExpandableTable {...this.props} />
           </div>
           <div style={{ textAlign: 'right' }}>
             <i className='fa fa-history' /> Updated 3 mins ago

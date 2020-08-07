@@ -163,10 +163,11 @@ class Join extends React.Component {
             </CardText>
             <div>
               <Button
-                disabled={
-                  this.state.title.length < 1 || this.props.loggedIn === false
-                }
-                color='danger'
+                disabled='true'
+                // disabled={
+                //   this.state.title.length < 1 || this.props.loggedIn === false
+                // }
+                color='primary'
                 onClick={this.onClickJoin}
               >
                 Join Queue!

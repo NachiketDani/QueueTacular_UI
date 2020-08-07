@@ -13,7 +13,6 @@ import React from 'react';
 // reactstrap components
 import { Row, Col } from 'reactstrap';
 
-import InQueue from '../components/InQueue.js';
 import QueueMultiview from '../components/QueueMultiview.js';
 import CreatedQueues from '../components/CreatedQueues.js';
 import CreatedQueue from '../components/CreatedQueue.js';
@@ -52,14 +51,9 @@ class Dashboard extends React.Component {
           {this.state.showCreatedBool ? (
             <CreatedQueue
               removeCreated={this.removeCreated}
-              {...this.props.createdQueues[0]}
+              {...this.props.createdQueues[this.state.showId]}
             />
           ) : null}
-          {/* <Row>
-            <Col md='12'>
-              <CreatedQueue />
-            </Col>
-          </Row> */}
           <Row>
             <Col md='12'>
               <CreatedQueues
@@ -75,11 +69,6 @@ class Dashboard extends React.Component {
                 userId={this.props.userId}
                 queues={this.props.queues}
               />
-            </Col>
-          </Row>
-          <Row>
-            <Col md='12'>
-              {/*<QueueMultiview userId={this.props.userId} />*/}
             </Col>
           </Row>
         </div>

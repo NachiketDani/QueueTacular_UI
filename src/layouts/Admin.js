@@ -167,7 +167,9 @@ class App extends React.Component {
       }
     }
     const queues = await this.getCreatedQueues();
-    this.setState({ createdQueues: queues });
+    if (queues) {
+      this.setState({ createdQueues: queues });
+    }
   }
 
   async getInQueueItems() {
@@ -240,6 +242,7 @@ class App extends React.Component {
         owner
         description
         status
+        maxParticipants
         startDate
         endDate
         items {
@@ -249,7 +252,8 @@ class App extends React.Component {
     }`;
 
     const data = await graphQLFetch(queryForQueues);
-    if (data.queueMany.length > 0) return data.queueMany;
+    if (data && data.queueMany !== null && data.queueMany.length > 0)
+      return data.queueMany;
   }
 
   render() {
