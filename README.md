@@ -7,6 +7,13 @@
 
 ---
 
+## Heroku Links:
+
+- [Space Force API on Heroku](https://queuetacular-api.herokuapp.com/graphql)
+- [Space Force UI on Heroku](https://queuetacular-ui.herokuapp.com/)
+
+---
+
 ## Link to API
 
 [Space Force API](https://github.ccs.neu.edu/NEU-CS5610-SU20/GroupProject-SpaceForce-API)
