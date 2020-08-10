@@ -38,16 +38,28 @@ class CreatedQueues extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag='h5'>My Created Queues</CardTitle>
+          {this.props.createdQueues.length === 0 ? (
+            <CardTitle tag='h5'>
+              Please Login or click "Create" to create a Queue!
+            </CardTitle>
+          ) : (
+            <CardTitle tag='h5'>My Created Queues:</CardTitle>
+          )}
         </CardHeader>
         <CardBody>
-          <Table hover>
-            <tbody>{this.createCreatedQueueMini()}</tbody>
-          </Table>
+          {this.props.createdQueues.length === 0 ? (
+            <h6>No created Queues to show!</h6>
+          ) : (
+            <Table hover>
+              <tbody>{this.createCreatedQueueMini()}</tbody>
+            </Table>
+          )}
         </CardBody>
-        <CardFooter>
-          <Expandable {...this.props} />
-        </CardFooter>
+        {this.props.createdQueues.length === 0 ? null : (
+          <CardFooter>
+            <Expandable {...this.props} />
+          </CardFooter>
+        )}
       </Card>
     );
   }

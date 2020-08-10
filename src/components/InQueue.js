@@ -27,10 +27,10 @@ class InQueue extends React.Component {
   getPlaceInQueue() {
     let i;
     for (i = 0; i < this.props.queue.items.length; i++) {
-      console.log(this.props.queue.items);
+      // console.log(this.props.queue.items);
       if (this.props.queue.items[i].user === this.props.userId) {
-        console.log('Determining place in line...');
-        console.log(i);
+        // console.log('Determining place in line...');
+        // console.log(i);
         return i;
       }
     }
@@ -60,7 +60,7 @@ class InQueue extends React.Component {
 
   getEndDate() {
     const date = new Date(this.props.queue.endDate);
-    console.log(date);
+    // console.log(date);
     const end = ` ${date.toDateString()} at ${date.toLocaleTimeString()}`;
     return end;
   }
@@ -91,7 +91,7 @@ class InQueue extends React.Component {
                 <h6>
                   <Badge color='primary'>
                     Its your turn!
-                    <div classname='icon-big text-center icon-success'>
+                    <div className='icon-big text-center icon-success'>
                       <i className='nc-icon nc-spaceship' />
                     </div>
                   </Badge>
