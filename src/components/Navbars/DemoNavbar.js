@@ -74,7 +74,7 @@ class Header extends React.Component {
   }
 
   getBrand() {
-    let brandName = 'Default Brand';
+    let brandName = 'Edit';
     routes.map((prop, key) => {
       if (window.location.href.indexOf(prop.layout + prop.path) !== -1) {
         brandName = prop.name;
@@ -178,9 +178,9 @@ class Header extends React.Component {
                 <DropdownToggle caret nav>
                   <span style={{ marginRight: 10 }}>{this.props.name}</span>
                   <i className='nc-icon nc-circle-10' />
-                  <p>
+                  {/* <p>
                     <span className='d-lg-none d-md-block'>Some Actions</span>
-                  </p>
+                  </p> */}
                 </DropdownToggle>
                 {
                   <DropdownMenu right>

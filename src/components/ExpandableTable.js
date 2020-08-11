@@ -57,9 +57,8 @@ const ExpandableTable = (props) => {
                   <td className='text-right'>{(i + 1) * 15} mins</td>
                   <td className='text-right'>
                     <Badge
-                      style={{ marginRight: 10 }}
+                      style={{ marginRight: 10, cursor: 'pointer' }}
                       color='success'
-                      href='#'
                       id='serving'
                     >
                       <UncontrolledTooltip placement='bottom' target='serving'>
@@ -67,7 +66,12 @@ const ExpandableTable = (props) => {
                       </UncontrolledTooltip>
                       <i className='nc-icon nc-check-2' />
                     </Badge>
-                    <Badge color='danger' href='#' id='complete'>
+                    <Badge
+                      color='danger'
+                      id='complete'
+                      onClick={() => props.onDelete(item)}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <UncontrolledTooltip placement='bottom' target='complete'>
                         Mark Participant as Complete
                       </UncontrolledTooltip>

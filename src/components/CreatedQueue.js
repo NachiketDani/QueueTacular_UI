@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 
 // reactstrap components
 import {
@@ -6,14 +7,9 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  CardTitle,
-  Row,
-  Col,
-  Progress,
   Badge,
   Button,
   Table,
-  Tooltip,
 } from 'reactstrap';
 
 import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
@@ -22,24 +18,48 @@ import ExpandableTable from './ExpandableTable';
 class CreatedQueue extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      referrer: null,
+      items: this.props.items,
+    };
   }
 
+  onDelete = (newItems, i) => {
+    const items = newItems.filter((p) => p.item !== i);
+    this.setState({ items });
+  };
+
+  tryRedirect = () => {
+    console.log('clicky clicky!');
+    this.setState({ referrer: './edit' });
+  };
+
   render() {
+    const { referrer } = this.state;
+    if (referrer)
+      return (
+        <Redirect
+          to={{
+            pathname: referrer,
+            state: { id: '123' },
+          }}
+        />
+      );
+
     return (
       <Card>
         <CardBody>
           <Table style={{ marginBottom: 0 }} size='sm' borderless>
             <tbody>
               <tr>
-                <CardHeader tag='h5' style={{ verticalAlign: 'top' }}>
-                  {this.props.title}
-                </CardHeader>
                 <td style={{ textAlign: 'right' }}>
-                  <Button style={{ marginRight: 10 }}>
+                  <Button
+                    onClick={this.tryRedirect}
+                    style={{ marginRight: 10 }}
+                  >
                     <i
                       style={{ marginRight: 10 }}
                       className='nc-icon nc-settings-gear-65'
-                      onClick={this.try}
                     />
                     Edit
                   </Button>
@@ -53,6 +73,14 @@ class CreatedQueue extends React.Component {
                   </Badge>
                 </td>
               </tr>
+              <tr>
+                <CardHeader
+                  tag='h5'
+                  style={{ verticalAlign: 'top', textAlign: 'left' }}
+                >
+                  {this.props.title}
+                </CardHeader>
+              </tr>
             </tbody>
           </Table>
           <hr />
@@ -64,7 +92,7 @@ class CreatedQueue extends React.Component {
               <tr>
                 <td>
                   <b>
-                    {this.props.status === 'Open' ? this.props.items.length : 0}
+                    {this.props.status === 'Open' ? this.state.items.length : 0}
                   </b>{' '}
                   participant(s) currently waiting.
                 </td>
@@ -77,7 +105,7 @@ class CreatedQueue extends React.Component {
               </tr>
               <tr>
                 <td>
-                  <CreatedQueueParticipantHover />
+                  <CreatedQueueParticipantHover items={this.state.items} />
                 </td>
               </tr>
               <tr>
@@ -86,15 +114,27 @@ class CreatedQueue extends React.Component {
                 </td>
               </tr>
               <td>
-                <Badge color='success'>
-                  <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
-                    Active.
-                    <i
-                      style={{ marginRight: 10 }}
-                      className='nc-icon nc-bulb-63'
-                    />
-                  </h5>
-                </Badge>
+                {this.props.status === 'Open' ? (
+                  <Badge color='success'>
+                    <div style={{ marginLeft: 10, marginBottom: 0 }}>
+                      Active.
+                      <i
+                        style={{ marginRight: 10 }}
+                        className='nc-icon nc-bulb-63'
+                      />
+                    </div>
+                  </Badge>
+                ) : (
+                  <Badge color='danger'>
+                    <div style={{ marginLeft: 10, marginBottom: 0 }}>
+                      Closed
+                      <i
+                        style={{ marginRight: 10 }}
+                        className='nc-icon nc-time-alarm'
+                      />
+                    </div>
+                  </Badge>
+                )}
               </td>
             </tbody>
           </Table>
@@ -102,7 +142,11 @@ class CreatedQueue extends React.Component {
         </CardBody>
         <CardFooter>
           <div>
-            <ExpandableTable {...this.props} />
+            <ExpandableTable
+              {...this.props}
+              items={this.state.items}
+              onDelete={this.onDelete}
+            />
           </div>
           <div style={{ textAlign: 'right' }}>
             <i className='fa fa-history' /> Updated 3 mins ago

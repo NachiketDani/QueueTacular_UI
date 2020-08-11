@@ -19,10 +19,6 @@ class QueueMultiview extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    // this.loadData();
-  }
-
   createQueueViews() {
     const rows = [];
     let i;
@@ -30,7 +26,13 @@ class QueueMultiview extends React.Component {
       const inQueue = (
         <tr>
           <td>
-            <InQueue queue={this.props.queues[i]} userId={this.props.userId} />
+            <InQueueMini
+              {...this.props.queues[i]}
+              userId={this.props.userId}
+              queueId={i}
+              key={'Q' + i.toString()}
+              showQueueDetail={this.props.showQueueDetail}
+            />
           </td>
         </tr>
       );
@@ -43,12 +45,22 @@ class QueueMultiview extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag='h5'>Queues I Am In</CardTitle>
+          {this.props.queues.length === 0 ? (
+            <CardTitle tag='h5'>
+              You are not waiting in any queues. Click login to join a Queue!
+            </CardTitle>
+          ) : (
+            <CardTitle tag='h5'>Currently Waiting In:</CardTitle>
+          )}
         </CardHeader>
         <CardBody>
-          <Table hover>
-            <tbody>{this.createQueueViews()}</tbody>
-          </Table>
+          {this.props.queues.length === 0 ? (
+            <h6>No queues to show!</h6>
+          ) : (
+            <Table hover>
+              <tbody>{this.createQueueViews()}</tbody>
+            </Table>
+          )}
         </CardBody>
         {/*
         <CardFooter>

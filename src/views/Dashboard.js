@@ -16,6 +16,7 @@ import { Row, Col } from 'reactstrap';
 import QueueMultiview from '../components/QueueMultiview.js';
 import CreatedQueues from '../components/CreatedQueues.js';
 import CreatedQueue from '../components/CreatedQueue.js';
+import InQueue from '../components/InQueue.js';
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -23,9 +24,13 @@ class Dashboard extends React.Component {
     this.state = {
       showCreatedBool: false,
       showId: 0,
+      showQueueDetail: false,
+      queueDetailId: 0,
     };
     this.showCreated = this.showCreated.bind(this);
     this.removeCreated = this.removeCreated.bind(this);
+    this.showQueueDetail = this.showQueueDetail.bind(this);
+    this.removeQueueDetail = this.removeQueueDetail.bind(this);
   }
 
   showCreated = (id) => {
@@ -33,44 +38,63 @@ class Dashboard extends React.Component {
       showCreatedBool: true,
       showId: id,
     });
-    console.log('success');
+    // console.log('success');
   };
 
   removeCreated() {
     this.setState({
       showCreatedBool: false,
     });
-    console.log('removed');
+    // console.log('removed');
+  }
+
+  showQueueDetail = (id) => {
+    let queueID = id.substr(1);
+    console.log('ID:', queueID);
+    this.setState({
+      showQueueDetail: true,
+      queueDetailId: queueID,
+    });
+  };
+
+  removeQueueDetail() {
+    this.setState({
+      showQueueDetail: false,
+    });
   }
 
   render() {
-    console.log('showId:', `${this.state.showId}`);
+    // console.log('showId:', `${this.state.showId}`);
     return (
       <>
         <div className='content'>
+          {this.state.showQueueDetail ? (
+            <InQueue
+              removeQueueDetail={this.removeQueueDetail}
+              queue={this.props.queues[this.state.queueDetailId]}
+              userId={this.props.userId}
+            />
+          ) : null}
+          <Row>
+            <Col md='12'>
+              <QueueMultiview
+                userId={this.props.userId}
+                queues={this.props.queues}
+                showQueueDetail={this.showQueueDetail}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col md='12'>
+              <CreatedQueues showCreated={this.showCreated} {...this.props} />
+            </Col>
+          </Row>
           {this.state.showCreatedBool ? (
             <CreatedQueue
               removeCreated={this.removeCreated}
               {...this.props.createdQueues[this.state.showId]}
             />
           ) : null}
-          <Row>
-            <Col md='12'>
-              <CreatedQueues
-                showCreated={this.showCreated}
-                {...this.props}
-                showCreated={this.showCreated}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col md='12'>
-              <QueueMultiview
-                userId={this.props.userId}
-                queues={this.props.queues}
-              />
-            </Col>
-          </Row>
         </div>
       </>
     );

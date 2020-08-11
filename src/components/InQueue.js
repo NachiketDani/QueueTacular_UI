@@ -27,10 +27,10 @@ class InQueue extends React.Component {
   getPlaceInQueue() {
     let i;
     for (i = 0; i < this.props.queue.items.length; i++) {
-      console.log(this.props.queue.items);
+      // console.log(this.props.queue.items);
       if (this.props.queue.items[i].user === this.props.userId) {
-        console.log('Determining place in line...');
-        console.log(i);
+        // console.log('Determining place in line...');
+        // console.log(i);
         return i;
       }
     }
@@ -49,6 +49,7 @@ class InQueue extends React.Component {
           animated={placeInQueue === i ? true : false}
           color={placeInQueue === i ? 'danger' : 'success'}
           value={unit * 100}
+          key={i.toString()}
         >
           {placeInQueue === i ? 'You Are Here' : ''}
         </Progress>
@@ -60,7 +61,7 @@ class InQueue extends React.Component {
 
   getEndDate() {
     const date = new Date(this.props.queue.endDate);
-    console.log(date);
+    // console.log(date);
     const end = ` ${date.toDateString()} at ${date.toLocaleTimeString()}`;
     return end;
   }
@@ -69,6 +70,16 @@ class InQueue extends React.Component {
     return (
       <Card>
         <CardHeader>
+          <div style={{ textAlign: 'right', verticalAlign: 'top' }}>
+            <Badge
+              color='danger'
+              onClick={() => this.props.removeQueueDetail()}
+              style={{ cursor: 'pointer' }}
+            >
+              <i className='nc-icon nc-simple-remove' />
+            </Badge>
+          </div>
+
           <CardTitle tag='h5'>{this.props.queue.title}</CardTitle>
           <p className='card-just-text'>{this.props.queue.description}</p>
           <p className='card-just-text'>
@@ -91,7 +102,7 @@ class InQueue extends React.Component {
                 <h6>
                   <Badge color='primary'>
                     Its your turn!
-                    <div classname='icon-big text-center icon-success'>
+                    <div className='icon-big text-center icon-success'>
                       <i className='nc-icon nc-spaceship' />
                     </div>
                   </Badge>
@@ -101,8 +112,8 @@ class InQueue extends React.Component {
             <br />
             <Row>
               <Col className='card-just-text'>
-                In Queue - There are {this.getPlaceInQueue()} people ahead of
-                you
+                In Queue - There are <strong>{this.getPlaceInQueue()}</strong>{' '}
+                people ahead of you
               </Col>
             </Row>
           </div>

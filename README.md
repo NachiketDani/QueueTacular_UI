@@ -16,6 +16,8 @@
 
 ## Link to API
 
+Please see the Space Force API Group Project API for information about each iteration.
+
 [Space Force Group Project API](https://github.ccs.neu.edu/NEU-CS5610-SU20/GroupProject-SpaceForce-API)
 
 ---
@@ -24,13 +26,15 @@
 
 To run the the application, install npm, and start with the start scripts
 
+    $ npm i
+
     $ npm start
 
 ---
 
 ## Components:
 
-The top level file is Admin.js, which routes using routes.js and fetches using GraphQLFetch.js. There are modifications made throughout in other areas.
+The top level file is Admin.js, which routes using routes.js and fetches using GraphQLFetch.js.
 
 Custom components:
 

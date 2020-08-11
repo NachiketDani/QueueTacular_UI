@@ -2,6 +2,8 @@ import React from 'react';
 // reactstrap components
 import { Row, Col, Progress, Badge } from 'reactstrap';
 
+import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
+
 class CreatedQueueMini extends React.Component {
   render() {
     const queueTitle =
@@ -20,26 +22,20 @@ class CreatedQueueMini extends React.Component {
             </Row>
             <Row>
               <Col sm='11'>
-                <Progress multi>
-                  <Progress bar color='success' value='40' />
-                  <Progress bar animated color='new-blue' value='15' />
-                  <Progress bar color='info' value='15' />
-                  <Progress bar color='warning' value='15' />
-                  <Progress bar color='danger' value='15' />
-                </Progress>
+                <CreatedQueueParticipantHover items={this.props.items} />
               </Col>
               <Col>
                 {this.props.status === 'Open' ? (
                   <Badge color='success'>
                     {this.props.status}
-                    <div classname='icon-big text-center icon-warning'>
+                    <div className='icon-big text-center icon-warning'>
                       <i className='nc-icon nc-bulb-63' />
                     </div>
                   </Badge>
                 ) : (
                   <Badge color='danger'>
                     {this.props.status}
-                    <div classname='icon-big text-center icon-warning'>
+                    <div className='icon-big text-center icon-warning'>
                       <i className='nc-icon nc-time-alarm' />
                     </div>
                   </Badge>

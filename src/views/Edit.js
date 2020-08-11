@@ -128,6 +128,7 @@ class Edit extends React.Component {
   }
 
   render() {
+    console.log(this.props.location.state.id);
     return (
       <div className='content'>
         <Row>
