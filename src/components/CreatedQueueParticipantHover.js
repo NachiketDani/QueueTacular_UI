@@ -39,8 +39,8 @@ const CreatedQueueParticipantHover = (props) => {
   return (
     <>
       <Progress multi>
-        {console.log(participants)}
         {participants.map((tooltip, i) => {
+          tooltip = tooltip[0];
           return <TooltipItem key={i} item={tooltip} id={i} />;
         })}
       </Progress>
