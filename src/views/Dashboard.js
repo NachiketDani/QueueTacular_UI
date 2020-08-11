@@ -33,36 +33,21 @@ class Dashboard extends React.Component {
       showCreatedBool: true,
       showId: id,
     });
-    console.log('success');
+    // console.log('success');
   };
 
   removeCreated() {
     this.setState({
       showCreatedBool: false,
     });
-    console.log('removed');
+    // console.log('removed');
   }
 
   render() {
-    console.log('showId:', `${this.state.showId}`);
+    // console.log('showId:', `${this.state.showId}`);
     return (
       <>
         <div className='content'>
-          {this.state.showCreatedBool ? (
-            <CreatedQueue
-              removeCreated={this.removeCreated}
-              {...this.props.createdQueues[this.state.showId]}
-            />
-          ) : null}
-          <Row>
-            <Col md='12'>
-              <CreatedQueues
-                showCreated={this.showCreated}
-                {...this.props}
-                showCreated={this.showCreated}
-              />
-            </Col>
-          </Row>
           <Row>
             <Col md='12'>
               <QueueMultiview
@@ -71,6 +56,17 @@ class Dashboard extends React.Component {
               />
             </Col>
           </Row>
+          <Row>
+            <Col md='12'>
+              <CreatedQueues showCreated={this.showCreated} {...this.props} />
+            </Col>
+          </Row>
+          {this.state.showCreatedBool ? (
+            <CreatedQueue
+              removeCreated={this.removeCreated}
+              {...this.props.createdQueues[this.state.showId]}
+            />
+          ) : null}
         </div>
       </>
     );

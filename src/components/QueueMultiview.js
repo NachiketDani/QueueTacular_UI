@@ -28,7 +28,7 @@ class QueueMultiview extends React.Component {
     let i;
     for (i = 0; i < this.props.queues.length; i++) {
       const inQueue = (
-        <tr>
+        <tr key={i.toString()}>
           <td>
             <InQueue queue={this.props.queues[i]} userId={this.props.userId} />
           </td>
@@ -43,12 +43,22 @@ class QueueMultiview extends React.Component {
     return (
       <Card>
         <CardHeader>
-          <CardTitle tag='h5'>Queues I Am In</CardTitle>
+          {this.props.queues.length === 0 ? (
+            <CardTitle tag='h5'>
+              You are not waiting in any queues. Click login to join a Queue!
+            </CardTitle>
+          ) : (
+            <CardTitle tag='h5'>Currently Waiting In:</CardTitle>
+          )}
         </CardHeader>
         <CardBody>
-          <Table hover>
-            <tbody>{this.createQueueViews()}</tbody>
-          </Table>
+          {this.props.queues.length === 0 ? (
+            <h6>No queues to show!</h6>
+          ) : (
+            <Table hover>
+              <tbody>{this.createQueueViews()}</tbody>
+            </Table>
+          )}
         </CardBody>
         {/*
         <CardFooter>

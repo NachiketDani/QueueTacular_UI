@@ -1,6 +1,9 @@
 require('dotenv').config();
+
 const API_ENDPOINT =
-  process.env.API_SERVER_PORT || 'http://localhost:4000/graphql';
+  process.env.API_SERVER_PORT ||
+  'http://localhost:4000/graphql' ||
+  'https://queuetacular-api.herokuapp.com/graphql';
 
 export default async function graphQLFetch(query, variables = {}) {
   try {
@@ -21,7 +24,7 @@ export default async function graphQLFetch(query, variables = {}) {
         alert(`${error.extensions.code}: ${error.message}`);
       }
     }
-    console.log(result.data);
+    // console.log(result.data);
     return result.data;
   } catch (e) {
     alert(`Error in sending data to server: ${e.message}`);

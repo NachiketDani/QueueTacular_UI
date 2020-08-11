@@ -25,7 +25,7 @@ class InQueueMini extends React.Component {
           <Col>
             <Badge color='danger'>
               Closed
-              <div classname='icon-big text-center icon-warning'>
+              <div className='icon-big text-center icon-warning'>
                 <i className='nc-icon nc-simple-remove' />
               </div>
             </Badge>

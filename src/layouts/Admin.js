@@ -89,7 +89,7 @@ class App extends React.Component {
   };
 
   async loadData() {
-    console.log('loading data..', this.state.userId);
+    // console.log('loading data..', this.state.userId);
     const items = await this.getInQueueItems();
     if (items && items.itemMany != null) {
       this.setState({ inQueueItems: items });
@@ -116,8 +116,8 @@ class App extends React.Component {
   }
 
   async responseGoogle(response) {
-    console.log(response);
-    console.log(response.profileObj.givenName);
+    // console.log(response);
+    // console.log(response.profileObj.givenName);
     this.setState({
       name: response.profileObj.givenName,
       email: response.profileObj.email,
@@ -185,15 +185,15 @@ class App extends React.Component {
     }`;
 
     const data = await graphQLFetch(queryForItems);
-    console.log(data);
+    // console.log(data);
     if (data != null && data.itemMany != null) {
-      console.log(data.itemMany);
+      // console.log(data.itemMany);
       let i;
       let items = [];
       for (i = 0; i < data.itemMany.length; i++) {
         items.push(data.itemMany[i]);
       }
-      console.log('items list to return', items);
+      // console.log('items list to return', items);
       return items;
     }
   }
@@ -201,8 +201,8 @@ class App extends React.Component {
   async getQueuesCurrentlyIn() {
     let queues = [];
     let i;
-    console.log(this.state.inQueueItems);
-    console.log('Items to iterate over', this.state.inQueueItems);
+    // console.log(this.state.inQueueItems);
+    // console.log('Items to iterate over', this.state.inQueueItems);
     for (i = 0; i < this.state.inQueueItems.length; i++) {
       let itemId = this.state.inQueueItems[i]._id;
       const queryForQueue = `query {
@@ -224,7 +224,7 @@ class App extends React.Component {
         }
       }`;
       const data = await graphQLFetch(queryForQueue);
-      console.log(data);
+      // console.log(data);
       if (data != null && data.queueOne != null) {
         queues.push(data.queueOne);
       }
