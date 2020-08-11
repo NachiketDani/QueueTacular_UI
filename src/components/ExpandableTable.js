@@ -9,7 +9,7 @@ import {
 
 const ExpandableTable = (props) => {
   const [collapse, setCollapse] = useState(false);
-  const [setStatus] = useState('Closed');
+  const [status, setStatus] = useState('Closed');
 
   const onEntering = () => setStatus('Opening...');
 
@@ -46,51 +46,41 @@ const ExpandableTable = (props) => {
             </tr>
           </thead>
           <tbody>
-            {props.items.length === 0 ? (
-              <h6>No participants enqueued!</h6>
-            ) : (
-              props.items.map((item, i) => {
-                return [
-                  <tr>
-                    <td>{i + 1}</td>
-                    <td>{item.user}</td>
-                    <td>noahb@hotmail.com</td>
-                    {/* No phone number functionality at the moment - Tim*/}
-                    {/* <td>(555) 555-5555</td> */}
-                    <td className='text-right'>{(i + 1) * 15} mins</td>
-                    <td className='text-right'>
-                      <Badge
-                        style={{ marginRight: 10, cursor: 'pointer' }}
-                        color='success'
-                        id='serving'
-                      >
-                        <UncontrolledTooltip
-                          placement='bottom'
-                          target='serving'
-                        >
-                          Mark Serving Now
-                        </UncontrolledTooltip>
-                        <i className='nc-icon nc-check-2' />
-                      </Badge>
-                      <Badge
-                        color='danger'
-                        id='complete'
-                        onClick={() => props.onDelete(props.items, item)}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <UncontrolledTooltip
-                          placement='bottom'
-                          target='complete'
-                        >
-                          Mark Participant as Complete
-                        </UncontrolledTooltip>
-                        <i className='nc-icon nc-simple-remove' />
-                      </Badge>
-                    </td>
-                  </tr>,
-                ];
-              })
-            )}
+            {props.items.map((item, i) => {
+              return [
+                <tr>
+                  <td>{i + 1}</td>
+                  <td>{item.user}</td>
+                  <td>noahb@hotmail.com</td>
+                  {/* No phone number functionality at the moment - Tim*/}
+                  {/* <td>(555) 555-5555</td> */}
+                  <td className='text-right'>{(i + 1) * 15} mins</td>
+                  <td className='text-right'>
+                    <Badge
+                      style={{ marginRight: 10, cursor: 'pointer' }}
+                      color='success'
+                      id='serving'
+                    >
+                      <UncontrolledTooltip placement='bottom' target='serving'>
+                        Mark Serving Now
+                      </UncontrolledTooltip>
+                      <i className='nc-icon nc-check-2' />
+                    </Badge>
+                    <Badge
+                      color='danger'
+                      id='complete'
+                      onClick={() => props.onDelete(item)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <UncontrolledTooltip placement='bottom' target='complete'>
+                        Mark Participant as Complete
+                      </UncontrolledTooltip>
+                      <i className='nc-icon nc-simple-remove' />
+                    </Badge>
+                  </td>
+                </tr>,
+              ];
+            })}
           </tbody>
           {/* <tr>
             <td>1</td>
