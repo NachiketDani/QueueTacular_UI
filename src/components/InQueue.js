@@ -70,6 +70,16 @@ class InQueue extends React.Component {
     return (
       <Card>
         <CardHeader>
+          <div style={{ textAlign: 'right', verticalAlign: 'top' }}>
+            <Badge
+              color='danger'
+              onClick={() => this.props.removeQueueDetail()}
+              style={{ cursor: 'pointer' }}
+            >
+              <i className='nc-icon nc-simple-remove' />
+            </Badge>
+          </div>
+
           <CardTitle tag='h5'>{this.props.queue.title}</CardTitle>
           <p className='card-just-text'>{this.props.queue.description}</p>
           <p className='card-just-text'>

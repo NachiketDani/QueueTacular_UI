@@ -70,7 +70,7 @@ class Dashboard extends React.Component {
         <div className='content'>
           {this.state.showQueueDetail ? (
             <InQueue
-              removeCreated={this.removeCreated}
+              removeQueueDetail={this.removeQueueDetail}
               queue={this.props.queues[this.state.queueDetailId]}
               userId={this.props.userId}
             />

@@ -97,12 +97,6 @@ class InQueueMini extends React.Component {
               </h6>
             </Col>
           </Row>
-          <Row>
-            <Col className='card-just-text'>
-              There are <strong>{this.getPlaceInQueue()}</strong> people ahead
-              of you
-            </Col>
-          </Row>
         </div>
       </>
     );
