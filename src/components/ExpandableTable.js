@@ -45,37 +45,55 @@ const ExpandableTable = (props) => {
               <th className='text-right'>Actions</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody key='tbody'>
             {props.items.map((item, i) => {
               return [
-                <tr>
-                  <td>{i + 1}</td>
-                  <td>{item.user}</td>
-                  <td>noahb@hotmail.com</td>
+                <tr key={'row' + i}>
+                  <td key={'postion' + i}>{i + 1}</td>
+                  <td key={'username' + i}>{item.user}</td>
+                  <td key={'email' + i}>noahb@hotmail.com</td>
                   {/* No phone number functionality at the moment - Tim*/}
                   {/* <td>(555) 555-5555</td> */}
-                  <td className='text-right'>{(i + 1) * 15} mins</td>
-                  <td className='text-right'>
+                  <td className='text-right' key={'time estimate' + i}>
+                    {(i + 1) * 15} mins
+                  </td>
+                  <td className='text-right' key={'buttons' + i}>
                     <Badge
                       style={{ marginRight: 10, cursor: 'pointer' }}
                       color='success'
                       id='serving'
+                      key={'serving badge' + i}
                     >
-                      <UncontrolledTooltip placement='bottom' target='serving'>
+                      <UncontrolledTooltip
+                        key={'tooltip serving icon' + i}
+                        placement='bottom'
+                        target='serving'
+                      >
                         Mark Serving Now
                       </UncontrolledTooltip>
-                      <i className='nc-icon nc-check-2' />
+                      <i
+                        key={'servingicon' + i}
+                        className='nc-icon nc-check-2'
+                      />
                     </Badge>
                     <Badge
+                      key={'completebadge' + i}
                       color='danger'
                       id='complete'
                       onClick={() => props.onDelete(props.items, item.id)}
                       style={{ cursor: 'pointer' }}
                     >
-                      <UncontrolledTooltip placement='bottom' target='complete'>
+                      <UncontrolledTooltip
+                        key={'completetooltip' + i}
+                        placement='bottom'
+                        target='complete'
+                      >
                         Mark Participant as Complete
                       </UncontrolledTooltip>
-                      <i className='nc-icon nc-simple-remove' />
+                      <i
+                        key={'removeicon' + i}
+                        className='nc-icon nc-simple-remove'
+                      />
                     </Badge>
                   </td>
                 </tr>,
