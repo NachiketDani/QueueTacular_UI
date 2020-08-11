@@ -19,18 +19,20 @@ class QueueMultiview extends React.Component {
     super(props);
   }
 
-  componentDidMount() {
-    // this.loadData();
-  }
-
   createQueueViews() {
     const rows = [];
     let i;
     for (i = 0; i < this.props.queues.length; i++) {
       const inQueue = (
-        <tr key={i.toString()}>
+        <tr>
           <td>
-            <InQueue queue={this.props.queues[i]} userId={this.props.userId} />
+            <InQueueMini
+              {...this.props.queues[i]}
+              userId={this.props.userId}
+              queueId={i}
+              key={'Q' + i.toString()}
+              showQueueDetail={this.props.showQueueDetail}
+            />
           </td>
         </tr>
       );

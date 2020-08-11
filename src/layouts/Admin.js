@@ -216,6 +216,7 @@ class App extends React.Component {
           description
           title
           endDate
+          status
           items {
             user
             status
