@@ -68,7 +68,7 @@ class InQueue extends React.Component {
 
   render() {
     let display =
-      this.props.loggedIn === false ? null : (
+      this.props.queue != null ? (
         <Card>
           <CardHeader>
             <div style={{ textAlign: 'right', verticalAlign: 'top' }}>
@@ -141,7 +141,7 @@ class InQueue extends React.Component {
             </div>
           </CardFooter>
         </Card>
-      );
+      ) : null;
     return display;
   }
 }

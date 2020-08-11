@@ -106,12 +106,12 @@ class App extends React.Component {
 
   signoutGoogle() {
     this.setState({
+      loggedIn: false,
       userId: '',
       name: '',
       inQueueItems: [],
       queues: [],
       createdQueues: [],
-      loggedIn: false,
     });
   }
 
@@ -291,6 +291,7 @@ class App extends React.Component {
                         createdQueues={this.state.createdQueues}
                         onSignOut={this.signoutGoogle}
                         onSignInFailure={this.signInFailure}
+                        onSignIn={this.responseGoogle}
                       />
                     )}
                   />
