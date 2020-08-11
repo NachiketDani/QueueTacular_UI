@@ -18,10 +18,10 @@ class CreatedQueues extends React.Component {
     super(props);
   }
 
-  createCreatedQueueMini() {
+  createCreatedQueueMiniTop() {
     const rows = [];
     let i;
-    for (i = 0; i < this.props.createdQueues.length; i++) {
+    for (i = 0; i < 2; i++) {
       const queueMini = (
         <CreatedQueueMini
           {...this.props.createdQueues[i]}
@@ -33,6 +33,28 @@ class CreatedQueues extends React.Component {
       rows.push(queueMini);
     }
     return rows;
+  }
+
+  restOfQueues() {
+    console.log('rest of queues');
+    // console.log(this.props);
+    // if (this.props.createdQueues.length > 2) {
+    //   return null;
+    // }
+    // const rows = [];
+    // let i;
+    // for (i = 2; i < this.props.createdQueues.length; i++) {
+    //   const queueMini = (
+    //     <CreatedQueueMini
+    //       {...this.props.createdQueues[i]}
+    //       showId={i}
+    //       key={i.toString()}
+    //       showCreated={this.props.showCreated}
+    //     />
+    //   );
+    //   rows.push(queueMini);
+    // }
+    // return rows;
   }
 
   render() {
@@ -52,13 +74,13 @@ class CreatedQueues extends React.Component {
             <h6>No created Queues to show!</h6>
           ) : (
             <Table hover>
-              <tbody>{this.createCreatedQueueMini()}</tbody>
+              <tbody>{this.createCreatedQueueMiniTop()}</tbody>
             </Table>
           )}
         </CardBody>
         {this.props.createdQueues.length === 0 ? null : (
           <CardFooter>
-            <Expandable {...this.props} />
+            <Expandable {...this.props} restOfQueues={this.restOfQueues} />
           </CardFooter>
         )}
       </Card>
