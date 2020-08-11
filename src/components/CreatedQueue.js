@@ -74,12 +74,11 @@ class CreatedQueue extends React.Component {
                 </td>
               </tr>
               <tr>
-                <CardHeader
-                  tag='h5'
-                  style={{ verticalAlign: 'top', textAlign: 'left' }}
-                >
-                  {this.props.title}
-                </CardHeader>
+                <td style={{ marginTop: 0, marginBottom: 0 }}>
+                  <h5 style={{ verticalAlign: 'top', textAlign: 'left' }}>
+                    {this.props.title}
+                  </h5>
+                </td>
               </tr>
             </tbody>
           </Table>

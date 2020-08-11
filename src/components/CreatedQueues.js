@@ -31,25 +31,25 @@ class CreatedQueues extends React.Component {
   }
 
   restOfQueues() {
-    // console.log('rest of queues');
-    // console.log(this.props);
-    // if (this.props.createdQueues.length > 2) {
-    //   return null;
-    // }
-    // const rows = [];
-    // let i;
-    // for (i = 2; i < this.props.createdQueues.length; i++) {
-    //   const queueMini = (
-    //     <CreatedQueueMini
-    //       {...this.props.createdQueues[i]}
-    //       showId={i}
-    //       key={i.toString()}
-    //       showCreated={this.props.showCreated}
-    //     />
-    //   );
-    //   rows.push(queueMini);
-    // }
-    // return rows;
+    console.log('rest of queues');
+    console.log(this.props);
+    if (this.props.createdQueues.length > 2) {
+      return null;
+    }
+    const rows = [];
+    let i;
+    for (i = 2; i < this.props.createdQueues.length; i++) {
+      const queueMini = (
+        <CreatedQueueMini
+          {...this.props.createdQueues[i]}
+          showId={i}
+          key={i.toString()}
+          showCreated={this.props.showCreated}
+        />
+      );
+      rows.push(queueMini);
+    }
+    return rows;
   }
 
   render() {
