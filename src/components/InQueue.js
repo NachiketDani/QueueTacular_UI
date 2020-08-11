@@ -49,6 +49,7 @@ class InQueue extends React.Component {
           animated={placeInQueue === i ? true : false}
           color={placeInQueue === i ? 'danger' : 'success'}
           value={unit * 100}
+          key={i.toString()}
         >
           {placeInQueue === i ? 'You Are Here' : ''}
         </Progress>

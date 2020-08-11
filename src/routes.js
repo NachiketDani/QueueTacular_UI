@@ -58,7 +58,7 @@ var routes = [
     layout: '/admin',
   },
   {
-    path: '/edit/:_id',
+    path: '/edit/',
     name: 'Edit',
     component: Edit,
     layout: '/admin',

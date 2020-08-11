@@ -26,6 +26,7 @@ class CreatedQueues extends React.Component {
         <CreatedQueueMini
           {...this.props.createdQueues[i]}
           showId={i}
+          key={i.toString()}
           showCreated={this.props.showCreated}
         />
       );

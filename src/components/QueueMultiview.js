@@ -28,7 +28,7 @@ class QueueMultiview extends React.Component {
     let i;
     for (i = 0; i < this.props.queues.length; i++) {
       const inQueue = (
-        <tr>
+        <tr key={i.toString()}>
           <td>
             <InQueue queue={this.props.queues[i]} userId={this.props.userId} />
           </td>
