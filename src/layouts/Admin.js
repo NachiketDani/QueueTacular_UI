@@ -273,7 +273,7 @@ class App extends React.Component {
             name={this.state.name}
             loggedIn={this.state.loggedIn}
             onSignOut={this.signoutGoogle}
-            onSignInFailure={this.onSignInFailure}
+            onSignInFailure={this.signInFailure}
           />
           {
             <Switch>
@@ -289,6 +289,8 @@ class App extends React.Component {
                         queues={this.state.queues}
                         loggedIn={this.state.loggedIn}
                         createdQueues={this.state.createdQueues}
+                        onSignOut={this.signoutGoogle}
+                        onSignInFailure={this.signInFailure}
                       />
                     )}
                   />

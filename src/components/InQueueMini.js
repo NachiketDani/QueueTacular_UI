@@ -65,35 +65,25 @@ class InQueueMini extends React.Component {
             </Col>
             <Col xs='2'>
               <h6>
-                {this.props.status === 'Open' ? (
+                {this.props.items[this.getPlaceInQueue()].status ===
+                'Waiting' ? (
                   <Badge color='success'>
                     <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
-                      Open
-                      <i
-                        style={{ marginRight: 10 }}
-                        className='nc-icon nc-bulb-63'
-                      />
-                    </h5>
-                  </Badge>
-                ) : (
-                  <Badge color='danger'>
-                    <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
-                      Closed
+                      Waiting {}
                       <i
                         style={{ marginRight: 10 }}
                         className='nc-icon nc-time-alarm'
                       />
                     </h5>
                   </Badge>
+                ) : (
+                  <Badge color='primary'>
+                    Its your turn!
+                    <div className='icon-big text-center icon-success'>
+                      <i className='nc-icon nc-spaceship' />
+                    </div>
+                  </Badge>
                 )}
-                {/*
-              <Badge color='primary'>
-                Its your turn!
-                <div className='icon-big text-center icon-success'>
-                  <i className='nc-icon nc-spaceship' />
-                </div>
-              </Badge>
-              */}
               </h6>
             </Col>
           </Row>

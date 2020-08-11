@@ -67,67 +67,82 @@ class InQueue extends React.Component {
   }
 
   render() {
-    return (
-      <Card>
-        <CardHeader>
-          <div style={{ textAlign: 'right', verticalAlign: 'top' }}>
-            <Badge
-              color='danger'
-              onClick={() => this.props.removeQueueDetail()}
-              style={{ cursor: 'pointer' }}
-            >
-              <i className='nc-icon nc-simple-remove' />
-            </Badge>
-          </div>
+    let display =
+      this.props.loggedIn === false ? null : (
+        <Card>
+          <CardHeader>
+            <div style={{ textAlign: 'right', verticalAlign: 'top' }}>
+              <Badge
+                color='danger'
+                onClick={() => this.props.removeQueueDetail()}
+                style={{ cursor: 'pointer' }}
+              >
+                <i className='nc-icon nc-simple-remove' />
+              </Badge>
+            </div>
 
-          <CardTitle tag='h5'>{this.props.queue.title}</CardTitle>
-          <p className='card-just-text'>{this.props.queue.description}</p>
-          <p className='card-just-text'>
-            <em>Your details: </em>
-            {this.props.queue.items[this.getPlaceInQueue()].description}
-          </p>
-        </CardHeader>
-        <CardBody>
-          <div>
-            <Row>
-              <Col>
-                <p className='card-just-text'>Queue Progress</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs='10'>
-                <Progress multi>{this.getProgressViews()}</Progress>
-              </Col>
-              <Col xs='2'>
-                <h6>
-                  <Badge color='primary'>
-                    Its your turn!
-                    <div className='icon-big text-center icon-success'>
-                      <i className='nc-icon nc-spaceship' />
-                    </div>
-                  </Badge>
-                </h6>
-              </Col>
-            </Row>
-            <br />
-            <Row>
-              <Col className='card-just-text'>
-                In Queue - There are <strong>{this.getPlaceInQueue()}</strong>{' '}
-                people ahead of you
-              </Col>
-            </Row>
-          </div>
-        </CardBody>
-        <CardFooter>
-          <hr />
-          <div className='stats'>
-            <i className='fa fa-history' />
-            This queue will be open until:
-            {this.getEndDate()}
-          </div>
-        </CardFooter>
-      </Card>
-    );
+            <CardTitle tag='h5'>{this.props.queue.title}</CardTitle>
+            <p className='card-just-text'>{this.props.queue.description}</p>
+            <p className='card-just-text'>
+              <em>Your details: </em>
+              {this.props.queue.items[this.getPlaceInQueue()].description}
+            </p>
+          </CardHeader>
+          <CardBody>
+            <div>
+              <Row>
+                <Col>
+                  <p className='card-just-text'>Queue Progress</p>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs='10'>
+                  <Progress multi>{this.getProgressViews()}</Progress>
+                </Col>
+                <Col xs='2'>
+                  <h6>
+                    {this.props.queue.items[this.getPlaceInQueue()].status ===
+                    'Waiting' ? (
+                      <Badge color='success'>
+                        <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                          Waiting {}
+                          <i
+                            style={{ marginRight: 10 }}
+                            className='nc-icon nc-time-alarm'
+                          />
+                        </h5>
+                      </Badge>
+                    ) : (
+                      <Badge color='primary'>
+                        Its your turn!
+                        <div className='icon-big text-center icon-success'>
+                          <i className='nc-icon nc-spaceship' />
+                        </div>
+                      </Badge>
+                    )}
+                  </h6>
+                </Col>
+              </Row>
+              <br />
+              <Row>
+                <Col className='card-just-text'>
+                  In Queue - There are <strong>{this.getPlaceInQueue()}</strong>{' '}
+                  people ahead of you
+                </Col>
+              </Row>
+            </div>
+          </CardBody>
+          <CardFooter>
+            <hr />
+            <div className='stats'>
+              <i className='fa fa-history' />
+              This queue will be open until:
+              {this.getEndDate()}
+            </div>
+          </CardFooter>
+        </Card>
+      );
+    return display;
   }
 }
 
