@@ -7,14 +7,9 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  CardTitle,
-  Row,
-  Col,
-  Progress,
   Badge,
   Button,
   Table,
-  Tooltip,
 } from 'reactstrap';
 
 import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
@@ -25,13 +20,12 @@ class CreatedQueue extends React.Component {
     super(props);
     this.state = {
       referrer: null,
-      items: props.items,
+      items: this.props.items,
     };
   }
 
-  onDelete = (item) => {
-    console.log('this works?');
-    const items = this.state.items.filter((c) => c.item !== item);
+  onDelete = (newItems, i) => {
+    const items = newItems.filter((p) => p.item !== i);
     this.setState({ items });
   };
 
@@ -58,9 +52,6 @@ class CreatedQueue extends React.Component {
           <Table style={{ marginBottom: 0 }} size='sm' borderless>
             <tbody>
               <tr>
-                <CardHeader tag='h5' style={{ verticalAlign: 'top' }}>
-                  {this.props.title}
-                </CardHeader>
                 <td style={{ textAlign: 'right' }}>
                   <Button
                     onClick={this.tryRedirect}
@@ -80,6 +71,20 @@ class CreatedQueue extends React.Component {
                   >
                     <i className='nc-icon nc-simple-remove' />
                   </Badge>
+                </td>
+              </tr>
+              <tr>
+                <td style={{ marginTop: 0, marginBottom: 0 }}>
+                  <h5
+                    style={{
+                      verticalAlign: 'top',
+                      textAlign: 'left',
+                      marginTop: 0,
+                      marginBottom: 0,
+                    }}
+                  >
+                    {this.props.title}
+                  </h5>
                 </td>
               </tr>
             </tbody>
@@ -106,7 +111,7 @@ class CreatedQueue extends React.Component {
               </tr>
               <tr>
                 <td>
-                  <CreatedQueueParticipantHover />
+                  <CreatedQueueParticipantHover items={this.state.items} />
                 </td>
               </tr>
               <tr>
@@ -117,23 +122,23 @@ class CreatedQueue extends React.Component {
               <td>
                 {this.props.status === 'Open' ? (
                   <Badge color='success'>
-                    <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                    <div style={{ marginLeft: 10, marginBottom: 0 }}>
                       Active.
                       <i
                         style={{ marginRight: 10 }}
                         className='nc-icon nc-bulb-63'
                       />
-                    </h5>
+                    </div>
                   </Badge>
                 ) : (
                   <Badge color='danger'>
-                    <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                    <div style={{ marginLeft: 10, marginBottom: 0 }}>
                       Closed
                       <i
                         style={{ marginRight: 10 }}
                         className='nc-icon nc-time-alarm'
                       />
-                    </h5>
+                    </div>
                   </Badge>
                 )}
               </td>
