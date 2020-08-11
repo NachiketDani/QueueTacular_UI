@@ -29,11 +29,13 @@ const Expandable = (props) => {
         onExiting={onExiting}
         onExited={onExited}
       >
-        {props.createdQueues.length === 0 ? (
+        {props.createdQueues.length < 3 ? (
           <h6>No created Queues to show!</h6>
         ) : (
           <Table hover>
-            <tbody>{props.restOfQueues()}</tbody>
+            <tbody>
+              {props.restOfQueues(props.createdQueues, props.showCreated)}
+            </tbody>
           </Table>
         )}
       </Collapse>
