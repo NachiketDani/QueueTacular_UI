@@ -96,7 +96,6 @@ class Join extends React.Component {
     const updateQueue = `mutation queueInsertOneItem {
       queuePushToItems (_id: "${this.state.queueId}",
       record: {
-<<<<<<< HEAD
         _id: "${this.state.newItemId}",
         status: Waiting,
         user: "${this.props.userId}",
@@ -106,13 +105,6 @@ class Join extends React.Component {
       description title items {
         status description _id
       }
-=======
-        _id: "${this.state.queueId}"
-        items: JSON.stringify(${itemsToAdd})
-    }
-    ) {
-      recordId
->>>>>>> f900dbf54190ba82dd8d2b8ff989276569d8560e
     }
   }`;
     console.log(updateQueue);
