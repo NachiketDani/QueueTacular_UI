@@ -25,13 +25,12 @@ class CreatedQueue extends React.Component {
     super(props);
     this.state = {
       referrer: null,
-      items: props.items,
+      items: this.props.items,
     };
   }
 
-  onDelete = (item) => {
-    console.log('this works?');
-    const items = this.state.items.filter((c) => c.item !== item);
+  onDelete = (newItems, i) => {
+    const items = newItems.filter((p) => p.item !== i);
     this.setState({ items });
   };
 
@@ -58,9 +57,6 @@ class CreatedQueue extends React.Component {
           <Table style={{ marginBottom: 0 }} size='sm' borderless>
             <tbody>
               <tr>
-                <CardHeader tag='h5' style={{ verticalAlign: 'top' }}>
-                  {this.props.title}
-                </CardHeader>
                 <td style={{ textAlign: 'right' }}>
                   <Button
                     onClick={this.tryRedirect}
@@ -81,6 +77,14 @@ class CreatedQueue extends React.Component {
                     <i className='nc-icon nc-simple-remove' />
                   </Badge>
                 </td>
+              </tr>
+              <tr>
+                <CardHeader
+                  tag='h5'
+                  style={{ verticalAlign: 'top', textAlign: 'left' }}
+                >
+                  {this.props.title}
+                </CardHeader>
               </tr>
             </tbody>
           </Table>
