@@ -9,7 +9,7 @@ import {
 
 const ExpandableTable = (props) => {
   const [collapse, setCollapse] = useState(false);
-  const [status, setStatus] = useState('Closed');
+  const [setStatus] = useState('Closed');
 
   const onEntering = () => setStatus('Opening...');
 

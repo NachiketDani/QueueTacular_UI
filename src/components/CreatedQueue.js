@@ -7,14 +7,9 @@ import {
   CardHeader,
   CardBody,
   CardFooter,
-  CardTitle,
-  Row,
-  Col,
-  Progress,
   Badge,
   Button,
   Table,
-  Tooltip,
 } from 'reactstrap';
 
 import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
@@ -117,23 +112,23 @@ class CreatedQueue extends React.Component {
               <td>
                 {this.props.status === 'Open' ? (
                   <Badge color='success'>
-                    <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                    <div style={{ marginLeft: 10, marginBottom: 0 }}>
                       Active.
                       <i
                         style={{ marginRight: 10 }}
                         className='nc-icon nc-bulb-63'
                       />
-                    </h5>
+                    </div>
                   </Badge>
                 ) : (
                   <Badge color='danger'>
-                    <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                    <div style={{ marginLeft: 10, marginBottom: 0 }}>
                       Closed
                       <i
                         style={{ marginRight: 10 }}
                         className='nc-icon nc-time-alarm'
                       />
-                    </h5>
+                    </div>
                   </Badge>
                 )}
               </td>

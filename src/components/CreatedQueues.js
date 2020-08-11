@@ -11,13 +11,8 @@ import {
 
 import CreatedQueueMini from './CreatedQueueMini.js';
 import Expandable from './Expandable.js';
-import CreatedQueue from './CreatedQueue.js';
 
 class CreatedQueues extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   createCreatedQueueMiniTop() {
     const rows = [];
     let i;
@@ -36,7 +31,7 @@ class CreatedQueues extends React.Component {
   }
 
   restOfQueues() {
-    console.log('rest of queues');
+    // console.log('rest of queues');
     // console.log(this.props);
     // if (this.props.createdQueues.length > 2) {
     //   return null;
