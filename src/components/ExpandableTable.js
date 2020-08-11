@@ -69,7 +69,7 @@ const ExpandableTable = (props) => {
                     <Badge
                       color='danger'
                       id='complete'
-                      onClick={() => props.onDelete(item)}
+                      onClick={() => props.onDelete(props.items, item.id)}
                       style={{ cursor: 'pointer' }}
                     >
                       <UncontrolledTooltip placement='bottom' target='complete'>

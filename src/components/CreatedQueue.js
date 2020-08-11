@@ -25,7 +25,7 @@ class CreatedQueue extends React.Component {
   }
 
   onDelete = (newItems, i) => {
-    const items = newItems.filter((p) => p.item !== i);
+    const items = newItems.filter((p) => p.item.id !== i);
     this.setState({ items });
   };
 
@@ -119,29 +119,31 @@ class CreatedQueue extends React.Component {
                   Estimated end of queue current wait time is <b>15</b> minutes.
                 </td>
               </tr>
-              <td>
-                {this.props.status === 'Open' ? (
-                  <Badge color='success'>
-                    <div style={{ marginLeft: 10, marginBottom: 0 }}>
-                      Active.
-                      <i
-                        style={{ marginRight: 10 }}
-                        className='nc-icon nc-bulb-63'
-                      />
-                    </div>
-                  </Badge>
-                ) : (
-                  <Badge color='danger'>
-                    <div style={{ marginLeft: 10, marginBottom: 0 }}>
-                      Closed
-                      <i
-                        style={{ marginRight: 10 }}
-                        className='nc-icon nc-time-alarm'
-                      />
-                    </div>
-                  </Badge>
-                )}
-              </td>
+              <tr>
+                <td>
+                  {this.props.status === 'Open' ? (
+                    <Badge color='success'>
+                      <div style={{ marginLeft: 10, marginBottom: 0 }}>
+                        Active.
+                        <i
+                          style={{ marginRight: 10 }}
+                          className='nc-icon nc-bulb-63'
+                        />
+                      </div>
+                    </Badge>
+                  ) : (
+                    <Badge color='danger'>
+                      <div style={{ marginLeft: 10, marginBottom: 0 }}>
+                        Closed
+                        <i
+                          style={{ marginRight: 10 }}
+                          className='nc-icon nc-time-alarm'
+                        />
+                      </div>
+                    </Badge>
+                  )}
+                </td>
+              </tr>
             </tbody>
           </Table>
           <hr style={{ marginBottom: 0, marginTop: 0 }} />
