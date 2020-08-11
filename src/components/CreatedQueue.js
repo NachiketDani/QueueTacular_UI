@@ -51,8 +51,10 @@ class CreatedQueue extends React.Component {
         <CardBody>
           <Table style={{ marginBottom: 0 }} size='sm' borderless>
             <tbody>
-              <tr>
-                <td style={{ textAlign: 'right' }}>
+              <tr style={{ marginTop: 0, marginBottom: 0 }}>
+                <td
+                  style={{ marginTop: 0, marginBottom: 0, textAlign: 'right' }}
+                >
                   <Button
                     onClick={this.tryRedirect}
                     style={{ marginRight: 10 }}
@@ -89,7 +91,7 @@ class CreatedQueue extends React.Component {
               </tr>
             </tbody>
           </Table>
-          <hr />
+          <hr style={{ marginTop: 0 }} />
           <Table style={{ marginBottom: 0 }} size='sm' borderless responsive>
             <tbody>
               <tr>

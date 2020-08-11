@@ -55,7 +55,7 @@ const ExpandableTable = (props) => {
                   {/* No phone number functionality at the moment - Tim*/}
                   {/* <td>(555) 555-5555</td> */}
                   <td className='text-right' key={'time estimate' + i}>
-                    {(i + 1) * 15} mins
+                    {(i + 1) * 5} mins
                   </td>
                   <td className='text-right' key={'buttons' + i}>
                     <Badge
