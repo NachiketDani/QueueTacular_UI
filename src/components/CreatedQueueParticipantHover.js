@@ -24,92 +24,23 @@ const TooltipItem = (props) => {
   );
 };
 
+const mapToArray = (props) => {
+  const participants = props.items.map((item) => [
+    {
+      placement: 'bottom',
+      text: item.user.toString(),
+    },
+  ]);
+  return participants;
+};
+
 const CreatedQueueParticipantHover = (props) => {
+  const participants = mapToArray(props);
   return (
     <>
       <Progress multi>
-        {[
-          {
-            placement: 'bottom',
-            text: 'John',
-          },
-          {
-            placement: 'bottom',
-            text: 'Ringo',
-          },
-          {
-            placement: 'bottom',
-            text: 'Paul',
-          },
-          {
-            placement: 'bottom',
-            text: 'George',
-          },
-          {
-            placement: 'bottom',
-            text: 'Thom',
-          },
-          {
-            placement: 'bottom',
-            text: 'John',
-          },
-          {
-            placement: 'bottom',
-            text: 'Ringo',
-          },
-          {
-            placement: 'bottom',
-            text: 'Paul',
-          },
-          {
-            placement: 'bottom',
-            text: 'George',
-          },
-          {
-            placement: 'bottom',
-            text: 'Thom',
-          },
-          {
-            placement: 'bottom',
-            text: 'John',
-          },
-          {
-            placement: 'bottom',
-            text: 'Ringo',
-          },
-          {
-            placement: 'bottom',
-            text: 'Paul',
-          },
-          {
-            placement: 'bottom',
-            text: 'George',
-          },
-          {
-            placement: 'bottom',
-            text: 'Thom',
-          },
-          {
-            placement: 'bottom',
-            text: 'John',
-          },
-          {
-            placement: 'bottom',
-            text: 'Ringo',
-          },
-          {
-            placement: 'bottom',
-            text: 'Paul',
-          },
-          {
-            placement: 'bottom',
-            text: 'George',
-          },
-          {
-            placement: 'bottom',
-            text: 'Thom',
-          },
-        ].map((tooltip, i) => {
+        {console.log(participants)}
+        {participants.map((tooltip, i) => {
           return <TooltipItem key={i} item={tooltip} id={i} />;
         })}
       </Progress>
