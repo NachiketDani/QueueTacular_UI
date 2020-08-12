@@ -2,24 +2,15 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 // reactstrap components
-<<<<<<< HEAD
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
-  CardTitle,
-  Row,
-  Col,
-  Progress,
+  CardHeader,
   Badge,
   Button,
   Table,
-  Tooltip,
 } from 'reactstrap';
-=======
-import { Card, CardBody, CardFooter, Badge, Button, Table } from 'reactstrap';
->>>>>>> tgb
 
 import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
 import ExpandableTable from './ExpandableTable';
