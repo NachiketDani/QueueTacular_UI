@@ -33,9 +33,7 @@ class Footer extends React.Component {
             <nav className='footer-nav'>
               <ul>
                 <li>
-                  <a href='#' target='_blank'>
-                    About
-                  </a>
+                  <a href='./about'>About</a>
                 </li>
                 <li>
                   <a

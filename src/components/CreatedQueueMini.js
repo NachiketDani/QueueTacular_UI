@@ -43,7 +43,15 @@ class CreatedQueueMini extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col>{this.props.items.length} Participants enqueued.</Col>
+              <Col>
+                {
+                  this.props.items.filter(
+                    (item) =>
+                      item.status === 'Waiting' || item.status === 'Serving'
+                  ).length
+                }{' '}
+                Participants enqueued.
+              </Col>
             </Row>
           </td>
         </tr>

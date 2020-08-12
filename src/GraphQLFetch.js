@@ -1,9 +1,7 @@
 require('dotenv').config();
 
 const API_ENDPOINT =
-  process.env.API_SERVER_PORT ||
-  'http://localhost:4000/graphql' ||
-  'https://queuetacular-api.herokuapp.com/graphql';
+  process.env.API_SERVER_PORT || 'http://localhost:4000/graphQL';
 
 export default async function graphQLFetch(query, variables = {}) {
   try {

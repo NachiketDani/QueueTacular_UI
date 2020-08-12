@@ -257,6 +257,39 @@ class App extends React.Component {
       return data.queueMany;
   }
 
+  // Tim: creates a list of objects with _id: that contain lists of user's MongoID
+  async getCreatedUsers() {
+    const queues = await this.getCreatedQueues();
+    return queues.map((queue) => {
+      return {
+        _id: queue.items.map((item) => {
+          return item.user;
+        }),
+      };
+    });
+  }
+
+  async getCreatedUsersInfo() {
+    const users = this.getCreatedUsers();
+    const queryForQueues = `query {
+      userMany(filter:{
+        OR: []
+      }){
+        _id
+        title
+        owner
+        description
+        status
+        maxParticipants
+        startDate
+        endDate
+        items {
+          _id user wait description status
+        }
+      }
+    }`;
+  }
+
   render() {
     return (
       <div className='wrapper'>
@@ -301,12 +334,6 @@ class App extends React.Component {
           }
           <Footer fluid />
         </div>
-        {/* <FixedPlugin
-          bgColor={this.state.backgroundColor}
-          activeColor={this.state.activeColor}
-          handleActiveClick={this.handleActiveClick}
-          handleBgClick={this.handleBgClick}
-        /> */}
       </div>
     );
   }
