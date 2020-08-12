@@ -55,9 +55,7 @@ class Footer extends React.Component {
             <nav className='footer-nav'>
               <ul>
                 <li>
-                  <a onClick={this.tryRedirect} style={{ cursor: 'pointer' }}>
-                    About
-                  </a>
+                  <a href='./about'>About</a>
                 </li>
                 <li>
                   <a

@@ -25,12 +25,16 @@ const TooltipItem = (props) => {
 };
 
 const mapToArray = (props) => {
-  const participants = props.items.map((item) => [
-    {
-      placement: 'bottom',
-      text: item.user.toString(),
-    },
-  ]);
+  const participants = props.items
+    .filter((item) => {
+      return item.status === 'Waiting' || item.status === 'Serving';
+    })
+    .map((item) => [
+      {
+        placement: 'bottom',
+        text: item.user.toString(),
+      },
+    ]);
   return participants;
 };
 
