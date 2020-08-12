@@ -21,31 +21,9 @@ import React from 'react';
 import { Container, Row } from 'reactstrap';
 // used for making the prop types of this component
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 
 class Footer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      referrer: null,
-    };
-  }
-
-  tryRedirect = () => {
-    this.setState({ referrer: './about' });
-  };
-
   render() {
-    const { referrer } = this.state;
-    if (referrer)
-      return (
-        <Redirect
-          to={{
-            pathname: referrer,
-          }}
-        />
-      );
-
     return (
       <footer
         className={'footer' + (this.props.default ? ' footer-default' : '')}
