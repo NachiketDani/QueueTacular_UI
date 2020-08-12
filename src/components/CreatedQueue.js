@@ -129,7 +129,7 @@ class CreatedQueue extends React.Component {
                               item.status === 'Serving'
                           ).length}
                     </b>{' '}
-                    minutes.
+                    minute(s).
                   </td>
                 </tr>
                 <td>
