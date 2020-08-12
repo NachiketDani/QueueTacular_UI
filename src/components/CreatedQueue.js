@@ -118,7 +118,17 @@ class CreatedQueue extends React.Component {
                 </tr>
                 <tr>
                   <td>
-                    Estimated end of queue current wait time is <b>15</b>{' '}
+                    Estimated end of queue current wait time is{' '}
+                    <b>
+                      {this.props.items == null
+                        ? 0
+                        : 5 *
+                          this.props.items.filter(
+                            (item) =>
+                              item.status === 'Waiting' ||
+                              item.status === 'Serving'
+                          ).length}
+                    </b>{' '}
                     minutes.
                   </td>
                 </tr>

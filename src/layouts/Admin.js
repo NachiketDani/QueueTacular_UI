@@ -44,6 +44,7 @@ class App extends React.Component {
       queues: [],
       createdQueues: [],
       loggedIn: false,
+      userItems: [],
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -170,6 +171,11 @@ class App extends React.Component {
     if (queues) {
       this.setState({ createdQueues: queues });
     }
+    //  Tim: ate some homemade spaghetti
+    // const users = await this.getCreatedUsersInfo();
+    // if (users) {
+    //   this.setState({ userItems: users });
+    // }
   }
 
   async getInQueueItems() {
@@ -260,35 +266,46 @@ class App extends React.Component {
   // Tim: creates a list of objects with _id: that contain lists of user's MongoID
   async getCreatedUsers() {
     const queues = await this.getCreatedQueues();
-    return queues.map((queue) => {
-      return {
-        _id: queue.items.map((item) => {
-          return item.user;
-        }),
-      };
+    const users = queues.map((queue) => {
+      return queue.items.map((item) => {
+        return { _id: JSON.stringify(item.user) };
+      });
     });
+    return users;
   }
 
-  async getCreatedUsersInfo() {
-    const users = this.getCreatedUsers();
-    const queryForQueues = `query {
-      userMany(filter:{
-        OR: []
-      }){
-        _id
-        title
-        owner
-        description
-        status
-        maxParticipants
-        startDate
-        endDate
-        items {
-          _id user wait description status
-        }
-      }
-    }`;
-  }
+  // Tim: homemade speciality spaghetti with JSON stringify,
+  // nested array of objectsm and meatball
+  // async getCreatedUsersInfo() {
+  //   const users = await this.getCreatedUsers();
+  //   if (users == null) return [];
+  //   let userInfo = [];
+  //   let i;
+  //   for (i = 0; i < 1; i++) {
+  //     let userList = users[i];
+  //     let j;
+  //     for (j = 0; j < userList.length; j++) {
+  //       let jsonObject = JSON.stringify(userList[i][j]);
+  //       jsonObject.replace(/"([^"]+)":/g, '$1:');
+  //     }
+  //     if (userList.length) {
+  //       const queryForUsers = `query {
+  //         userMany(filter: {
+  //           OR: ${userList[i]}
+  //         }) {
+  //           username email
+  //         }
+  //       }`;
+  //       const data = await graphQLFetch(queryForUsers);
+  //       if (data && data.userMany !== null) {
+  //         userInfo.push(data.userMany);
+  //       }
+  //     } else {
+  //       userInfo.push([]);
+  //     }
+  //   }
+  //   return userInfo;
+  // }
 
   render() {
     return (
@@ -325,6 +342,7 @@ class App extends React.Component {
                         onSignOut={this.signoutGoogle}
                         onSignInFailure={this.signInFailure}
                         onSignIn={this.responseGoogle}
+                        userItems={this.state.userItems}
                       />
                     )}
                   />
