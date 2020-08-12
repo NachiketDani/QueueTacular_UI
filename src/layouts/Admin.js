@@ -25,10 +25,12 @@ import { Route, Switch } from 'react-router-dom';
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
 import Footer from 'components/Footer/Footer.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
+
 // import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 
 import routes from 'routes.js';
 import graphQLFetch from '../GraphQLFetch';
+// import sendEmail from '../components/Email.js';
 
 var ps;
 
@@ -52,6 +54,7 @@ class App extends React.Component {
     this.loadData = this.loadData.bind(this);
     this.signoutGoogle = this.signoutGoogle.bind(this);
     this.signInFailure = this.signInFailure.bind(this);
+    this.serveUser = this.serveUser.bind(this);
   }
 
   async componentDidMount() {
@@ -290,6 +293,22 @@ class App extends React.Component {
     }`;
   }
 
+  async serveUser(queueId, itemId) {
+    const serveItemQuery = `mutation {
+      itemUpdateById(record: {
+        _id: "${itemId}"
+        status: Serving
+      }) {
+        recordId
+      }
+    }`;
+    const data = await graphQLFetch(serveItemQuery);
+    // if (data) {
+    //   console.log('Updated Item:', data.itemUpdateById.recordId);
+    //   sendEmail();
+    // }
+  }
+
   render() {
     return (
       <div className='wrapper'>
@@ -325,6 +344,7 @@ class App extends React.Component {
                         onSignOut={this.signoutGoogle}
                         onSignInFailure={this.signInFailure}
                         onSignIn={this.responseGoogle}
+                        serveUser={this.serveUser}
                       />
                     )}
                   />

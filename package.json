@@ -8,6 +8,7 @@
     "dotenv": "^6.2.0",
     "emailjs-com": "^2.6.3",
     "googleapis": "^59.0.0",
+    "gulp-mail": "^0.4.1",
     "history": "4.10.1",
     "node-sass": "4.14.1",
     "nodemailer": "^6.4.11",

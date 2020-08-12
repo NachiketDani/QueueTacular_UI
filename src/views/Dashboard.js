@@ -95,6 +95,7 @@ class Dashboard extends React.Component {
               removeCreated={this.removeCreated}
               {...this.props.createdQueues[this.state.showId]}
               loggedIn={this.props.loggedIn}
+              serveUser={this.props.serveUser}
             />
           ) : null}
         </div>

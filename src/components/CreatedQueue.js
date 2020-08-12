@@ -155,6 +155,7 @@ class CreatedQueue extends React.Component {
                 {...this.props}
                 items={this.props.items}
                 onDelete={this.onDelete}
+                serveUser={this.props.serveUser}
               />
             </div>
           </CardFooter>
