@@ -334,12 +334,6 @@ class App extends React.Component {
           }
           <Footer fluid />
         </div>
-        {/* <FixedPlugin
-          bgColor={this.state.backgroundColor}
-          activeColor={this.state.activeColor}
-          handleActiveClick={this.handleActiveClick}
-          handleBgClick={this.handleBgClick}
-        /> */}
       </div>
     );
   }
