@@ -51,7 +51,7 @@ class CreatedQueue extends React.Component {
       );
 
     let display =
-      this.props.loggedIn === true ? (
+      this.props.loggedIn === true && this.props.items != null ? (
         <Card>
           <CardBody>
             <Table style={{ marginBottom: 0 }} size='sm' borderless>
