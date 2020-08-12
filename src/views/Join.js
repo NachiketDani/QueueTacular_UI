@@ -10,6 +10,10 @@ import {
   ListGroup,
   ListGroupItem,
   Alert,
+  FormGroup,
+  Label,
+  Input,
+  Form,
 } from 'reactstrap';
 import NotificationAlert from 'react-notification-alert';
 
@@ -46,6 +50,8 @@ class Join extends React.Component {
     this.onClickJoin = this.onClickJoin.bind(this);
     this.submitSuccess = this.submitSuccess.bind(this);
     this.submitFailure = this.submitFailure.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
     this.state = {
       queueId: '',
@@ -54,10 +60,14 @@ class Join extends React.Component {
       peopleInQueue: [],
       status: '',
       newItemId: '',
-      newItemDescription: '',
+      newItemDescriptor: '',
       newItemStatus: '',
     };
   }
+
+  // async handleSubmit() {
+  //   this.onClickJoin();
+  // }
 
   // This method loads the selected option from loadOptions on the screen by setting the Join component state
   onChangeSelection({ value }) {
@@ -74,8 +84,17 @@ class Join extends React.Component {
     console.log(value);
   }
 
+  handleChange(event) {
+    this.setState({ newItemDescriptor: event.target.value });
+  }
+
+  handleSubmit(event) {
+    alert('Queue joined!\n Description:' + this.state.newItemDescriptor);
+    event.preventDefault();
+  }
+
   // This method is created to create an item from user login props information to prepare to add to a queue
-  async onClickJoin() {
+  async onClickJoin(event) {
     let userInArray = this.state.peopleInQueue.filter(
       (item) => item.user === this.props.userId
     );
@@ -84,11 +103,12 @@ class Join extends React.Component {
       this.submitFailure();
       return;
     }
+
     const query = `mutation { itemCreateOne(
       record:{
         status: Waiting
         user: "${this.props.userId}"
-        description: "I need service, test add"
+        description: "${this.state.newItemDescriptor}"
         }) {
         record{
           status
@@ -98,12 +118,13 @@ class Join extends React.Component {
         }
         }
     }`;
+
     const itemAdd = await graphQLFetch(query);
     if (itemAdd && itemAdd.itemCreateOne != null) {
       console.log(itemAdd.itemCreateOne.record);
       this.setState({
         newItemId: itemAdd.itemCreateOne.record._id,
-        newItemDescription: itemAdd.itemCreateOne.record.description,
+        newItemDescriptor: itemAdd.itemCreateOne.record.description,
         newItemStatus: itemAdd.itemCreateOne.record.status,
       });
     }
@@ -119,7 +140,7 @@ class Join extends React.Component {
         _id: "${this.state.newItemId}",
         status: Waiting,
         user: "${this.props.userId}",
-        description: "${this.state.newItemDescription}",
+        description: "${this.state.newItemDescriptor}",
         wait: 30
     }) {
       description title items {
@@ -173,7 +194,7 @@ class Join extends React.Component {
   render() {
     return (
       <div className='content'>
-        <h4>Search your Queue by Title:</h4>
+        <h4>Search your Queue by the exact title:</h4>
         <SelectAsync
           instanceId='search-select'
           value=''
@@ -190,7 +211,6 @@ class Join extends React.Component {
               </CardTitle>
               <CardText>
                 {this.state.description}
-                <hr></hr>
                 <ListGroup>
                   <ListGroupItem>
                     {this.state.queueId !== ''
@@ -200,20 +220,34 @@ class Join extends React.Component {
                 </ListGroup>
               </CardText>
               <div>
-                <Button
-                  // disabled='true'
-                  disabled={
-                    this.state.title.length < 1 || this.props.loggedIn === false
-                  }
-                  color='primary'
-                  onClick={this.onClickJoin}
-                >
-                  Join Queue!
-                </Button>
-                <Alert color='warning' isOpen={this.props.loggedIn === false}>
-                  Please login to Queue-Tacular to join a queue!
-                </Alert>
-                <NotificationAlert ref='notify' />
+                <Form onSubmit={this.handleSubmit}>
+                  <FormGroup>
+                    <Label>
+                      Optional: A brief description for services required
+                    </Label>
+                    <Input
+                      type='text'
+                      value={this.state.newItemDescriptor}
+                      onChange={this.handleChange}
+                      placeholder='Text'
+                    ></Input>
+                  </FormGroup>
+                  <Button
+                    // disabled='true'
+                    disabled={
+                      this.state.title.length < 1 ||
+                      this.props.loggedIn === false
+                    }
+                    color='primary'
+                    onClick={this.onClickJoin}
+                  >
+                    Join Queue!
+                  </Button>
+                  <Alert color='warning' isOpen={this.props.loggedIn === false}>
+                    Please login to Queue-Tacular to join a queue!
+                  </Alert>
+                  <NotificationAlert ref='notify' />
+                </Form>
               </div>
             </CardBody>
           </Card>
