@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 
 // reactstrap components
+<<<<<<< HEAD
 import {
   Card,
   CardHeader,
@@ -16,6 +17,9 @@ import {
   Table,
   Tooltip,
 } from 'reactstrap';
+=======
+import { Card, CardBody, CardFooter, Badge, Button, Table } from 'reactstrap';
+>>>>>>> tgb
 
 import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
 import ExpandableTable from './ExpandableTable';
@@ -45,7 +49,14 @@ class CreatedQueue extends React.Component {
         <Redirect
           to={{
             pathname: referrer,
-            state: { id: '123' },
+            state: {
+              id: this.props._id,
+              title: this.props.title,
+              description: this.props.description,
+              maxParticipants: this.props.maxParticipants,
+              startDate: this.props.startDate,
+              endDate: this.props.endDate,
+            },
           }}
         />
       );
