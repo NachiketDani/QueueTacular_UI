@@ -29,7 +29,6 @@ class CreatedQueue extends React.Component {
   };
 
   tryRedirect = () => {
-    console.log('clicky clicky!');
     this.setState({ referrer: './edit' });
   };
 
@@ -125,7 +124,7 @@ class CreatedQueue extends React.Component {
                   {this.props.status === 'Open' ? (
                     <Badge color='success'>
                       <div style={{ marginLeft: 10, marginBottom: 0 }}>
-                        Active.
+                        Active.{'  '}
                         <i
                           style={{ marginRight: 10 }}
                           className='nc-icon nc-bulb-63'
@@ -135,7 +134,7 @@ class CreatedQueue extends React.Component {
                   ) : (
                     <Badge color='danger'>
                       <div style={{ marginLeft: 10, marginBottom: 0 }}>
-                        Closed
+                        Closed{'  '}
                         <i
                           style={{ marginRight: 10 }}
                           className='nc-icon nc-time-alarm'
