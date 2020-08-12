@@ -6,10 +6,6 @@ import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
 
 class CreatedQueueMini extends React.Component {
   render() {
-    const participants = this.props.items.filter(
-      (item) => item.status === 'Waiting' || item.status === 'Serving'
-    );
-
     const queueTitle =
       this.props.title != null ? this.props.title : 'Title is missing';
     return (
@@ -47,7 +43,15 @@ class CreatedQueueMini extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col>{participants.length} Participants enqueued.</Col>
+              <Col>
+                {
+                  this.props.items.filter(
+                    (item) =>
+                      item.status === 'Waiting' || item.status === 'Serving'
+                  ).length
+                }{' '}
+                Participants enqueued.
+              </Col>
             </Row>
           </td>
         </tr>
