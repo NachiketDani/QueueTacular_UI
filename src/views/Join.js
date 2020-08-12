@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import SelectAsync from 'react-select/lib/Async';
 import graphQLFetch from '../GraphQLFetch.js';
+import Login from '../components/Login.js';
 import {
   Card,
+  Row,
+  Col,
+  CardHeader,
   Button,
   CardTitle,
   CardBody,
@@ -192,68 +196,93 @@ class Join extends React.Component {
   }
 
   render() {
-    return (
-      <div className='content'>
-        <h4>Search your Queue by the exact title:</h4>
-        <SelectAsync
-          instanceId='search-select'
-          value=''
-          loadOptions={this.loadOptions}
-          filterOption={() => true}
-          onChange={this.onChangeSelection}
-          components={{ DropdownIndicator: null }}
-        />
-        <div>
-          <Card body outline color='secondary'>
-            <CardBody>
-              <CardTitle>
-                <h4>{this.state.title}</h4>
-              </CardTitle>
-              <CardText>
-                {this.state.description}
-                <ListGroup>
-                  <ListGroupItem>
-                    {this.state.queueId !== ''
-                      ? `People currently in Queue: ${this.state.peopleInQueue.length}`
-                      : ''}
-                  </ListGroupItem>
-                </ListGroup>
-              </CardText>
-              <div>
-                <Form onSubmit={this.handleSubmit}>
-                  <FormGroup>
-                    <Label>
-                      Optional: A brief description for services required
-                    </Label>
-                    <Input
-                      type='text'
-                      value={this.state.newItemDescriptor}
-                      onChange={this.handleChange}
-                      placeholder='Text'
-                    ></Input>
-                  </FormGroup>
-                  <Button
-                    // disabled='true'
-                    disabled={
-                      this.state.title.length < 1 ||
-                      this.props.loggedIn === false
-                    }
-                    color='primary'
-                    onClick={this.onClickJoin}
-                  >
-                    Join Queue!
-                  </Button>
-                  <Alert color='warning' isOpen={this.props.loggedIn === false}>
-                    Please login to Queue-Tacular to join a queue!
-                  </Alert>
-                  <NotificationAlert ref='notify' />
-                </Form>
-              </div>
-            </CardBody>
-          </Card>
+    //return (
+    let display =
+      this.props.loggedIn === false ? (
+        <>
+          <div className='content'>
+            <Row>
+              <Col md='6'>
+                <Card body inverse color='primary'>
+                  <CardHeader>
+                    <CardTitle tag='h5'>
+                      Please login to create a queue
+                    </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    <Login onSignIn={this.props.onSignIn} />
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </div>
+        </>
+      ) : (
+        <div className='content'>
+          <h4>Search your Queue by the exact title:</h4>
+          <SelectAsync
+            instanceId='search-select'
+            value=''
+            loadOptions={this.loadOptions}
+            filterOption={() => true}
+            onChange={this.onChangeSelection}
+            components={{ DropdownIndicator: null }}
+          />
+          <div>
+            <Card body outline color='secondary'>
+              <CardBody>
+                <CardTitle>
+                  <h4>{this.state.title}</h4>
+                </CardTitle>
+                <CardText>
+                  {this.state.description}
+                  <ListGroup>
+                    <ListGroupItem>
+                      {this.state.queueId !== ''
+                        ? `People currently in Queue: ${this.state.peopleInQueue.length}`
+                        : ''}
+                    </ListGroupItem>
+                  </ListGroup>
+                </CardText>
+                <div>
+                  <Form onSubmit={this.handleSubmit}>
+                    <FormGroup>
+                      <Label>
+                        Optional: A brief description for services required
+                      </Label>
+                      <Input
+                        type='text'
+                        value={this.state.newItemDescriptor}
+                        onChange={this.handleChange}
+                        placeholder='Text'
+                      ></Input>
+                    </FormGroup>
+                    <Button
+                      // disabled='true'
+                      disabled={
+                        this.state.title.length < 1 ||
+                        this.props.loggedIn === false
+                      }
+                      color='primary'
+                      onClick={this.onClickJoin}
+                    >
+                      Join Queue!
+                    </Button>
+                    <Alert
+                      color='warning'
+                      isOpen={this.props.loggedIn === false}
+                    >
+                      Please login to Queue-Tacular to join a queue!
+                    </Alert>
+                    <NotificationAlert ref='notify' />
+                  </Form>
+                </div>
+              </CardBody>
+            </Card>
+          </div>
         </div>
-      </div>
-    );
+      );
+    return display;
   }
 }
 
