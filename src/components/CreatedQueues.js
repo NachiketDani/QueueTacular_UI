@@ -72,7 +72,7 @@ class CreatedQueues extends React.Component {
             </Table>
           )}
         </CardBody>
-        {this.props.createdQueues.length < 2 ? null : (
+        {this.props.createdQueues.length <= 2 ? null : (
           <CardFooter>
             <Expandable {...this.props} restOfQueues={this.restOfQueues} />
           </CardFooter>
