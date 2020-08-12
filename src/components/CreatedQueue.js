@@ -121,13 +121,8 @@ class CreatedQueue extends React.Component {
                 <td>
                   {this.props.status === 'Open' ? (
                     <Badge color='success'>
-<<<<<<< HEAD
-                      <div style={{ marginLeft: 10, marginBottom: 0 }}>
-                        Active.{'  '}
-=======
                       <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
                         Active{'  '}
->>>>>>> master
                         <i
                           style={{ marginRight: 10 }}
                           className='nc-icon nc-bulb-63'
@@ -136,11 +131,7 @@ class CreatedQueue extends React.Component {
                     </Badge>
                   ) : (
                     <Badge color='danger'>
-<<<<<<< HEAD
-                      <div style={{ marginLeft: 10, marginBottom: 0 }}>
-=======
                       <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
->>>>>>> master
                         Closed{'  '}
                         <i
                           style={{ marginRight: 10 }}
