@@ -161,11 +161,7 @@ class CreatedQueue extends React.Component {
           </CardBody>
           <CardFooter>
             <div>
-              <ExpandableTable
-                {...this.props}
-                items={this.props.items}
-                onDelete={this.onDelete}
-              />
+              <ExpandableTable {...this.props} onDelete={this.onDelete} />
             </div>
           </CardFooter>
         </Card>
