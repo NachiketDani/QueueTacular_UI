@@ -62,7 +62,7 @@ const ExpandableTable = (props) => {
                     <tr key={'row' + i}>
                       <td key={'postion' + i}>{i + 1}</td>
                       <td key={'username' + i}>{item.user}</td>
-                      <td key={'email' + i}>noahb@hotmail.com</td>
+                      {/* <td key={'email' + i}>{props.userItems}</td> */}
                       {/* No phone number functionality at the moment - Tim*/}
                       {/* <td>(555) 555-5555</td> */}
                       <td className='text-right' key={'time estimate' + i}>

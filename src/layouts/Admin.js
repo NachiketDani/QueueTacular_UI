@@ -172,10 +172,10 @@ class App extends React.Component {
       this.setState({ createdQueues: queues });
     }
     //  Tim: ate some homemade spaghetti
-    // const users = await this.getCreatedUsersInfo();
-    // if (users) {
-    //   this.setState({ userItems: users });
-    // }
+    const users = await this.getCreatedUsersInfo();
+    if (users) {
+      this.setState({ userItems: users });
+    }
   }
 
   async getInQueueItems() {
@@ -268,44 +268,44 @@ class App extends React.Component {
     const queues = await this.getCreatedQueues();
     const users = queues.map((queue) => {
       return queue.items.map((item) => {
-        return { _id: JSON.stringify(item.user) };
+        return { _id: item.user };
       });
     });
     return users;
   }
 
-  // Tim: homemade speciality spaghetti with JSON stringify,
-  // nested array of objectsm and meatball
-  // async getCreatedUsersInfo() {
-  //   const users = await this.getCreatedUsers();
-  //   if (users == null) return [];
-  //   let userInfo = [];
-  //   let i;
-  //   for (i = 0; i < 1; i++) {
-  //     let userList = users[i];
-  //     let j;
-  //     for (j = 0; j < userList.length; j++) {
-  //       let jsonObject = JSON.stringify(userList[i][j]);
-  //       jsonObject.replace(/"([^"]+)":/g, '$1:');
-  //     }
-  //     if (userList.length) {
-  //       const queryForUsers = `query {
-  //         userMany(filter: {
-  //           OR: ${userList[i]}
-  //         }) {
-  //           username email
-  //         }
-  //       }`;
-  //       const data = await graphQLFetch(queryForUsers);
-  //       if (data && data.userMany !== null) {
-  //         userInfo.push(data.userMany);
-  //       }
-  //     } else {
-  //       userInfo.push([]);
-  //     }
-  //   }
-  //   return userInfo;
-  // }
+  // Tim: voodoo magic
+  async getCreatedUsersInfo() {
+    const users = await this.getCreatedUsers();
+    if (users == null) return [];
+    let userInfo = [];
+    let i;
+    for (i = 0; i < users.length; i++) {
+      if (users[i].length) {
+        let userList = JSON.stringify(users[i]).replace(/"([^"]+)":/g, '$1:');
+        console.log(userList);
+        // let j;
+        // for (j = 0; j < userList.length; j++) {
+        //   userList = userList.replace(/"([^"]+)":/g, '$1:');
+        //   console.log('userList', j, userList[j]);
+        // }
+        const queryForUsers = `query {
+          userMany(filter: {
+            OR: ${userList}
+          }) {
+            username email
+          }
+        }`;
+        const data = await graphQLFetch(queryForUsers);
+        if (data && data.userMany !== null) {
+          userInfo.push(data.userMany);
+        }
+      } else {
+        userInfo.push([]);
+      }
+    }
+    return userInfo;
+  }
 
   render() {
     return (
