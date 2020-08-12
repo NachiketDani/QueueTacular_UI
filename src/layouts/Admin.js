@@ -44,7 +44,7 @@ class App extends React.Component {
       queues: [],
       createdQueues: [],
       loggedIn: false,
-      userItems: [],
+      createdUsers: [],
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -174,7 +174,7 @@ class App extends React.Component {
     //  Tim: ate some homemade spaghetti
     const users = await this.getCreatedUsersInfo();
     if (users) {
-      this.setState({ userItems: users });
+      this.setState({ createdUsers: users });
     }
   }
 
@@ -231,7 +231,6 @@ class App extends React.Component {
         }
       }`;
       const data = await graphQLFetch(queryForQueue);
-      // console.log(data);
       if (data != null && data.queueOne != null) {
         queues.push(data.queueOne);
       }
@@ -283,12 +282,6 @@ class App extends React.Component {
     for (i = 0; i < users.length; i++) {
       if (users[i].length) {
         let userList = JSON.stringify(users[i]).replace(/"([^"]+)":/g, '$1:');
-        console.log(userList);
-        // let j;
-        // for (j = 0; j < userList.length; j++) {
-        //   userList = userList.replace(/"([^"]+)":/g, '$1:');
-        //   console.log('userList', j, userList[j]);
-        // }
         const queryForUsers = `query {
           userMany(filter: {
             OR: ${userList}
@@ -342,7 +335,7 @@ class App extends React.Component {
                         onSignOut={this.signoutGoogle}
                         onSignInFailure={this.signInFailure}
                         onSignIn={this.responseGoogle}
-                        userItems={this.state.userItems}
+                        createdUsers={this.state.createdUsers}
                       />
                     )}
                   />

@@ -39,9 +39,11 @@ const ExpandableTable = (props) => {
               <th>Position</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Status</th>
               {/* No phone number functionality at the moment - Tim
               <th>Phone</th> */}
-              <th className='text-right'>Time Remaining</th>
+              {/* No remaining time calculation for now - Tim */}
+              {/* <th className='text-right'>Time Remaining</th> */}
               <th className='text-right'>Actions</th>
             </tr>
           </thead>
@@ -54,20 +56,25 @@ const ExpandableTable = (props) => {
               </tr>
             ) : (
               props.items
-                .filter((item) => {
-                  return item.status === 'Waiting' || item.status === 'Serving';
-                })
+                // .filter((item) => {
+                //   return item.status === 'Waiting' || item.status === 'Serving';
+                // })
                 .map((item, i) => {
+                  return [item, props.createdUsers[i]];
+                })
+                .map((zipped, i) => {
                   return [
                     <tr key={'row' + i}>
                       <td key={'postion' + i}>{i + 1}</td>
-                      <td key={'username' + i}>{item.user}</td>
-                      {/* <td key={'email' + i}>{props.userItems}</td> */}
+                      <td key={'username' + i}>{zipped[1].username}</td>
+                      <td key={'email' + i}>{zipped[1].email}</td>
+                      <td key={'status' + i}>{zipped[0].status}</td>
                       {/* No phone number functionality at the moment - Tim*/}
                       {/* <td>(555) 555-5555</td> */}
-                      <td className='text-right' key={'time estimate' + i}>
+                      {/* No remaining time calculation for now - Tim */}
+                      {/* <td className='text-right' key={'time estimate' + i}>
                         {(i + 1) * 5} mins
-                      </td>
+                      </td> */}
                       <td className='text-right' key={'buttons' + i}>
                         <Badge
                           style={{ marginRight: 10, cursor: 'pointer' }}
@@ -91,7 +98,9 @@ const ExpandableTable = (props) => {
                           key={'completebadge' + i}
                           color='danger'
                           id='complete'
-                          onClick={() => props.onDelete(props.items, item.id)}
+                          onClick={() =>
+                            props.onDelete(props.items, zipped[0].id)
+                          }
                           style={{ cursor: 'pointer' }}
                         >
                           <UncontrolledTooltip
