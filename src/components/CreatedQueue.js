@@ -25,18 +25,16 @@ class CreatedQueue extends React.Component {
     super(props);
     this.state = {
       referrer: null,
-      items: props.items,
     };
   }
 
   onDelete = (item) => {
-    console.log('this works?');
-    const items = this.state.items.filter((c) => c.item !== item);
-    this.setState({ items });
+    // console.log('this works?');
+    // const items = this.state.items.filter((c) => c.item !== item);
+    // this.setState({ items });
   };
 
   tryRedirect = () => {
-    console.log('clicky clicky!');
     this.setState({ referrer: './edit' });
   };
 
@@ -95,7 +93,7 @@ class CreatedQueue extends React.Component {
                   <td>
                     <b>
                       {this.props.status === 'Open'
-                        ? this.state.items.length
+                        ? this.props.items.length
                         : 0}
                     </b>{' '}
                     participant(s) currently waiting.
@@ -109,7 +107,7 @@ class CreatedQueue extends React.Component {
                 </tr>
                 <tr>
                   <td>
-                    <CreatedQueueParticipantHover />
+                    <CreatedQueueParticipantHover items={this.props.items} />
                   </td>
                 </tr>
                 <tr>
@@ -122,7 +120,7 @@ class CreatedQueue extends React.Component {
                   {this.props.status === 'Open' ? (
                     <Badge color='success'>
                       <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
-                        Active.
+                        Active{'  '}
                         <i
                           style={{ marginRight: 10 }}
                           className='nc-icon nc-bulb-63'
@@ -132,7 +130,7 @@ class CreatedQueue extends React.Component {
                   ) : (
                     <Badge color='danger'>
                       <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
-                        Closed
+                        Closed{'  '}
                         <i
                           style={{ marginRight: 10 }}
                           className='nc-icon nc-time-alarm'
@@ -149,7 +147,7 @@ class CreatedQueue extends React.Component {
             <div>
               <ExpandableTable
                 {...this.props}
-                items={this.state.items}
+                items={this.props.items}
                 onDelete={this.onDelete}
               />
             </div>
