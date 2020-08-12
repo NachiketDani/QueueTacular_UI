@@ -55,7 +55,7 @@ const ExpandableTable = (props) => {
             ) : (
               props.items
                 .filter((item) => {
-                  return item.status === 'Waiting';
+                  return item.status === 'Waiting' || item.status === 'Serving';
                 })
                 .map((item, i) => {
                   return [
