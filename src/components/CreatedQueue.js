@@ -94,9 +94,13 @@ class CreatedQueue extends React.Component {
                 <tr>
                   <td>
                     <b>
-                      {this.props.status === 'Open'
-                        ? this.props.items.length
-                        : 0}
+                      {
+                        this.props.items.filter(
+                          (item) =>
+                            item.status === 'Waiting' ||
+                            item.status === 'Serving'
+                        ).length
+                      }
                     </b>{' '}
                     participant(s) currently waiting.
                   </td>
