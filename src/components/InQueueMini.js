@@ -60,10 +60,10 @@ class InQueueMini extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Col xs='10'>
+            <Col sm='11'>
               <Progress multi>{this.getProgressViews()}</Progress>
             </Col>
-            <Col xs='2'>
+            <Col>
               {this.props.items[this.getPlaceInQueue()].status === 'Waiting' ? (
                 <Badge color='warning'>
                   Waiting
