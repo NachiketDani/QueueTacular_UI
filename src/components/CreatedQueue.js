@@ -153,9 +153,6 @@ class CreatedQueue extends React.Component {
                 onDelete={this.onDelete}
               />
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <i className='fa fa-history' /> Updated 3 mins ago
-            </div>
           </CardFooter>
         </Card>
       ) : null;
