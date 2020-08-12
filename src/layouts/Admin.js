@@ -234,21 +234,27 @@ class App extends React.Component {
   }
 
   async getCreatedQueues() {
-    const queryForUsers = `query {
-      userMany(filter: {
-        OR: [{
-          _id: "5f33578b779ccd2d645c0cb8"
-        }, {
-          _id: "5f33578b779ccd2d645c0cbb"
-        }]
-      }) {
-        username email
+    const queryForQueues = `query {
+      queueMany(filter:{
+        owner: "${this.state.userId}"
+      }){
+        _id
+        title
+        owner
+        description
+        status
+        maxParticipants
+        startDate
+        endDate
+        items {
+          _id user wait description status
+        }
       }
     }`;
 
-    const data = await graphQLFetch(queryForUsers);
-    if (data && data.userMany !== null && data.userMany.length > 0)
-      return data.userMany;
+    const data = await graphQLFetch(queryForQueues);
+    if (data && data.queueMany !== null && data.queueMany.length > 0)
+      return data.queueMany;
   }
 
   // Tim: creates a list of objects with _id: that contain lists of user's MongoID
@@ -263,7 +269,7 @@ class App extends React.Component {
     });
   }
 
-  async getCreatedUsersInf() {
+  async getCreatedUsersInfo() {
     const users = this.getCreatedUsers();
     const queryForQueues = `query {
       userMany(filter:{
