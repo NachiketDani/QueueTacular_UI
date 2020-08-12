@@ -5,17 +5,37 @@ import {
   Card,
   Button,
   CardTitle,
+  CardBody,
   CardText,
   ListGroup,
   ListGroupItem,
-  Modal,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
+  Alert,
 } from 'reactstrap';
-import { timers } from 'jquery';
+import NotificationAlert from 'react-notification-alert';
 
 // import withToast from "./withToast";
+
+let optionSuccess = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Successfully joined queue!'</div>
+    </div>
+  ),
+  type: 'success',
+  autoDismiss: 3,
+};
+
+let optionFailure = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'You are already in the queue!'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
 
 class Join extends React.Component {
   constructor(props) {
@@ -24,6 +44,8 @@ class Join extends React.Component {
     this.loadOptions = this.loadOptions.bind(this);
     this.queueUpItem = this.queueUpItem.bind(this);
     this.onClickJoin = this.onClickJoin.bind(this);
+    this.submitSuccess = this.submitSuccess.bind(this);
+    this.submitFailure = this.submitFailure.bind(this);
 
     this.state = {
       queueId: '',
@@ -54,6 +76,14 @@ class Join extends React.Component {
 
   // This method is created to create an item from user login props information to prepare to add to a queue
   async onClickJoin() {
+    let userInArray = this.state.peopleInQueue.filter(
+      (item) => item.user === this.props.userId
+    );
+    if (userInArray.length > 0) {
+      console.log('Already in queue!');
+      this.submitFailure();
+      return;
+    }
     const query = `mutation { itemCreateOne(
       record:{
         status: Waiting
@@ -77,22 +107,12 @@ class Join extends React.Component {
         newItemStatus: itemAdd.itemCreateOne.record.status,
       });
     }
-    // Get new items array ready to be inserted into the queue
-    // const newItemArray = this.state.peopleInQueue; //CHANGED HERE
-    // newItemArray.push({
-    //   status: this.state.newItemStatus,
-    //   _id: this.state.newItemId,
-    //   description: this.state.newItemDescription,
-    //   user: this.props.userId,
-    // });
-    // this.setState({ peopleInQueue: newItemArray });
-    // console.log('New array', newItemArray);
-    // const stringedArray = JSON.stringify(newItemArray);
-    this.queueUpItem(itemAdd);
+
+    this.queueUpItem();
   }
 
   // This method is to add the created item data to the queue currently in state
-  async queueUpItem(newItemArray) {
+  async queueUpItem() {
     const updateQueue = `mutation queueInsertOneItem {
       queuePushToItems (_id: "${this.state.queueId}",
       record: {
@@ -110,6 +130,9 @@ class Join extends React.Component {
     console.log(updateQueue);
     const data = await graphQLFetch(updateQueue);
     console.log(data);
+    if (data) {
+      this.submitSuccess();
+    }
   }
 
   // Load options for search: needs 2 callbacks: loadOptions and filterOptions
@@ -139,6 +162,14 @@ class Join extends React.Component {
     }));
   }
 
+  submitSuccess() {
+    this.refs.notify.notificationAlert(optionSuccess);
+  }
+
+  submitFailure() {
+    this.refs.notify.notificationAlert(optionFailure);
+  }
+
   render() {
     return (
       <div className='content'>
@@ -153,31 +184,38 @@ class Join extends React.Component {
         />
         <div>
           <Card body outline color='secondary'>
-            <CardTitle>
-              <h4>{this.state.title}</h4>
-              <em>Queue-tacular ID:{this.state.queueId}</em>
-            </CardTitle>
-            <CardText>
-              {this.state.description}
-              <hr></hr>
-              <ListGroup>
-                <ListGroupItem>
-                  People currently in Queue: {this.state.peopleInQueue.length}
-                </ListGroupItem>
-              </ListGroup>
-            </CardText>
-            <div>
-              <Button
-                // disabled='true'
-                disabled={
-                  this.state.title.length < 1 || this.props.loggedIn === false
-                }
-                color='primary'
-                onClick={this.onClickJoin}
-              >
-                Join Queue!
-              </Button>
-            </div>
+            <CardBody>
+              <CardTitle>
+                <h4>{this.state.title}</h4>
+              </CardTitle>
+              <CardText>
+                {this.state.description}
+                <hr></hr>
+                <ListGroup>
+                  <ListGroupItem>
+                    {this.state.queueId !== ''
+                      ? `People currently in Queue: ${this.state.peopleInQueue.length}`
+                      : ''}
+                  </ListGroupItem>
+                </ListGroup>
+              </CardText>
+              <div>
+                <Button
+                  // disabled='true'
+                  disabled={
+                    this.state.title.length < 1 || this.props.loggedIn === false
+                  }
+                  color='primary'
+                  onClick={this.onClickJoin}
+                >
+                  Join Queue!
+                </Button>
+                <Alert color='warning' isOpen={this.props.loggedIn === false}>
+                  Please login to Queue-Tacular to join a queue!
+                </Alert>
+                <NotificationAlert ref='notify' />
+              </div>
+            </CardBody>
           </Card>
         </div>
       </div>
