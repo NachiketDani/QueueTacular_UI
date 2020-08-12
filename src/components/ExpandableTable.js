@@ -56,6 +56,7 @@ const ExpandableTable = (props) => {
               </tr>
             ) : (
               props.items
+                // Tim: Removed status so that queue creator sees all queue items
                 // .filter((item) => {
                 //   return item.status === 'Waiting' || item.status === 'Serving';
                 // })
@@ -121,136 +122,6 @@ const ExpandableTable = (props) => {
                 })
             )}
           </tbody>
-          {/* <tr>
-            <td>1</td>
-            <td>John Lennon</td>
-            <td>noahb@hotmail.com</td>
-            <td>(555) 555-5555</td>
-            <td className='text-right'>10 mins</td>
-            <td className='text-right'>
-              <Badge
-                style={{ marginRight: 10 }}
-                color='success'
-                href='#'
-                id='serving'
-              >
-                <UncontrolledTooltip placement='bottom' target='serving'>
-                  Mark Serving Now
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-check-2' />
-              </Badge>
-              <Badge color='danger' href='#' id='complete'>
-                <UncontrolledTooltip placement='bottom' target='complete'>
-                  Mark Participant as Complete
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-simple-remove' />
-              </Badge>
-            </td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Paul McCartney</td>
-            <td>noahb@hotmail.com</td>
-            <td>(555) 555-5555</td>
-            <td className='text-right'>20 mins</td>
-            <td className='text-right'>
-              <Badge
-                style={{ marginRight: 10 }}
-                color='success'
-                href='#'
-                id='serving'
-              >
-                <UncontrolledTooltip placement='bottom' target='serving'>
-                  Mark Serving Now
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-check-2' />
-              </Badge>
-              <Badge color='danger' href='#' id='complete'>
-                <UncontrolledTooltip placement='bottom' target='complete'>
-                  Mark Participant as Complete
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-simple-remove' />
-              </Badge>
-            </td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>George Harrison</td>
-            <td>noahb@hotmail.com</td>
-            <td>(555) 555-5555</td>
-            <td className='text-right'>30 mins</td>
-            <td className='text-right'>
-              <Badge
-                style={{ marginRight: 10 }}
-                color='success'
-                href='#'
-                id='serving'
-              >
-                <UncontrolledTooltip placement='bottom' target='serving'>
-                  Mark Serving Now
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-check-2' />
-              </Badge>
-              <Badge color='danger' href='#' id='complete'>
-                <UncontrolledTooltip placement='bottom' target='complete'>
-                  Mark Participant as Complete
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-simple-remove' />
-              </Badge>
-            </td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Ringo Starr</td>
-            <td>noahb@hotmail.com</td>
-            <td>(555) 555-5555</td>
-            <td className='text-right'>40 mins</td>
-            <td className='text-right'>
-              <Badge
-                style={{ marginRight: 10 }}
-                color='success'
-                href='#'
-                id='serving'
-              >
-                <UncontrolledTooltip placement='bottom' target='serving'>
-                  Mark Serving Now
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-check-2' />
-              </Badge>
-              <Badge color='danger' href='#' id='complete'>
-                <UncontrolledTooltip placement='bottom' target='complete'>
-                  Mark Participant as Complete
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-simple-remove' />
-              </Badge>
-            </td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Thom Yorke</td>
-            <td>noahb@hotmail.com</td>
-            <td>(555) 555-5555</td>
-            <td className='text-right'>50 mins</td>
-            <td className='text-right'>
-              <Badge
-                style={{ marginRight: 10 }}
-                color='success'
-                href='#'
-                id='serving'
-              >
-                <UncontrolledTooltip placement='bottom' target='serving'>
-                  Mark Serving Now
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-check-2' />
-              </Badge>
-              <Badge color='danger' href='#' id='complete'>
-                <UncontrolledTooltip placement='bottom' target='complete'>
-                  Mark Participant as Complete
-                </UncontrolledTooltip>
-                <i className='nc-icon nc-simple-remove' />
-              </Badge>
-            </td>
-          </tr> */}
         </Table>
       </Collapse>
     </div>
