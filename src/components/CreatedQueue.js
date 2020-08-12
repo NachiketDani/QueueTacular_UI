@@ -4,9 +4,9 @@ import { Redirect } from 'react-router-dom';
 // reactstrap components
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
+  CardHeader,
   Badge,
   Button,
   Table,
@@ -20,18 +20,16 @@ class CreatedQueue extends React.Component {
     super(props);
     this.state = {
       referrer: null,
-      items: this.props.items,
     };
   }
 
   onDelete = (item) => {
-    console.log('this works?');
-    const items = this.state.items.filter((c) => c.item !== item);
-    this.setState({ items });
+    // console.log('this works?');
+    // const items = this.state.items.filter((c) => c.item !== item);
+    // this.setState({ items });
   };
 
   tryRedirect = () => {
-    console.log('clicky clicky!');
     this.setState({ referrer: './edit' });
   };
 
@@ -42,25 +40,29 @@ class CreatedQueue extends React.Component {
         <Redirect
           to={{
             pathname: referrer,
-            state: { id: '123' },
+            state: {
+              id: this.props._id,
+              title: this.props.title,
+              description: this.props.description,
+              maxParticipants: this.props.maxParticipants,
+              startDate: this.props.startDate,
+              endDate: this.props.endDate,
+            },
           }}
         />
       );
 
     let display =
-      this.props.loggedIn === true ? (
+      this.props.loggedIn === true && this.props.items != null ? (
         <Card>
           <CardBody>
             <Table style={{ marginBottom: 0 }} size='sm' borderless>
               <tbody>
-                <tr style={{ marginTop: 0, marginBottom: 0 }}>
-                  <td
-                    style={{
-                      marginTop: 0,
-                      marginBottom: 0,
-                      textAlign: 'right',
-                    }}
-                  >
+                <tr>
+                  <CardHeader tag='h5' style={{ verticalAlign: 'top' }}>
+                    {this.props.title}
+                  </CardHeader>
+                  <td style={{ textAlign: 'right' }}>
                     <Button
                       onClick={this.tryRedirect}
                       style={{ marginRight: 10 }}
@@ -81,23 +83,9 @@ class CreatedQueue extends React.Component {
                     </Badge>
                   </td>
                 </tr>
-                <tr>
-                  <td style={{ marginTop: 0, marginBottom: 0 }}>
-                    <h5
-                      style={{
-                        verticalAlign: 'top',
-                        textAlign: 'left',
-                        marginTop: 0,
-                        marginBottom: 0,
-                      }}
-                    >
-                      {this.props.title}
-                    </h5>
-                  </td>
-                </tr>
               </tbody>
             </Table>
-            <hr style={{ marginTop: 0 }} />
+            <hr />
             <Table style={{ marginBottom: 0 }} size='sm' borderless responsive>
               <tbody>
                 <tr>
@@ -107,7 +95,7 @@ class CreatedQueue extends React.Component {
                   <td>
                     <b>
                       {this.props.status === 'Open'
-                        ? this.state.items.length
+                        ? this.props.items.length
                         : 0}
                     </b>{' '}
                     participant(s) currently waiting.
@@ -121,7 +109,7 @@ class CreatedQueue extends React.Component {
                 </tr>
                 <tr>
                   <td>
-                    <CreatedQueueParticipantHover items={this.state.items} />
+                    <CreatedQueueParticipantHover items={this.props.items} />
                   </td>
                 </tr>
                 <tr>
@@ -130,31 +118,29 @@ class CreatedQueue extends React.Component {
                     minutes.
                   </td>
                 </tr>
-                <tr>
-                  <td>
-                    {this.props.status === 'Open' ? (
-                      <Badge color='success'>
-                        <div style={{ marginLeft: 10, marginBottom: 0 }}>
-                          Active.
-                          <i
-                            style={{ marginRight: 10 }}
-                            className='nc-icon nc-bulb-63'
-                          />
-                        </div>
-                      </Badge>
-                    ) : (
-                      <Badge color='danger'>
-                        <div style={{ marginLeft: 10, marginBottom: 0 }}>
-                          Closed
-                          <i
-                            style={{ marginRight: 10 }}
-                            className='nc-icon nc-time-alarm'
-                          />
-                        </div>
-                      </Badge>
-                    )}
-                  </td>
-                </tr>
+                <td>
+                  {this.props.status === 'Open' ? (
+                    <Badge color='success'>
+                      <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                        Active{'  '}
+                        <i
+                          style={{ marginRight: 10 }}
+                          className='nc-icon nc-bulb-63'
+                        />
+                      </h5>
+                    </Badge>
+                  ) : (
+                    <Badge color='danger'>
+                      <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                        Closed{'  '}
+                        <i
+                          style={{ marginRight: 10 }}
+                          className='nc-icon nc-time-alarm'
+                        />
+                      </h5>
+                    </Badge>
+                  )}
+                </td>
               </tbody>
             </Table>
             <hr style={{ marginBottom: 0, marginTop: 0 }} />
@@ -163,12 +149,9 @@ class CreatedQueue extends React.Component {
             <div>
               <ExpandableTable
                 {...this.props}
-                items={this.state.items}
+                items={this.props.items}
                 onDelete={this.onDelete}
               />
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <i className='fa fa-history' /> Updated 3 mins ago
             </div>
           </CardFooter>
         </Card>

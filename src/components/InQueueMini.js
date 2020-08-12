@@ -64,27 +64,21 @@ class InQueueMini extends React.Component {
               <Progress multi>{this.getProgressViews()}</Progress>
             </Col>
             <Col xs='2'>
-              <h6>
-                {this.props.items[this.getPlaceInQueue()].status ===
-                'Waiting' ? (
-                  <Badge color='success'>
-                    <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
-                      Waiting {}
-                      <i
-                        style={{ marginRight: 10 }}
-                        className='nc-icon nc-time-alarm'
-                      />
-                    </h5>
-                  </Badge>
-                ) : (
-                  <Badge color='primary'>
-                    Its your turn!
-                    <div className='icon-big text-center icon-success'>
-                      <i className='nc-icon nc-spaceship' />
-                    </div>
-                  </Badge>
-                )}
-              </h6>
+              {this.props.items[this.getPlaceInQueue()].status === 'Waiting' ? (
+                <Badge color='warning'>
+                  Waiting
+                  <div className='icon-big text-center icon-warning'>
+                    <i className='nc-icon nc-time-alarm' />
+                  </div>
+                </Badge>
+              ) : (
+                <Badge color='primary'>
+                  Its your turn!
+                  <div className='icon-big text-center icon-success'>
+                    <i className='nc-icon nc-spaceship' />
+                  </div>
+                </Badge>
+              )}
             </Col>
           </Row>
         </div>

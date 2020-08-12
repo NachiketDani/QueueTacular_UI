@@ -41,40 +41,8 @@ let optionFailure = {
 };
 
 class Edit extends React.Component {
-  static async fetchData(match, search, showError) {
-    const query = `{
-      queueById(_id: "5f2b37083480b51aa889965a") {
-        title
-        status
-        description
-        maxParticipants
-        startDate
-        endDate
-      }
-    }`;
-
-    const {
-      params: { id },
-    } = match;
-    const result = await graphQLFetch(
-      query,
-      { id: parseInt(id, 10) },
-      showError
-    );
-    return result;
-  }
-
   constructor(props) {
     super(props);
-    this.state = {
-      title: '',
-      description: '',
-      participant: '',
-      startDate: '',
-      startTime: '',
-      endDate: '',
-      endTime: '',
-    };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.submitSuccess = this.submitSuccess.bind(this);
@@ -128,7 +96,14 @@ class Edit extends React.Component {
   }
 
   render() {
-    console.log(this.props.location.state.id);
+    const {
+      title,
+      description,
+      maxParticipants,
+      startDate,
+      endDate,
+    } = this.props.history.location.state;
+    const start = new Date(startDate).toISOString().split('T')[0];
     return (
       <div className='content'>
         <Row>
@@ -143,7 +118,7 @@ class Edit extends React.Component {
                     </Label>
                     <Input
                       className='mt-2'
-                      defaultValue={this.state.title}
+                      defaultValue={title == null ? '' : title}
                       type='text'
                       id='title'
                       placeholder='Text'
@@ -155,7 +130,7 @@ class Edit extends React.Component {
                     </Label>
                     <Input
                       className='mt-2'
-                      defaultValue={this.state.description}
+                      defaultValue={description == null ? '' : description}
                       type='textarea'
                       id='description'
                       placeholder='Text'
@@ -168,7 +143,9 @@ class Edit extends React.Component {
                     <InputGroup>
                       <Input
                         className='mt-2'
-                        defaultValue={this.state.participant}
+                        defaultValue={
+                          maxParticipants == null ? 0 : maxParticipants
+                        }
                         min={0}
                         type='number'
                         step='1'
@@ -198,10 +175,15 @@ class Edit extends React.Component {
                         <InputGroup>
                           <Input
                             className='border-left border-right mt-2'
-                            defaultValue={this.state.startDate}
+                            // Tim: Unable to convert ISOString to datepicker date
+                            // defaultValue={
+                            //   startDate == null
+                            //     ? 'date placeholder'
+                            //     : '00-00-2020'
+                            // }
                             type='date'
                             id='startDate'
-                            placeholder='date placeholder'
+                            // placeholder={start}
                           />
                         </InputGroup>
                       </Col>
@@ -209,7 +191,7 @@ class Edit extends React.Component {
                         <InputGroup>
                           <Input
                             className='border-left border-right mt-2'
-                            defaultValue={this.state.startTime}
+                            // defaultValue={this.state.startTime}
                             type='time'
                             id='startTime'
                             placeholder='time placeholder'
@@ -236,7 +218,7 @@ class Edit extends React.Component {
                         <InputGroup>
                           <Input
                             className='border-left border-right mt-2'
-                            defaultValue={this.state.endDate}
+                            // defaultValue={this.state.endDate}
                             type='date'
                             id='endDate'
                             placeholder='date placeholder'
@@ -247,7 +229,7 @@ class Edit extends React.Component {
                         <InputGroup>
                           <Input
                             className='border-left border-right mt-2'
-                            defaultValue={this.state.endTime}
+                            // defaultValue={this.state.endTime}
                             type='time'
                             id='endTime'
                             placeholder='time placeholder'

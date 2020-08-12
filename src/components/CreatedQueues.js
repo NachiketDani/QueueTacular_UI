@@ -16,7 +16,11 @@ class CreatedQueues extends React.Component {
   createCreatedQueueMiniTop() {
     const rows = [];
     let i;
-    for (i = 0; i < 2; i++) {
+    let upper;
+    this.props.createdQueues.length < 2
+      ? (upper = this.props.createdQueues.length)
+      : (upper = 2);
+    for (i = 0; i < upper; i++) {
       const queueMini = (
         <CreatedQueueMini
           {...this.props.createdQueues[i]}

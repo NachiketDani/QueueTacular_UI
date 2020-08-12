@@ -47,11 +47,15 @@ const ExpandableTable = (props) => {
           </thead>
           <tbody key='tbody'>
             {props.items.length === 0 ? (
-              <h6>No participants enqueued!</h6>
+              <tr>
+                <td>
+                  <h6>No participants enqueued!</h6>
+                </td>
+              </tr>
             ) : (
               props.items
                 .filter((item) => {
-                  return item.status === 'Waiting';
+                  return item.status === 'Waiting' || item.status === 'Serving';
                 })
                 .map((item, i) => {
                   return [
