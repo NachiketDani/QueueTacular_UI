@@ -20,13 +20,12 @@ class CreatedQueue extends React.Component {
     super(props);
     this.state = {
       referrer: null,
-      items: this.props.items,
     };
   }
 
   onDelete = (newItems, i) => {
-    const items = newItems.filter((p) => p.item.id !== i);
-    this.setState({ items });
+    // const items = newItems.filter((p) => p.item.id !== i);
+    // this.setState({ items });
   };
 
   tryRedirect = () => {
@@ -100,7 +99,7 @@ class CreatedQueue extends React.Component {
               <tr>
                 <td>
                   <b>
-                    {this.props.status === 'Open' ? this.state.items.length : 0}
+                    {this.props.status === 'Open' ? this.props.items.length : 0}
                   </b>{' '}
                   participant(s) currently waiting.
                 </td>
@@ -113,7 +112,7 @@ class CreatedQueue extends React.Component {
               </tr>
               <tr>
                 <td>
-                  <CreatedQueueParticipantHover items={this.state.items} />
+                  <CreatedQueueParticipantHover items={this.props.items} />
                 </td>
               </tr>
               <tr>
@@ -152,11 +151,7 @@ class CreatedQueue extends React.Component {
         </CardBody>
         <CardFooter>
           <div>
-            <ExpandableTable
-              {...this.props}
-              items={this.state.items}
-              onDelete={this.onDelete}
-            />
+            <ExpandableTable {...this.props} onDelete={this.onDelete} />
           </div>
           <div style={{ textAlign: 'right' }}>
             <i className='fa fa-history' /> Updated 3 mins ago
