@@ -43,7 +43,10 @@ class CreatedQueueMini extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col>{this.props.items.length} Participants enqueued.</Col>
+              <Col>
+                {this.props.items.length === 0 ? '0' : this.props.items.length}{' '}
+                Participants enqueued.
+              </Col>
             </Row>
           </td>
         </tr>
