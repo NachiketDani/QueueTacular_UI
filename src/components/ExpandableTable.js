@@ -47,7 +47,11 @@ const ExpandableTable = (props) => {
           </thead>
           <tbody key='tbody'>
             {props.items.length === 0 ? (
-              <h6>No participants enqueued!</h6>
+              <tr>
+                <td>
+                  <h6>No participants enqueued!</h6>
+                </td>
+              </tr>
             ) : (
               props.items.map((item, i) => {
                 return [
