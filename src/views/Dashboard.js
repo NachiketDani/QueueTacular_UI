@@ -73,6 +73,7 @@ class Dashboard extends React.Component {
               removeQueueDetail={this.removeQueueDetail}
               queue={this.props.queues[this.state.queueDetailId]}
               userId={this.props.userId}
+              loggedIn={this.state.loggedIn}
             />
           ) : null}
           <Row>

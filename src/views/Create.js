@@ -13,10 +13,12 @@ import {
   Input,
   InputGroup,
   InputGroupAddon,
+  CardTitle,
 } from 'reactstrap';
 
 import graphQLFetch from '../GraphQLFetch.js';
 import NotificationAlert from 'react-notification-alert';
+import Login from '../components/Login.js';
 
 let optionSuccess = {
   place: 'br',
@@ -111,146 +113,170 @@ class Create extends React.Component {
   }
 
   render() {
-    return (
-      <div className='content'>
-        <Row>
-          <Col md='12'>
-            <Card>
-              <CardHeader>Create a Queue</CardHeader>
-              <CardBody>
-                <Form onSubmit={this.handleSubmit} onChange={this.handleChange}>
-                  <FormGroup>
-                    <Label for='title' className='mt-2'>
-                      Title
-                    </Label>
-                    <Input
-                      className='mt-2'
-                      defaultValue={this.state.title}
-                      type='text'
-                      id='title'
-                      placeholder='Text'
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for='description' className='mt-2'>
-                      Description
-                    </Label>
-                    <Input
-                      className='mt-2'
-                      defaultValue={this.state.description}
-                      type='textarea'
-                      id='description'
-                      placeholder='Text'
-                    />
-                  </FormGroup>
-                  <FormGroup>
-                    <Label for='participant' className='mt-2'>
-                      Maximum Participant
-                    </Label>
-                    <InputGroup>
+    let display =
+      this.props.loggedIn === false ? (
+        <>
+          <div className='content'>
+            <Row>
+              <Col md='6'>
+                <Card body inverse color='primary'>
+                  <CardHeader>
+                    <CardTitle tag='h5'>
+                      Please login to create a queue
+                    </CardTitle>
+                  </CardHeader>
+                  <CardBody>
+                    <Login onSignIn={this.props.onSignIn} />
+                  </CardBody>
+                </Card>
+              </Col>
+            </Row>
+          </div>
+        </>
+      ) : (
+        <div className='content'>
+          <Row>
+            <Col md='12'>
+              <Card>
+                <CardHeader>Create a Queue</CardHeader>
+                <CardBody>
+                  <Form
+                    onSubmit={this.handleSubmit}
+                    onChange={this.handleChange}
+                  >
+                    <FormGroup>
+                      <Label for='title' className='mt-2'>
+                        Title
+                      </Label>
                       <Input
                         className='mt-2'
-                        defaultValue={this.state.participant}
-                        min={0}
-                        type='number'
-                        step='1'
-                        id='participant'
-                        placeholder='Number'
+                        defaultValue={this.state.title}
+                        type='text'
+                        id='title'
+                        placeholder='Text'
                       />
-                      <InputGroupAddon className='mt-2' addonType='append'>
-                        person(s)
-                      </InputGroupAddon>
-                    </InputGroup>
-                  </FormGroup>
-                  <FormGroup>
-                    <Row>
-                      <Col>
-                        <Label for='startDate' className='mt-2'>
-                          Start Date
-                        </Label>
-                      </Col>
-                      <Col>
-                        <Label for='startTime' className='mt-2'>
-                          Start Time
-                        </Label>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <InputGroup>
-                          <Input
-                            className='border-left border-right mt-2'
-                            defaultValue={this.state.startDate}
-                            type='date'
-                            id='startDate'
-                            placeholder='date placeholder'
-                          />
-                        </InputGroup>
-                      </Col>
-                      <Col>
-                        <InputGroup>
-                          <Input
-                            className='border-left border-right mt-2'
-                            defaultValue={this.state.startTime}
-                            type='time'
-                            id='startTime'
-                            placeholder='time placeholder'
-                          />
-                        </InputGroup>
-                      </Col>
-                    </Row>
-                  </FormGroup>
-                  <FormGroup>
-                    <Row>
-                      <Col>
-                        <Label for='endDate' className='mt-2'>
-                          End Date
-                        </Label>
-                      </Col>
-                      <Col>
-                        <Label for='endTime' className='mt-2'>
-                          End Time
-                        </Label>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col>
-                        <InputGroup>
-                          <Input
-                            className='border-left border-right mt-2'
-                            defaultValue={this.state.endDate}
-                            type='date'
-                            id='endDate'
-                            placeholder='date placeholder'
-                          />
-                        </InputGroup>
-                      </Col>
-                      <Col>
-                        <InputGroup>
-                          <Input
-                            className='border-left border-right mt-2'
-                            defaultValue={this.state.endTime}
-                            type='time'
-                            id='endTime'
-                            placeholder='time placeholder'
-                          />
-                        </InputGroup>
-                      </Col>
-                    </Row>
-                  </FormGroup>
-                  <FormGroup>
-                    <CardFooter>
-                      <NotificationAlert ref='notify' />
-                      <Button color='primary'>Submit</Button>
-                    </CardFooter>
-                  </FormGroup>
-                </Form>
-              </CardBody>
-            </Card>
-          </Col>
-        </Row>
-      </div>
-    );
+                    </FormGroup>
+                    <FormGroup>
+                      <Label for='description' className='mt-2'>
+                        Description
+                      </Label>
+                      <Input
+                        className='mt-2'
+                        defaultValue={this.state.description}
+                        type='textarea'
+                        id='description'
+                        placeholder='Text'
+                      />
+                    </FormGroup>
+                    <FormGroup>
+                      <Label for='participant' className='mt-2'>
+                        Maximum Participant
+                      </Label>
+                      <InputGroup>
+                        <Input
+                          className='mt-2'
+                          defaultValue={this.state.participant}
+                          min={0}
+                          type='number'
+                          step='1'
+                          id='participant'
+                          placeholder='Number'
+                        />
+                        <InputGroupAddon className='mt-2' addonType='append'>
+                          person(s)
+                        </InputGroupAddon>
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <Row>
+                        <Col>
+                          <Label for='startDate' className='mt-2'>
+                            Start Date
+                          </Label>
+                        </Col>
+                        <Col>
+                          <Label for='startTime' className='mt-2'>
+                            Start Time
+                          </Label>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <InputGroup>
+                            <Input
+                              className='border-left border-right mt-2'
+                              defaultValue={this.state.startDate}
+                              type='date'
+                              id='startDate'
+                              placeholder='date placeholder'
+                            />
+                          </InputGroup>
+                        </Col>
+                        <Col>
+                          <InputGroup>
+                            <Input
+                              className='border-left border-right mt-2'
+                              defaultValue={this.state.startTime}
+                              type='time'
+                              id='startTime'
+                              placeholder='time placeholder'
+                            />
+                          </InputGroup>
+                        </Col>
+                      </Row>
+                    </FormGroup>
+                    <FormGroup>
+                      <Row>
+                        <Col>
+                          <Label for='endDate' className='mt-2'>
+                            End Date
+                          </Label>
+                        </Col>
+                        <Col>
+                          <Label for='endTime' className='mt-2'>
+                            End Time
+                          </Label>
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col>
+                          <InputGroup>
+                            <Input
+                              className='border-left border-right mt-2'
+                              defaultValue={this.state.endDate}
+                              type='date'
+                              id='endDate'
+                              placeholder='date placeholder'
+                            />
+                          </InputGroup>
+                        </Col>
+                        <Col>
+                          <InputGroup>
+                            <Input
+                              className='border-left border-right mt-2'
+                              defaultValue={this.state.endTime}
+                              type='time'
+                              id='endTime'
+                              placeholder='time placeholder'
+                            />
+                          </InputGroup>
+                        </Col>
+                      </Row>
+                    </FormGroup>
+                    <FormGroup>
+                      <CardFooter>
+                        <NotificationAlert ref='notify' />
+                        <Button color='primary'>Submit</Button>
+                      </CardFooter>
+                    </FormGroup>
+                  </Form>
+                </CardBody>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      );
+    return display;
   }
 }
 
