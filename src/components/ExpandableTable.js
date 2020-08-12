@@ -49,59 +49,63 @@ const ExpandableTable = (props) => {
             {props.items.length === 0 ? (
               <h6>No participants enqueued!</h6>
             ) : (
-              props.items.map((item, i) => {
-                return [
-                  <tr key={'row' + i}>
-                    <td key={'postion' + i}>{i + 1}</td>
-                    <td key={'username' + i}>{item.user}</td>
-                    <td key={'email' + i}>noahb@hotmail.com</td>
-                    {/* No phone number functionality at the moment - Tim*/}
-                    {/* <td>(555) 555-5555</td> */}
-                    <td className='text-right' key={'time estimate' + i}>
-                      {(i + 1) * 5} mins
-                    </td>
-                    <td className='text-right' key={'buttons' + i}>
-                      <Badge
-                        style={{ marginRight: 10, cursor: 'pointer' }}
-                        color='success'
-                        id='serving'
-                        key={'serving badge' + i}
-                      >
-                        <UncontrolledTooltip
-                          key={'tooltip serving icon' + i}
-                          placement='bottom'
-                          target='serving'
+              props.items
+                .filter((item) => {
+                  return item.status === 'Waiting';
+                })
+                .map((item, i) => {
+                  return [
+                    <tr key={'row' + i}>
+                      <td key={'postion' + i}>{i + 1}</td>
+                      <td key={'username' + i}>{item.user}</td>
+                      <td key={'email' + i}>noahb@hotmail.com</td>
+                      {/* No phone number functionality at the moment - Tim*/}
+                      {/* <td>(555) 555-5555</td> */}
+                      <td className='text-right' key={'time estimate' + i}>
+                        {(i + 1) * 5} mins
+                      </td>
+                      <td className='text-right' key={'buttons' + i}>
+                        <Badge
+                          style={{ marginRight: 10, cursor: 'pointer' }}
+                          color='success'
+                          id='serving'
+                          key={'serving badge' + i}
                         >
-                          Mark Serving Now
-                        </UncontrolledTooltip>
-                        <i
-                          key={'servingicon' + i}
-                          className='nc-icon nc-check-2'
-                        />
-                      </Badge>
-                      <Badge
-                        key={'completebadge' + i}
-                        color='danger'
-                        id='complete'
-                        onClick={() => props.onDelete(props.items, item.id)}
-                        style={{ cursor: 'pointer' }}
-                      >
-                        <UncontrolledTooltip
-                          key={'completetooltip' + i}
-                          placement='bottom'
-                          target='complete'
+                          <UncontrolledTooltip
+                            key={'tooltip serving icon' + i}
+                            placement='bottom'
+                            target='serving'
+                          >
+                            Mark Serving Now
+                          </UncontrolledTooltip>
+                          <i
+                            key={'servingicon' + i}
+                            className='nc-icon nc-check-2'
+                          />
+                        </Badge>
+                        <Badge
+                          key={'completebadge' + i}
+                          color='danger'
+                          id='complete'
+                          onClick={() => props.onDelete(props.items, item.id)}
+                          style={{ cursor: 'pointer' }}
                         >
-                          Mark Participant as Complete
-                        </UncontrolledTooltip>
-                        <i
-                          key={'removeicon' + i}
-                          className='nc-icon nc-simple-remove'
-                        />
-                      </Badge>
-                    </td>
-                  </tr>,
-                ];
-              })
+                          <UncontrolledTooltip
+                            key={'completetooltip' + i}
+                            placement='bottom'
+                            target='complete'
+                          >
+                            Mark Participant as Complete
+                          </UncontrolledTooltip>
+                          <i
+                            key={'removeicon' + i}
+                            className='nc-icon nc-simple-remove'
+                          />
+                        </Badge>
+                      </td>
+                    </tr>,
+                  ];
+                })
             )}
           </tbody>
           {/* <tr>
