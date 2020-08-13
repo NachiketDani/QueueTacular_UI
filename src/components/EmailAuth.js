@@ -1,3 +1,5 @@
+// Not on use at the moment - Danielle
+
 require('dotenv').config();
 
 const nodemailer = require('nodemailer');
