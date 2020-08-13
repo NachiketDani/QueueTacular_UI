@@ -265,12 +265,16 @@ class App extends React.Component {
   // Tim: creates a list of objects with _id: that contain lists of user's MongoID
   async getCreatedUsers() {
     const queues = await this.getCreatedQueues();
-    const users = queues.map((queue) => {
-      return queue.items.map((item) => {
-        return { _id: item.user };
+    if (queues) {
+      const users = queues.map((queue) => {
+        return queue.items.map((item) => {
+          return { _id: item.user };
+        });
       });
-    });
-    return users;
+      return users;
+    } else {
+      return [];
+    }
   }
 
   // Tim: voodoo magic
