@@ -20,7 +20,6 @@ import React from 'react';
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Route, Switch } from 'react-router-dom';
-import NotificationAlert from 'react-notification-alert';
 // import { Card, CardBody, CardText } from 'reactstrap';
 
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
@@ -225,13 +224,8 @@ class App extends React.Component {
       const items = await this.getInQueueItems();
       this.setState({ inQueueItems: items });
       if (this.state.inQueueItems.length > 0) {
-        // console.log(this.state.inQueueItems.length);
-        // console.log(this.state.inQueueItems);
-        // console.log('Got the items... on to the queues!');
         const queues = await this.getQueuesCurrentlyIn();
-        // console.log(queues);
         this.setState({ queues: queues });
-        // console.log(this.state.queues);
       }
     }
     // user is not in the DB yet, create a new one
@@ -276,15 +270,12 @@ class App extends React.Component {
     }`;
 
     const data = await graphQLFetch(queryForItems);
-    // console.log(data);
     if (data != null && data.itemMany != null) {
-      // console.log(data.itemMany);
       let i;
       let items = [];
       for (i = 0; i < data.itemMany.length; i++) {
         items.push(data.itemMany[i]);
       }
-      // console.log('items list to return', items);
       return items;
     }
   }
@@ -292,8 +283,6 @@ class App extends React.Component {
   async getQueuesCurrentlyIn() {
     let queues = [];
     let i;
-    // console.log(this.state.inQueueItems);
-    // console.log('Items to iterate over', this.state.inQueueItems);
     for (i = 0; i < this.state.inQueueItems.length; i++) {
       let itemId = this.state.inQueueItems[i]._id;
       const queryForQueue = `query {
