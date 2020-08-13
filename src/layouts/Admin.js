@@ -47,6 +47,7 @@ class App extends React.Component {
       createdQueues: [],
       loggedIn: false,
       createdUsers: [],
+      changeMade: false,
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -59,6 +60,14 @@ class App extends React.Component {
     this.markItemServedInQueue = this.markItemServedInQueue.bind(this);
     this.markUserCompleted = this.markUserCompleted.bind(this);
     this.markItemCompletedInQueue = this.markItemCompletedInQueue.bind(this);
+    this.setChangeMade = this.setChangeMade.bind(this);
+  }
+
+  async setChangeMade(value) {
+    console.log('changing state');
+    this.setState({
+      changeMade: value,
+    });
   }
 
   async componentDidMount() {
@@ -66,8 +75,9 @@ class App extends React.Component {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle('perfect-scrollbar-on');
     }
-    if (this.state.userId !== '') {
-      // this.loadData();
+    if (this.state.userId !== '' && this.state.changeMade === true) {
+      this.loadData();
+      this.setChangeMade(false);
     }
   }
 
@@ -83,8 +93,9 @@ class App extends React.Component {
       this.mainPanel.current.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
     }
-    if (this.state.userId !== '') {
-      // this.loadData();
+    if (this.state.userId !== '' && this.state.changeMade === true) {
+      this.loadData();
+      this.setChangeMade(false);
     }
   }
 
@@ -96,7 +107,7 @@ class App extends React.Component {
   };
 
   async loadData() {
-    // console.log('loading data..', this.state.userId);
+    console.log('loading data..');
     const items = await this.getInQueueItems();
     if (items && items.itemMany != null) {
       this.setState({ inQueueItems: items });
@@ -492,6 +503,7 @@ class App extends React.Component {
                         serveUser={this.serveUser}
                         markUserCompleted={this.markUserCompleted}
                         createdUsers={this.state.createdUsers}
+                        setChangeMade={this.setChangeMade}
                       />
                     )}
                   />

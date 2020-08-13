@@ -137,7 +137,6 @@ class Join extends React.Component {
         newItemStatus: itemAdd.itemCreateOne.record.status,
       });
     }
-
     this.queueUpItem();
   }
 
@@ -161,6 +160,7 @@ class Join extends React.Component {
     const data = await graphQLFetch(updateQueue);
     console.log(data);
     if (data) {
+      this.props.setChangeMade(true);
       this.submitSuccess();
     } else {
       this.submitFailure();
