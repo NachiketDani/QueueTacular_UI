@@ -97,7 +97,6 @@ class Join extends React.Component {
   handleSubmit(event) {
     //alert('Queue joined!\n Description:' + this.state.newItemDescriptor);
     event.preventDefault();
-    window.reload(true);
   }
 
   // This method is created to create an item from user login props information to prepare to add to a queue
