@@ -113,7 +113,9 @@ class CreatedQueue extends React.Component {
                 </tr>
                 <tr>
                   <td>
-                    <CreatedQueueParticipantHover items={this.props.items} />
+                    <CreatedQueueParticipantHover
+                      createdUsers={this.props.createdUsers}
+                    />
                   </td>
                 </tr>
                 <tr>

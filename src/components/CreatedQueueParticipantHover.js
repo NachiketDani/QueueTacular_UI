@@ -25,29 +25,34 @@ const TooltipItem = (props) => {
 };
 
 const mapToArray = (props) => {
-  const participants = props.items
-    .filter((item) => {
-      return item.status === 'Waiting' || item.status === 'Serving';
-    })
-    .map((item) => [
-      {
-        placement: 'bottom',
-        text: item.user.toString(),
-      },
-    ]);
-  return participants;
+  if (props.createdUsers.length) {
+    return (
+      props.createdUsers
+        // .filter((item) => {
+        //   return item.status === 'Waiting' || item.status === 'Serving';
+        // })
+        .map((user) => [
+          {
+            placement: 'bottom',
+            text: user.username,
+          },
+        ])
+    );
+  } else {
+    return [];
+  }
 };
 
 const CreatedQueueParticipantHover = (props) => {
-  const participants = mapToArray(props);
+  // const participants = mapToArray(props);
   return (
     <>
-      <Progress multi>
-        {participants.map((tooltip, i) => {
-          tooltip = tooltip[0];
-          return <TooltipItem key={i} item={tooltip} id={i} />;
-        })}
-      </Progress>
+      {/* <Progress multi>
+         {participants.map((tooltip, i) => {
+           tooltip = tooltip[0];
+           return <TooltipItem key={i} item={tooltip} id={i} />;
+         })}
+       </Progress> */}
     </>
   );
 };
