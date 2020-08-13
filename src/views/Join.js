@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SelectAsync from 'react-select/lib/Async';
 import graphQLFetch from '../GraphQLFetch.js';
 import Login from '../components/Login.js';
