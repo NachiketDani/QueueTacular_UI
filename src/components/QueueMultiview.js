@@ -10,15 +10,8 @@ import {
 } from 'reactstrap';
 
 import InQueueMini from '../components/InQueueMini.js';
-import InQueue from '../components/InQueue.js';
-import graphQLFetch from '../GraphQLFetch.js';
-import Expandable from './Expandable.js';
 
 class QueueMultiview extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   createQueueViews() {
     const rows = [];
     let i;

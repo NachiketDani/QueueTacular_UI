@@ -59,9 +59,11 @@ class CreatedQueue extends React.Component {
             <Table style={{ marginBottom: 0 }} size='sm' borderless>
               <tbody>
                 <tr>
-                  <CardHeader tag='h5' style={{ verticalAlign: 'top' }}>
-                    {this.props.title}
-                  </CardHeader>
+                  <td>
+                    <CardHeader tag='h5' style={{ verticalAlign: 'top' }}>
+                      {this.props.title}
+                    </CardHeader>
+                  </td>
                   <td style={{ textAlign: 'right' }}>
                     <Button
                       onClick={this.tryRedirect}
@@ -136,25 +138,29 @@ class CreatedQueue extends React.Component {
                 </tr>
                 <tr>
                   {this.props.status === 'Open' ? (
-                    <Badge color='success'>
-                      <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
-                        Active{'  '}
-                        <i
-                          style={{ marginRight: 10 }}
-                          className='nc-icon nc-bulb-63'
-                        />
-                      </h5>
-                    </Badge>
+                    <td>
+                      <Badge color='success'>
+                        <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                          Active{'  '}
+                          <i
+                            style={{ marginRight: 10 }}
+                            className='nc-icon nc-bulb-63'
+                          />
+                        </h5>
+                      </Badge>
+                    </td>
                   ) : (
-                    <Badge color='danger'>
-                      <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
-                        Closed{'  '}
-                        <i
-                          style={{ marginRight: 10 }}
-                          className='nc-icon nc-time-alarm'
-                        />
-                      </h5>
-                    </Badge>
+                    <td>
+                      <Badge color='danger'>
+                        <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
+                          Closed{'  '}
+                          <i
+                            style={{ marginRight: 10 }}
+                            className='nc-icon nc-time-alarm'
+                          />
+                        </h5>
+                      </Badge>
+                    </td>
                   )}
                 </tr>
               </tbody>
