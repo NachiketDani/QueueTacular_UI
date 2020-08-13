@@ -63,6 +63,7 @@ class Join extends React.Component {
       description: '',
       peopleInQueue: [],
       status: '',
+      maxParticipants: 999,
       newItemId: '',
       newItemDescriptor: '',
       newItemStatus: '',
@@ -84,6 +85,7 @@ class Join extends React.Component {
       description: value.description,
       peopleInQueue: value.items,
       status: value.status,
+      maxParticipants: value.maxParticipants,
     });
     console.log(value);
   }
@@ -102,7 +104,10 @@ class Join extends React.Component {
     let userInArray = this.state.peopleInQueue.filter(
       (item) => item.user === this.props.userId
     );
-    if (userInArray.length > 0) {
+    if (
+      userInArray.length > 0 ||
+      this.state.peopleInQueue === this.state.maxParticipants
+    ) {
       console.log('Already in queue!');
       this.submitFailure();
       return;
@@ -172,6 +177,7 @@ class Join extends React.Component {
         title
         description
         status
+        maxParticipants
         items {
           user
           _id
