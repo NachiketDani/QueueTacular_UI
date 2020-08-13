@@ -73,12 +73,6 @@ class CreatedQueue extends React.Component {
     this.markFailureServed = this.markFailureServed.bind(this);
   }
 
-  onDelete = (item) => {
-    // console.log('this works?');
-    // const items = this.state.items.filter((c) => c.item !== item);
-    // this.setState({ items });
-  };
-
   tryRedirect = () => {
     this.setState({ referrer: './edit' });
   };

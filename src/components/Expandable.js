@@ -20,7 +20,6 @@ const Expandable = (props) => {
       <Button color='primary' onClick={toggle} style={{ marginBottom: '1rem' }}>
         Expand
       </Button>
-      {/* <h5>Current state: {status}</h5> */}
       <Collapse
         isOpen={collapse}
         onEntering={onEntering}

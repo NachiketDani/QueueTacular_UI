@@ -1,13 +1,6 @@
 import React from 'react';
 // reactstrap components
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  // CardFooter,
-  CardTitle,
-  Table,
-} from 'reactstrap';
+import { Card, CardHeader, CardBody, CardTitle, Table } from 'reactstrap';
 
 import InQueueMini from '../components/InQueueMini.js';
 
@@ -55,11 +48,6 @@ class QueueMultiview extends React.Component {
             </Table>
           )}
         </CardBody>
-        {/*
-        <CardFooter>
-          <Expandable />
-        </CardFooter>
-        */}
       </Card>
     );
   }

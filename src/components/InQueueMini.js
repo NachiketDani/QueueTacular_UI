@@ -11,10 +11,7 @@ class InQueueMini extends React.Component {
   getPlaceInQueue() {
     let i;
     for (i = 0; i < this.props.items.length; i++) {
-      // console.log(this.props.queue.items);
       if (this.props.items[i].user === this.props.userId) {
-        // console.log('Determining place in line...');
-        // console.log(i);
         return i;
       }
     }
