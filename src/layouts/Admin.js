@@ -20,6 +20,7 @@ import React from 'react';
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Route, Switch } from 'react-router-dom';
+import NotificationAlert from 'react-notification-alert';
 // import { Card, CardBody, CardText } from 'reactstrap';
 
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
@@ -33,6 +34,50 @@ import graphQLFetch from '../GraphQLFetch';
 import sendEmail from '../components/Email';
 
 var ps;
+
+let optionSuccessCompleted = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Successfully marked item as "Completed".'</div>
+    </div>
+  ),
+  type: 'success',
+  autoDismiss: 3,
+};
+
+let optionFailureCompleted = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Failed to mark item as "Completed".'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
+
+let optionSuccessServed = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Successfully marked item as "Served".'</div>
+    </div>
+  ),
+  type: 'success',
+  autoDismiss: 3,
+};
+
+let optionFailureServed = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Failed to mark item as "Served".'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -59,6 +104,10 @@ class App extends React.Component {
     this.markItemServedInQueue = this.markItemServedInQueue.bind(this);
     this.markUserCompleted = this.markUserCompleted.bind(this);
     this.markItemCompletedInQueue = this.markItemCompletedInQueue.bind(this);
+    this.markSuccessCompleted = this.markSuccessCompleted.bind(this);
+    this.markFailureCompleted = this.markFailureCompleted.bind(this);
+    this.markSuccessServed = this.markSuccessServed.bind(this);
+    this.markFailureServed = this.markFailureServed.bind(this);
   }
 
   // async setChangeMade() {
@@ -101,6 +150,22 @@ class App extends React.Component {
   handleBgClick = (color) => {
     this.setState({ backgroundColor: color });
   };
+
+  markSuccessCompleted() {
+    this.refs.notify.notificationAlert(optionSuccessCompleted);
+  }
+
+  markFailureCompleted() {
+    this.refs.notify.notificationAlert(optionFailureCompleted);
+  }
+
+  markSuccessServed() {
+    this.refs.notify.notificationAlert(optionSuccessServed);
+  }
+
+  markFailureServed() {
+    this.refs.notify.notificationAlert(optionFailureServed);
+  }
 
   async loadData() {
     console.log('loading data..');

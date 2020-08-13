@@ -1,14 +1,6 @@
 import React from 'react';
 // reactstrap components
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
-  Row,
-  Col,
-} from 'reactstrap';
+import { Card, CardHeader, CardBody, CardTitle } from 'reactstrap';
 
 class About extends React.Component {
   render() {
@@ -24,16 +16,14 @@ class About extends React.Component {
               <div>
                 Queue-Tacular is a general purpose queue management app for
                 businesses of all shapes and sizes. Inspired by the needs of
-                local business to strictly manage capacities during the Covid-19
-                pandemic of 2020, Danielle Mallare-Dani, Tim Gao, Nachiket Dani,
-                and Zack Katancik set out to create a queue management
-                technology designed with all business in mind, not just
-                restaurants.
+                manage capacities during the Covid-19 pandemic of 2020. Created
+                by Danielle Mallare-Dani, Tim Gao, Nachiket Dani.
               </div>
               <br />
               <div>Login to get started with Queue-Tacular now.</div>
               <hr />
-              <a href='mailto:spaceforcegroup@gmail.com' target='_blank'>
+              {/* target='_blank' is a safety risk according to console - Tim */}
+              <a href='mailto:spaceforcegroup@gmail.com'>
                 Email us here for inquiries!
               </a>
             </CardBody>

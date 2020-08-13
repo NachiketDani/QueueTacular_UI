@@ -99,9 +99,8 @@ class Create extends React.Component {
         return;
       }
     }
-
-    start = start.toISOString();
-    end = end.toISOString();
+    // start = start.toISOString();
+    // end = end.toISOString();
 
     const record = {
       title: title,
@@ -109,8 +108,8 @@ class Create extends React.Component {
       owner: this.props.userId,
       description: description,
       maxParticipants: parseFloat(participant),
-      startDate: start,
-      endDate: end,
+      // startDate: start,
+      // endDate: end,
     };
     const mutationForQueue = `mutation queueCreateOne($record: CreateOneQueueInput!) {
       queueCreateOne(record: $record) {
