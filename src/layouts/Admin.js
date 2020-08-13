@@ -65,7 +65,7 @@ class App extends React.Component {
       document.body.classList.toggle('perfect-scrollbar-on');
     }
     if (this.state.userId !== '') {
-      this.loadData();
+      // this.loadData();
     }
   }
 
@@ -82,7 +82,7 @@ class App extends React.Component {
       document.scrollingElement.scrollTop = 0;
     }
     if (this.state.userId !== '') {
-      this.loadData();
+      // this.loadData();
     }
   }
 
