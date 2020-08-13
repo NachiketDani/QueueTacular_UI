@@ -1,6 +1,8 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
 
+import NotificationAlert from 'react-notification-alert';
+
 // reactstrap components
 import {
   Card,
@@ -15,12 +17,60 @@ import {
 import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
 import ExpandableTable from './ExpandableTable';
 
+let optionSuccessCompleted = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Successfully marked item as "Completed".'</div>
+    </div>
+  ),
+  type: 'success',
+  autoDismiss: 3,
+};
+
+let optionFailureCompleted = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Failed to mark item as "Completed".'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
+
+let optionSuccessServed = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Successfully marked item as "Served".'</div>
+    </div>
+  ),
+  type: 'success',
+  autoDismiss: 3,
+};
+
+let optionFailureServed = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Failed to mark item as "Served".'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
+
 class CreatedQueue extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       referrer: null,
     };
+    this.markSuccessCompleted = this.markSuccessCompleted.bind(this);
+    this.markFailureCompleted = this.markFailureCompleted.bind(this);
+    this.markSuccessServed = this.markSuccessServed.bind(this);
+    this.markFailureServed = this.markFailureServed.bind(this);
   }
 
   onDelete = (item) => {
@@ -32,6 +82,22 @@ class CreatedQueue extends React.Component {
   tryRedirect = () => {
     this.setState({ referrer: './edit' });
   };
+
+  markSuccessCompleted() {
+    this.refs.notify.notificationAlert(optionSuccessCompleted);
+  }
+
+  markFailureCompleted() {
+    this.refs.notify.notificationAlert(optionFailureCompleted);
+  }
+
+  markSuccessServed() {
+    this.refs.notify.notificationAlert(optionSuccessServed);
+  }
+
+  markFailureServed() {
+    this.refs.notify.notificationAlert(optionFailureServed);
+  }
 
   render() {
     const { referrer } = this.state;
@@ -76,10 +142,13 @@ class CreatedQueue extends React.Component {
                       Edit
                     </Button>
                     <Badge
-                      style={{ textAlign: 'right', verticalAlign: 'top' }}
                       color='danger'
                       onClick={() => this.props.removeCreated()}
-                      style={{ cursor: 'pointer' }}
+                      style={{
+                        cursor: 'pointer',
+                        textAlign: 'right',
+                        verticalAlign: 'top',
+                      }}
                     >
                       <i className='nc-icon nc-simple-remove' />
                     </Badge>
@@ -168,6 +237,7 @@ class CreatedQueue extends React.Component {
             <hr style={{ marginBottom: 0, marginTop: 0 }} />
           </CardBody>
           <CardFooter>
+            <NotificationAlert ref='notify' />
             <div>
               <ExpandableTable
                 {...this.props}
