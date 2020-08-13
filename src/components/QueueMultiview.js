@@ -4,7 +4,7 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
+  // CardFooter,
   CardTitle,
   Table,
 } from 'reactstrap';

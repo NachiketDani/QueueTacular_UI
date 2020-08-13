@@ -20,6 +20,7 @@ import React from 'react';
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Route, Switch } from 'react-router-dom';
+import NotificationAlert from 'react-notification-alert';
 // import { Card, CardBody, CardText } from 'reactstrap';
 
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
@@ -33,6 +34,50 @@ import graphQLFetch from '../GraphQLFetch';
 import sendEmail from '../components/Email';
 
 var ps;
+
+let optionSuccessCompleted = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Successfully marked item as "Completed".'</div>
+    </div>
+  ),
+  type: 'success',
+  autoDismiss: 3,
+};
+
+let optionFailureCompleted = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Failed to mark item as "Completed".'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
+
+let optionSuccessRemoved = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Successfully marked item as "Removed".'</div>
+    </div>
+  ),
+  type: 'success',
+  autoDismiss: 3,
+};
+
+let optionFailureRemoved = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Failed to mark item as "Removed".'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -57,6 +102,10 @@ class App extends React.Component {
     this.signInFailure = this.signInFailure.bind(this);
     this.serveUser = this.serveUser.bind(this);
     this.markItemServedInQueue = this.markItemServedInQueue.bind(this);
+    this.markSuccessCompleted = this.markSuccessCompleted.bind(this);
+    this.markFailureCompleted = this.markFailureCompleted.bind(this);
+    this.markSuccessRemoved = this.markSuccessRemoved.bind(this);
+    this.markFailureRemoved = this.markFailureRemoved.bind(this);
   }
 
   async componentDidMount() {
@@ -92,6 +141,22 @@ class App extends React.Component {
   handleBgClick = (color) => {
     this.setState({ backgroundColor: color });
   };
+
+  markSuccessCompleted() {
+    this.refs.notify.notificationAlert(optionSuccessCompleted);
+  }
+
+  markFailureCompleted() {
+    this.refs.notify.notificationAlert(optionFailureCompleted);
+  }
+
+  markSuccessRemoved() {
+    this.refs.notify.notificationAlert(optionSuccessRemoved);
+  }
+
+  markFailureRemoved() {
+    this.refs.notify.notificationAlert(optionFailureRemoved);
+  }
 
   async loadData() {
     // console.log('loading data..', this.state.userId);
