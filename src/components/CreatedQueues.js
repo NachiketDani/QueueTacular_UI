@@ -13,6 +13,11 @@ import CreatedQueueMini from './CreatedQueueMini.js';
 import Expandable from './Expandable.js';
 
 class CreatedQueues extends React.Component {
+  constructor(props) {
+    super(props);
+    this.createCreatedQueueMiniTop = this.createCreatedQueueMiniTop.bind(this);
+    this.restOfQueues = this.restOfQueues.bind(this);
+  }
   createCreatedQueueMiniTop() {
     const rows = [];
     let i;
@@ -27,6 +32,7 @@ class CreatedQueues extends React.Component {
           showId={i}
           key={i.toString()}
           showCreated={this.props.showCreated}
+          createdUsers={this.props.createdUsers[i]}
         />
       );
       rows.push(queueMini);
@@ -44,6 +50,7 @@ class CreatedQueues extends React.Component {
           showId={i}
           key={i.toString()}
           showCreated={showCreated}
+          createdUsers={this.props.createdUsers[i]}
         />
       );
       rows.push(queueMini);
@@ -72,7 +79,7 @@ class CreatedQueues extends React.Component {
             </Table>
           )}
         </CardBody>
-        {this.props.createdQueues.length <= 2 ? null : (
+        {this.props.createdQueues.length < 2 ? null : (
           <CardFooter>
             <Expandable {...this.props} restOfQueues={this.restOfQueues} />
           </CardFooter>
