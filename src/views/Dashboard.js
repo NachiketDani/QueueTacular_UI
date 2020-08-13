@@ -38,14 +38,12 @@ class Dashboard extends React.Component {
       showCreatedBool: true,
       showId: id,
     });
-    // console.log('success');
   };
 
   removeCreated() {
     this.setState({
       showCreatedBool: false,
     });
-    // console.log('removed');
   }
 
   showQueueDetail = (id) => {
@@ -64,7 +62,6 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    // console.log('showId:', `${this.state.showId}`);
     return (
       <>
         <div className='content'>
@@ -96,6 +93,7 @@ class Dashboard extends React.Component {
               {...this.props.createdQueues[this.state.showId]}
               loggedIn={this.props.loggedIn}
               serveUser={this.props.serveUser}
+              createdUsers={this.props.createdUsers[this.state.showId]}
             />
           ) : null}
         </div>

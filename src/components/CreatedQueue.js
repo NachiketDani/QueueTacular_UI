@@ -118,11 +118,21 @@ class CreatedQueue extends React.Component {
                 </tr>
                 <tr>
                   <td>
-                    Estimated end of queue current wait time is <b>15</b>{' '}
-                    minutes.
+                    Estimated end of queue current wait time is{' '}
+                    <b>
+                      {this.props.items == null
+                        ? 0
+                        : 5 *
+                          this.props.items.filter(
+                            (item) =>
+                              item.status === 'Waiting' ||
+                              item.status === 'Serving'
+                          ).length}
+                    </b>{' '}
+                    minute(s).
                   </td>
                 </tr>
-                <td>
+                <tr>
                   {this.props.status === 'Open' ? (
                     <Badge color='success'>
                       <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
@@ -144,7 +154,7 @@ class CreatedQueue extends React.Component {
                       </h5>
                     </Badge>
                   )}
-                </td>
+                </tr>
               </tbody>
             </Table>
             <hr style={{ marginBottom: 0, marginTop: 0 }} />

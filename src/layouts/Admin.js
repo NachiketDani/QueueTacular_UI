@@ -46,6 +46,7 @@ class App extends React.Component {
       queues: [],
       createdQueues: [],
       loggedIn: false,
+      createdUsers: [],
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -173,6 +174,11 @@ class App extends React.Component {
     if (queues) {
       this.setState({ createdQueues: queues });
     }
+    //  Tim: ate some homemade spaghetti
+    const users = await this.getCreatedUsersInfo();
+    if (users) {
+      this.setState({ createdUsers: users });
+    }
   }
 
   async getInQueueItems() {
@@ -228,7 +234,6 @@ class App extends React.Component {
         }
       }`;
       const data = await graphQLFetch(queryForQueue);
-      // console.log(data);
       if (data != null && data.queueOne != null) {
         queues.push(data.queueOne);
       }
@@ -263,34 +268,39 @@ class App extends React.Component {
   // Tim: creates a list of objects with _id: that contain lists of user's MongoID
   async getCreatedUsers() {
     const queues = await this.getCreatedQueues();
-    return queues.map((queue) => {
-      return {
-        _id: queue.items.map((item) => {
-          return item.user;
-        }),
-      };
+    const users = queues.map((queue) => {
+      return queue.items.map((item) => {
+        return { _id: item.user };
+      });
     });
+    return users;
   }
 
+  // Tim: voodoo magic
   async getCreatedUsersInfo() {
-    const users = this.getCreatedUsers();
-    const queryForQueues = `query {
-      userMany(filter:{
-        OR: []
-      }){
-        _id
-        title
-        owner
-        description
-        status
-        maxParticipants
-        startDate
-        endDate
-        items {
-          _id user wait description status
+    const users = await this.getCreatedUsers();
+    if (users == null) return [];
+    let userInfo = [];
+    let i;
+    for (i = 0; i < users.length; i++) {
+      if (users[i].length) {
+        let userList = JSON.stringify(users[i]).replace(/"([^"]+)":/g, '$1:');
+        const queryForUsers = `query {
+          userMany(filter: {
+            OR: ${userList}
+          }) {
+            username email
+          }
+        }`;
+        const data = await graphQLFetch(queryForUsers);
+        if (data && data.userMany !== null) {
+          userInfo.push(data.userMany);
         }
+      } else {
+        userInfo.push([]);
       }
-    }`;
+    }
+    return userInfo;
   }
 
   async serveUser(queueId, itemId) {
@@ -345,6 +355,7 @@ class App extends React.Component {
                         onSignInFailure={this.signInFailure}
                         onSignIn={this.responseGoogle}
                         serveUser={this.serveUser}
+                        createdUsers={this.state.createdUsers}
                       />
                     )}
                   />
