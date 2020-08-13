@@ -1,45 +1,68 @@
-// import app from '../EmailServer.js';
+//const nodemailer = require('nodemailer');
+// const gulp = require('gulp');
+// const mail = require('gulp-mail');
 
 require('dotenv').config();
-const nodemailer = require('nodemailer');
-const gulp = require('gulp');
-const mail = require('gulp-mail');
 
-async function sendEmail(queueName) {
-  console.log('Sending email...');
-  // create reusable transporter object using the default SMTP transport
-  //   let transporter = nodemailer.createTransport({
-  //     // host: 'smtp.gmail.com',
-  //     // port: 465, // use 465 for secure
-  //     // secure: true, // true for 465, false for other ports
-  //      service: 'gmail',
-  //     auth: {
-  //       user: process.env.EMAIL,
-  //       pass: process.env.PASSWORD,
-  //     },
-  //   });
-
-  const smtpInfo = {
-    auth: {
-      user: process.env.EMAIL,
-      pass: process.env.PASSWORD,
-    },
-    host: 'stmp.163.com',
-    secureConnection: true,
-    port: 465,
+export default async function sendEmail() {
+  const templateParams = {
+    to_name: 'James',
+    queue_name: 'Disneyland',
   };
 
-  gulp.task('mail', function () {
-    return gulp.src('./emailTemplate.html').pipe(
-      mail({
-        subject: 'Surprise!?',
-        to: ['spaceforcegroup@gmail.com'],
-        from: 'Queue-Tacular <spaceforcegroup@gmail.com>',
-        smtp: smtpInfo,
-      })
+  window.emailjs
+    .send('default_service', 'template_serving_queue', templateParams)
+    .then(
+      function (response) {
+        console.log('SUCCESS!', response.status, response.text);
+      },
+      function (error) {
+        console.log('FAILED...', error);
+      }
     );
-  });
 }
+
+// Attempt 2.
+// export default async function sendEmail(queueName) {
+//   //console.log('Sending email...');
+
+//   const smtpInfo = {
+//     auth: {
+//       user: process.env.EMAIL,
+//       pass: process.env.PASSWORD,
+//     },
+//     host: 'smtp.163.com',
+//     secureConnection: true,
+//     port: 465,
+//   };
+
+//   gulp.task('mail', function () {
+//     return gulp.src('./emailTemplate.html').pipe(
+//       mail({
+//         subject: 'Surprise!?',
+//         to: ['spaceforcegroup@gmail.com'],
+//         from: 'Queue-Tacular <spaceforcegroup@gmail.com>',
+//         smtp: smtpInfo,
+//       })
+//     );
+//   });
+// }
+
+// export default sendEmail;
+
+// Attempt 1.
+
+// create reusable transporter object using the default SMTP transport
+//   let transporter = nodemailer.createTransport({
+//     // host: 'smtp.gmail.com',
+//     // port: 465, // use 465 for secure
+//     // secure: true, // true for 465, false for other ports
+//      service: 'gmail',
+//     auth: {
+//       user: process.env.EMAIL,
+//       pass: process.env.PASSWORD,
+//     },
+//   });
 
 // verify connection configuration
 //   transporter.verify(function (error, success) {
@@ -67,5 +90,4 @@ async function sendEmail(queueName) {
 //   });
 //}
 
-export default sendEmail;
 // sendEmail().catch(console.error);

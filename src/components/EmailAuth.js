@@ -91,17 +91,3 @@ main().catch((err) => console.log(err));
 //     console.log('FAILED...', error);
 //   }
 // );
-
-// QueueTC.addResolver({
-//   name: 'pushToItems',
-//   type: QueueTC,
-//   args: [{ _id: 'MongoID!'}],
-//   resolve: async ({ source, args, context, info }) => {
-//     const users = await User.(
-//       { _id: args._id },
-//       { $push: { items: args.record } },
-//     );
-//     if (!queue) return null;
-//     return Queue.findOne({ _id: args._id });
-//   },
-// });

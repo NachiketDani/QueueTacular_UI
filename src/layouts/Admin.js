@@ -30,7 +30,7 @@ import Sidebar from 'components/Sidebar/Sidebar.js';
 
 import routes from 'routes.js';
 import graphQLFetch from '../GraphQLFetch';
-// import sendEmail from '../components/Email.js';
+import sendEmail from '../components/Email';
 
 var ps;
 
@@ -303,10 +303,10 @@ class App extends React.Component {
       }
     }`;
     const data = await graphQLFetch(serveItemQuery);
-    // if (data) {
-    //   console.log('Updated Item:', data.itemUpdateById.recordId);
-    //   sendEmail();
-    // }
+    if (data) {
+      console.log('Updated Item:', data.itemUpdateById.recordId);
+      sendEmail();
+    }
   }
 
   render() {
