@@ -196,7 +196,7 @@ class Create extends React.Component {
                         </Col>
                         <Col>
                           <Label for='startTime' className='mt-2'>
-                            Start Time
+                            Start Time (format: HH:MM AM/PM)
                           </Label>
                         </Col>
                       </Row>
@@ -234,7 +234,7 @@ class Create extends React.Component {
                         </Col>
                         <Col>
                           <Label for='endTime' className='mt-2'>
-                            End Time
+                            End Time (format: HH:MM AM/PM)
                           </Label>
                         </Col>
                       </Row>

@@ -24,10 +24,10 @@ import NotificationAlert from 'react-notification-alert';
 // import withToast from "./withToast";
 
 let optionSuccess = {
-  place: 'br',
+  place: 'bl',
   message: (
     <div>
-      <div>'Successfully joined queue!'</div>
+      <div>Successfully joined queue!</div>
     </div>
   ),
   type: 'success',
@@ -35,10 +35,10 @@ let optionSuccess = {
 };
 
 let optionFailure = {
-  place: 'br',
+  place: 'bl',
   message: (
     <div>
-      <div>'You are already in the queue!'</div>
+      <div>You are already in the queue!</div>
     </div>
   ),
   type: 'danger',
@@ -93,7 +93,7 @@ class Join extends React.Component {
   }
 
   handleSubmit(event) {
-    alert('Queue joined!\n Description:' + this.state.newItemDescriptor);
+    //alert('Queue joined!\n Description:' + this.state.newItemDescriptor);
     event.preventDefault();
   }
 
@@ -157,6 +157,8 @@ class Join extends React.Component {
     console.log(data);
     if (data) {
       this.submitSuccess();
+    } else {
+      this.submitFailure();
     }
   }
 
