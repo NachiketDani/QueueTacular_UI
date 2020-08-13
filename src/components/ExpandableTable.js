@@ -20,8 +20,11 @@ const ExpandableTable = (props) => {
   const onExited = () => setStatus('Closed');
 
   const onServing = (itemId, email, name) => {
-    // console.log('Serving Item Id=', email, 'Name=', name);
     props.serveUser(props._id, props.title, itemId, email, name);
+  };
+
+  const markCompleted = (itemId, email, name) => {
+    props.markUserCompleted(props._id, props.title, itemId, email, name);
   };
 
   const toggle = () => setCollapse(!collapse);
@@ -112,7 +115,11 @@ const ExpandableTable = (props) => {
                           color='danger'
                           id='complete'
                           onClick={() =>
-                            props.onDelete(props.items, zipped[0].id)
+                            markCompleted(
+                              zipped[0]._id,
+                              zipped[1].email,
+                              zipped[1].username
+                            )
                           }
                           style={{ cursor: 'pointer' }}
                         >

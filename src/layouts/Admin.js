@@ -57,6 +57,8 @@ class App extends React.Component {
     this.signInFailure = this.signInFailure.bind(this);
     this.serveUser = this.serveUser.bind(this);
     this.markItemServedInQueue = this.markItemServedInQueue.bind(this);
+    this.markUserCompleted = this.markUserCompleted.bind(this);
+    this.markItemCompletedInQueue = this.markItemCompletedInQueue.bind(this);
   }
 
   async componentDidMount() {
@@ -384,6 +386,74 @@ class App extends React.Component {
     }
   }
 
+  async markItemCompletedInQueue(queueId, itemId) {
+    // Find the queue we want to update
+    let newQueueItems = [];
+    let queueItems;
+    let i;
+    for (i = 0; i < this.state.createdQueues.length; i++) {
+      if (this.state.createdQueues[i]._id === queueId) {
+        queueItems = this.state.createdQueues[i].items;
+      }
+    }
+    // Copy all items into a new array
+    let j;
+    for (j = 0; j < queueItems.length; j++) {
+      if (queueItems[j]._id === itemId) {
+        const newItem = {
+          _id: queueItems[j]._id,
+          description: queueItems[j].description,
+          status: 'Complete',
+          user: queueItems[j].user,
+        };
+        newQueueItems.push(newItem);
+      } else {
+        newQueueItems.push(queueItems[j]);
+      }
+    }
+
+    // Make array compatible with GraphQL query
+    const queryItemsArray = JSON.stringify(newQueueItems).replace(
+      /"([^"]+)":/g,
+      '$1:'
+    );
+    // Remove quotes around status values (type enum)
+    const queryVar = queryItemsArray.replace(/(status:)"([\w]+)"/g, '$1$2');
+
+    const markItemServedInQueueQuery = `mutation {
+      queueUpdateById(
+          record: {
+              _id: "${queueId}"
+            items: ${queryVar}
+          }
+      ){
+        recordId
+      }
+    }`;
+    const data = await graphQLFetch(markItemServedInQueueQuery);
+    if (data) {
+      this.loadData();
+    }
+  }
+
+  async markUserCompleted(queueId, queueName, itemId, email, name) {
+    const completeItemQuery = `mutation {
+      itemUpdateById(record: {
+        _id: "${itemId}"
+        status: Complete
+      }) {
+        recordId
+      }
+    }`;
+
+    const data = await graphQLFetch(completeItemQuery);
+    if (data) {
+      console.log('Updated Item:', data.itemUpdateById.recordId);
+      // Mark user as Completed in the Queue's Items array
+      this.markItemCompletedInQueue(queueId, itemId);
+    }
+  }
+
   render() {
     return (
       <div className='wrapper'>
@@ -420,6 +490,7 @@ class App extends React.Component {
                         onSignInFailure={this.signInFailure}
                         onSignIn={this.responseGoogle}
                         serveUser={this.serveUser}
+                        markUserCompleted={this.markUserCompleted}
                         createdUsers={this.state.createdUsers}
                       />
                     )}
