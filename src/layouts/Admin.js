@@ -303,7 +303,7 @@ class App extends React.Component {
     return userInfo;
   }
 
-  async serveUser(queueId, itemId) {
+  async serveUser(queueId, queueName, itemId, email, name) {
     const serveItemQuery = `mutation {
       itemUpdateById(record: {
         _id: "${itemId}"
@@ -315,7 +315,7 @@ class App extends React.Component {
     const data = await graphQLFetch(serveItemQuery);
     if (data) {
       console.log('Updated Item:', data.itemUpdateById.recordId);
-      sendEmail();
+      sendEmail(queueName, name, email);
     }
   }
 

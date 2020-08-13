@@ -4,10 +4,11 @@
 
 require('dotenv').config();
 
-export default async function sendEmail() {
+export default async function sendEmail(queueTitle, name, email) {
   const templateParams = {
-    to_name: 'James',
-    queue_name: 'Disneyland',
+    to_name: name,
+    queue_name: queueTitle,
+    to_email: email,
   };
 
   window.emailjs

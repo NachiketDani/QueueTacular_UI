@@ -19,9 +19,9 @@ const ExpandableTable = (props) => {
 
   const onExited = () => setStatus('Closed');
 
-  const onServing = (itemId) => {
-    console.log('Serving Item Id=', itemId);
-    props.serveUser(props._id, itemId);
+  const onServing = (itemId, email, name) => {
+    // console.log('Serving Item Id=', email, 'Name=', name);
+    props.serveUser(props._id, props.title, itemId, email, name);
   };
 
   const toggle = () => setCollapse(!collapse);
@@ -87,7 +87,13 @@ const ExpandableTable = (props) => {
                           color='success'
                           id='serving'
                           key={'serving badge' + i}
-                          onClick={() => onServing(0)}
+                          onClick={() =>
+                            onServing(
+                              zipped[0]._id,
+                              zipped[1].email,
+                              zipped[1].username
+                            )
+                          }
                         >
                           <UncontrolledTooltip
                             key={'tooltip serving icon' + i}
