@@ -1,6 +1,6 @@
 import React from 'react';
 // reactstrap components
-import { Row, Col, Progress, Badge } from 'reactstrap';
+import { Row, Col, Badge } from 'reactstrap';
 
 import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
 

@@ -132,7 +132,7 @@ class CreatedQueue extends React.Component {
                     minute(s).
                   </td>
                 </tr>
-                <td>
+                <tr>
                   {this.props.status === 'Open' ? (
                     <Badge color='success'>
                       <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
@@ -154,7 +154,7 @@ class CreatedQueue extends React.Component {
                       </h5>
                     </Badge>
                   )}
-                </td>
+                </tr>
               </tbody>
             </Table>
             <hr style={{ marginBottom: 0, marginTop: 0 }} />

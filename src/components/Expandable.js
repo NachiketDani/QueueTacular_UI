@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Collapse, Button, Table } from 'reactstrap';
-import InQueueMini from './InQueueMini.js';
 
 const Expandable = (props) => {
   const [collapse, setCollapse] = useState(false);
