@@ -57,22 +57,22 @@ let optionFailureCompleted = {
   autoDismiss: 3,
 };
 
-let optionSuccessRemoved = {
+let optionSuccessServed = {
   place: 'br',
   message: (
     <div>
-      <div>'Successfully marked item as "Removed".'</div>
+      <div>'Successfully marked item as "Served".'</div>
     </div>
   ),
   type: 'success',
   autoDismiss: 3,
 };
 
-let optionFailureRemoved = {
+let optionFailureServed = {
   place: 'br',
   message: (
     <div>
-      <div>'Failed to mark item as "Removed".'</div>
+      <div>'Failed to mark item as "Served".'</div>
     </div>
   ),
   type: 'danger',
@@ -104,8 +104,8 @@ class App extends React.Component {
     this.markItemServedInQueue = this.markItemServedInQueue.bind(this);
     this.markSuccessCompleted = this.markSuccessCompleted.bind(this);
     this.markFailureCompleted = this.markFailureCompleted.bind(this);
-    this.markSuccessRemoved = this.markSuccessRemoved.bind(this);
-    this.markFailureRemoved = this.markFailureRemoved.bind(this);
+    this.markSuccessServed = this.markSuccessServed.bind(this);
+    this.markFailureServed = this.markFailureServed.bind(this);
   }
 
   async componentDidMount() {
@@ -150,12 +150,12 @@ class App extends React.Component {
     this.refs.notify.notificationAlert(optionFailureCompleted);
   }
 
-  markSuccessRemoved() {
-    this.refs.notify.notificationAlert(optionSuccessRemoved);
+  markSuccessServed() {
+    this.refs.notify.notificationAlert(optionSuccessServed);
   }
 
-  markFailureRemoved() {
-    this.refs.notify.notificationAlert(optionFailureRemoved);
+  markFailureServed() {
+    this.refs.notify.notificationAlert(optionFailureServed);
   }
 
   async loadData() {
