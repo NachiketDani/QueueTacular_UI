@@ -31,11 +31,22 @@ let optionSuccess = {
   autoDismiss: 3,
 };
 
-let optionFailure = {
+let optionFailureStart = {
   place: 'br',
   message: (
     <div>
-      <div>'Failed to create queue.'</div>
+      <div>'Failed to create queue. Please verify the start date.'</div>
+    </div>
+  ),
+  type: 'danger',
+  autoDismiss: 3,
+};
+
+let optionFailureEnd = {
+  place: 'br',
+  message: (
+    <div>
+      <div>'Failed to create queue. Please verify the end date.'</div>
     </div>
   ),
   type: 'danger',
@@ -57,7 +68,8 @@ class Create extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.submitSuccess = this.submitSuccess.bind(this);
-    this.submitFailure = this.submitFailure.bind(this);
+    this.submitFailureStart = this.submitFailureStart.bind(this);
+    this.submitFailureEnd = this.submitFailureEnd.bind(this);
   }
 
   async handleSubmit(event) {
@@ -71,8 +83,26 @@ class Create extends React.Component {
       endDate,
       endTime,
     } = this.state;
-    const start = new Date(startDate + 'T' + startTime).toISOString();
-    const end = new Date(endDate + 'T' + endTime).toISOString();
+    const start = new Date(startDate + 'T' + startTime);
+    const end = new Date(endDate + 'T' + endTime);
+
+    if (Object.prototype.toString.call(start) === '[object Date]') {
+      if (isNaN(start.getTime())) {
+        this.submitFailureStart();
+        return;
+      }
+    }
+
+    if (Object.prototype.toString.call(end) === '[object Date]') {
+      if (isNaN(end.getTime())) {
+        this.submitFailureEnd();
+        return;
+      }
+    }
+
+    start = start.toISOString();
+    end = end.toISOString();
+
     const record = {
       title: title,
       status: 'Open',
@@ -92,9 +122,6 @@ class Create extends React.Component {
     if (data) {
       console.log(data.queueCreateOne.recordId);
       this.submitSuccess();
-    } else {
-      // Failure doesn't trigger right now because of compiler error
-      this.submitFailure();
     }
   }
 
@@ -108,8 +135,12 @@ class Create extends React.Component {
     this.refs.notify.notificationAlert(optionSuccess);
   }
 
-  submitFailure() {
-    this.refs.notify.notificationAlert(optionFailure);
+  submitFailureStart() {
+    this.refs.notify.notificationAlert(optionFailureStart);
+  }
+
+  submitFailureEnd() {
+    this.refs.notify.notificationAlert(optionFailureEnd);
   }
 
   render() {

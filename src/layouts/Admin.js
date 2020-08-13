@@ -25,10 +25,12 @@ import { Route, Switch } from 'react-router-dom';
 import DemoNavbar from 'components/Navbars/DemoNavbar.js';
 import Footer from 'components/Footer/Footer.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
+
 // import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 
 import routes from 'routes.js';
 import graphQLFetch from '../GraphQLFetch';
+import sendEmail from '../components/Email';
 
 var ps;
 
@@ -44,7 +46,7 @@ class App extends React.Component {
       queues: [],
       createdQueues: [],
       loggedIn: false,
-      userItems: [],
+      createdUsers: [],
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -53,6 +55,8 @@ class App extends React.Component {
     this.loadData = this.loadData.bind(this);
     this.signoutGoogle = this.signoutGoogle.bind(this);
     this.signInFailure = this.signInFailure.bind(this);
+    this.serveUser = this.serveUser.bind(this);
+    this.markItemServedInQueue = this.markItemServedInQueue.bind(this);
   }
 
   async componentDidMount() {
@@ -99,6 +103,15 @@ class App extends React.Component {
         this.setState({ queues: queues });
       }
     }
+    const queues = await this.getCreatedQueues();
+    if (queues) {
+      this.setState({ createdQueues: queues });
+    }
+    //  Tim: ate some homemade spaghetti
+    const users = await this.getCreatedUsersInfo();
+    if (users) {
+      this.setState({ createdUsers: users });
+    }
   }
 
   signInFailure() {
@@ -117,8 +130,6 @@ class App extends React.Component {
   }
 
   async responseGoogle(response) {
-    // console.log(response);
-    // console.log(response.profileObj.givenName);
     this.setState({
       name: response.profileObj.givenName,
       email: response.profileObj.email,
@@ -174,7 +185,7 @@ class App extends React.Component {
     //  Tim: ate some homemade spaghetti
     const users = await this.getCreatedUsersInfo();
     if (users) {
-      this.setState({ userItems: users });
+      this.setState({ createdUsers: users });
     }
   }
 
@@ -231,7 +242,6 @@ class App extends React.Component {
         }
       }`;
       const data = await graphQLFetch(queryForQueue);
-      // console.log(data);
       if (data != null && data.queueOne != null) {
         queues.push(data.queueOne);
       }
@@ -266,12 +276,16 @@ class App extends React.Component {
   // Tim: creates a list of objects with _id: that contain lists of user's MongoID
   async getCreatedUsers() {
     const queues = await this.getCreatedQueues();
-    const users = queues.map((queue) => {
-      return queue.items.map((item) => {
-        return { _id: item.user };
+    if (queues) {
+      const users = queues.map((queue) => {
+        return queue.items.map((item) => {
+          return { _id: item.user };
+        });
       });
-    });
-    return users;
+      return users;
+    } else {
+      return [];
+    }
   }
 
   // Tim: voodoo magic
@@ -283,12 +297,6 @@ class App extends React.Component {
     for (i = 0; i < users.length; i++) {
       if (users[i].length) {
         let userList = JSON.stringify(users[i]).replace(/"([^"]+)":/g, '$1:');
-        console.log(userList);
-        // let j;
-        // for (j = 0; j < userList.length; j++) {
-        //   userList = userList.replace(/"([^"]+)":/g, '$1:');
-        //   console.log('userList', j, userList[j]);
-        // }
         const queryForUsers = `query {
           userMany(filter: {
             OR: ${userList}
@@ -305,6 +313,75 @@ class App extends React.Component {
       }
     }
     return userInfo;
+  }
+
+  async markItemServedInQueue(queueId, itemId) {
+    // Find the queue we want to update
+    let newQueueItems = [];
+    let queueItems;
+    let i;
+    for (i = 0; i < this.state.createdQueues.length; i++) {
+      if (this.state.createdQueues[i]._id === queueId) {
+        queueItems = this.state.createdQueues[i].items;
+      }
+    }
+    // Copy all items into a new array
+    let j;
+    for (j = 0; j < queueItems.length; j++) {
+      if (queueItems[j]._id === itemId) {
+        const newItem = {
+          _id: queueItems[j]._id,
+          description: queueItems[j].description,
+          status: 'Serving',
+          user: queueItems[j].user,
+        };
+        newQueueItems.push(newItem);
+      } else {
+        newQueueItems.push(queueItems[j]);
+      }
+    }
+
+    // Make array compatible with GraphQL query
+    const queryItemsArray = JSON.stringify(newQueueItems).replace(
+      /"([^"]+)":/g,
+      '$1:'
+    );
+    // Remove quotes around status values (type enum)
+    const queryVar = queryItemsArray.replace(/(status:)"([\w]+)"/g, '$1$2');
+
+    const markItemServedInQueueQuery = `mutation {
+      queueUpdateById(
+          record: {
+              _id: "${queueId}"
+            items: ${queryVar}
+          }
+      ){
+        recordId
+      }
+    }`;
+    const data = await graphQLFetch(markItemServedInQueueQuery);
+    if (data) {
+      this.loadData();
+    }
+  }
+
+  async serveUser(queueId, queueName, itemId, email, name) {
+    const serveItemQuery = `mutation {
+      itemUpdateById(record: {
+        _id: "${itemId}"
+        status: Serving
+      }) {
+        recordId
+      }
+    }`;
+
+    const data = await graphQLFetch(serveItemQuery);
+    if (data) {
+      console.log('Updated Item:', data.itemUpdateById.recordId);
+      sendEmail(queueName, name, email);
+      // Mark user as Serving in the Queue's Items array
+      this.markItemServedInQueue(queueId, itemId);
+    }
   }
 
   render() {
@@ -342,7 +419,8 @@ class App extends React.Component {
                         onSignOut={this.signoutGoogle}
                         onSignInFailure={this.signInFailure}
                         onSignIn={this.responseGoogle}
-                        userItems={this.state.userItems}
+                        serveUser={this.serveUser}
+                        createdUsers={this.state.createdUsers}
                       />
                     )}
                   />

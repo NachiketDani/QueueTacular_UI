@@ -1,6 +1,6 @@
 import React from 'react';
 // reactstrap components
-import { Row, Col, Progress, Badge } from 'reactstrap';
+import { Row, Col, Badge } from 'reactstrap';
 
 import CreatedQueueParticipantHover from './CreatedQueueParticipantHover';
 
@@ -22,7 +22,9 @@ class CreatedQueueMini extends React.Component {
             </Row>
             <Row>
               <Col sm='11'>
-                <CreatedQueueParticipantHover items={this.props.items} />
+                <CreatedQueueParticipantHover
+                  createdUsers={this.props.createdUsers}
+                />
               </Col>
               <Col>
                 {this.props.status === 'Open' ? (
@@ -45,10 +47,11 @@ class CreatedQueueMini extends React.Component {
             <Row>
               <Col>
                 {
-                  this.props.items.filter(
-                    (item) =>
-                      item.status === 'Waiting' || item.status === 'Serving'
-                  ).length
+                  // .filter(
+                  //   (item) =>
+                  //     item.status === 'Waiting' || item.status === 'Serving'
+                  // )
+                  this.props.items.length
                 }{' '}
                 Participants enqueued.
               </Col>

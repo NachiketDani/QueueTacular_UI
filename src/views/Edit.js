@@ -100,10 +100,10 @@ class Edit extends React.Component {
       title,
       description,
       maxParticipants,
-      startDate,
-      endDate,
+      // Tim: Unable to extract startDate and endDate to datepicker input
+      // startDate,
+      // endDate,
     } = this.props.history.location.state;
-    const start = new Date(startDate).toISOString().split('T')[0];
     return (
       <div className='content'>
         <Row>

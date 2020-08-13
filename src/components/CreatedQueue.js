@@ -113,7 +113,9 @@ class CreatedQueue extends React.Component {
                 </tr>
                 <tr>
                   <td>
-                    <CreatedQueueParticipantHover items={this.props.items} />
+                    <CreatedQueueParticipantHover
+                      createdUsers={this.props.createdUsers}
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -129,10 +131,10 @@ class CreatedQueue extends React.Component {
                               item.status === 'Serving'
                           ).length}
                     </b>{' '}
-                    minutes.
+                    minute(s).
                   </td>
                 </tr>
-                <td>
+                <tr>
                   {this.props.status === 'Open' ? (
                     <Badge color='success'>
                       <h5 style={{ marginLeft: 10, marginBottom: 0 }}>
@@ -154,7 +156,7 @@ class CreatedQueue extends React.Component {
                       </h5>
                     </Badge>
                   )}
-                </td>
+                </tr>
               </tbody>
             </Table>
             <hr style={{ marginBottom: 0, marginTop: 0 }} />
@@ -165,6 +167,7 @@ class CreatedQueue extends React.Component {
                 {...this.props}
                 items={this.props.items}
                 onDelete={this.onDelete}
+                serveUser={this.props.serveUser}
               />
             </div>
           </CardFooter>
