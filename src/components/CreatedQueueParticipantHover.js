@@ -25,7 +25,9 @@ const TooltipItem = (props) => {
 };
 
 const mapToArray = (props) => {
-  if (props.createdUsers.length) {
+  if (props.createdUsers == null) {
+    return [];
+  } else {
     return (
       props.createdUsers
         // .filter((item) => {
@@ -38,21 +40,19 @@ const mapToArray = (props) => {
           },
         ])
     );
-  } else {
-    return [];
   }
 };
 
 const CreatedQueueParticipantHover = (props) => {
-  // const participants = mapToArray(props);
+  const participants = mapToArray(props);
   return (
     <>
-      {/* <Progress multi>
-         {participants.map((tooltip, i) => {
-           tooltip = tooltip[0];
-           return <TooltipItem key={i} item={tooltip} id={i} />;
-         })}
-       </Progress> */}
+      <Progress multi>
+        {participants.map((tooltip, i) => {
+          tooltip = tooltip[0];
+          return <TooltipItem key={i} item={tooltip} id={i} />;
+        })}
+      </Progress>
     </>
   );
 };
