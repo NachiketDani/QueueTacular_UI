@@ -156,11 +156,10 @@ class Join extends React.Component {
       }
     }
   }`;
-    console.log(updateQueue);
+    // console.log(updateQueue);
     const data = await graphQLFetch(updateQueue);
     console.log(data);
     if (data) {
-      this.props.setChangeMade(true);
       this.submitSuccess();
     } else {
       this.submitFailure();

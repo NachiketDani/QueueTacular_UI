@@ -95,7 +95,6 @@ class Dashboard extends React.Component {
               serveUser={this.props.serveUser}
               createdUsers={this.props.createdUsers[this.state.showId]}
               markUserCompleted={this.props.markUserCompleted}
-              setChangeMade={this.props.setChangeMade}
             />
           ) : null}
         </div>

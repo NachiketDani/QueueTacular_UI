@@ -121,7 +121,6 @@ class Create extends React.Component {
     const data = await graphQLFetch(mutationForQueue, { record });
     if (data) {
       console.log(data.queueCreateOne.recordId);
-      this.props.setChangeMade(true);
       this.submitSuccess();
     }
   }

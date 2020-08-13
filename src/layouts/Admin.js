@@ -47,7 +47,6 @@ class App extends React.Component {
       createdQueues: [],
       loggedIn: false,
       createdUsers: [],
-      changeMade: false,
     };
     this.mainPanel = React.createRef();
     this.responseGoogle = this.responseGoogle.bind(this);
@@ -60,25 +59,26 @@ class App extends React.Component {
     this.markItemServedInQueue = this.markItemServedInQueue.bind(this);
     this.markUserCompleted = this.markUserCompleted.bind(this);
     this.markItemCompletedInQueue = this.markItemCompletedInQueue.bind(this);
-    this.setChangeMade = this.setChangeMade.bind(this);
   }
 
-  async setChangeMade(value) {
-    console.log('changing state');
-    this.setState({
-      changeMade: value,
-    });
-  }
+  // async setChangeMade() {
+  //   console.log('changing state');
+  //   this.setState({
+  //     changeMade: true,
+  //   });
+  // }
 
   async componentDidMount() {
     if (navigator.platform.indexOf('Win') > -1) {
       ps = new PerfectScrollbar(this.mainPanel.current);
       document.body.classList.toggle('perfect-scrollbar-on');
     }
-    if (this.state.userId !== '' && this.state.changeMade === true) {
-      this.loadData();
-      this.setChangeMade(false);
-    }
+    // if (this.state.userId !== '' && this.state.changeMade === true) {
+    //   this.loadData();
+    //   this.setState({
+    //     changeMade: false,
+    //   });
+    // }
   }
 
   componentWillUnmount() {
@@ -92,10 +92,6 @@ class App extends React.Component {
     if (e.history.action === 'PUSH') {
       this.mainPanel.current.scrollTop = 0;
       document.scrollingElement.scrollTop = 0;
-    }
-    if (this.state.userId !== '' && this.state.changeMade === true) {
-      this.loadData();
-      this.setChangeMade(false);
     }
   }
 
@@ -503,7 +499,6 @@ class App extends React.Component {
                         serveUser={this.serveUser}
                         markUserCompleted={this.markUserCompleted}
                         createdUsers={this.state.createdUsers}
-                        setChangeMade={this.setChangeMade}
                       />
                     )}
                   />
