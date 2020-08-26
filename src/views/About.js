@@ -16,8 +16,11 @@ class About extends React.Component {
               <div>
                 Queue-Tacular is a general purpose queue management app for
                 businesses of all shapes and sizes. Inspired by the needs of
-                manage capacities during the Covid-19 pandemic of 2020. Created
-                by Danielle Mallare-Dani, Tim Gao, Nachiket Dani.
+                local business to strictly manage capacities during the Covid-19
+                pandemic of 2020, Danielle Mallare-Dani, Tim Gao, Nachiket Dani,
+                and Zack Katancik set out to create a queue management
+                technology designed with all business in mind, not just
+                restaurants.
               </div>
               <br />
               <div>Login to get started with Queue-Tacular now.</div>
